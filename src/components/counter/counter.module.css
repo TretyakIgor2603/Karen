@@ -1,0 +1,16 @@
+.wrapper { border: 1px solid #ccc; }
+
+.header,
+.footer { padding: 25px; }
+
+.subtitle {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+}
