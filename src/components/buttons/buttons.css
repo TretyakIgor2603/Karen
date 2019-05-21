@@ -1,0 +1,14 @@
+.button {
+    font-family: inherit;
+    font-size: 1.3rem;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
+}
+
+button[disabled],
+.disabled { cursor: not-allowed; }
