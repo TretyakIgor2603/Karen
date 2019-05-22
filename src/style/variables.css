@@ -36,4 +36,12 @@
     --field__border-color--warning: #f1c763;
     --field-message__color--warning: var(--orange, #ecb32d);
     --field-message__color--error: var(--red, #e74246);
+
+    /* Form field counter */
+    --field-counter__color: var(--black__20, #333);
+    --field-counter__background-color: var(--white, #fff);
+    --field-counter__border-color: var(--mustard, #c49f68);
+    --field-counter__border-color--hover: #b99f4c;
+    --field-counter__button-color: #909090;
+    --field-counter__button-color--hover: var(--mustard, #c49f68);
 }
