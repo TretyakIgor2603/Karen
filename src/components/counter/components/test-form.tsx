@@ -1,0 +1,51 @@
+import React, { ReactElement } from "react";
+// Style
+import styles from "../counter.module.css";
+import { FormName } from "../../../app-constants";
+// Utils
+import { syncValidate } from "../../form-fields/utils/sync-validate";
+// Components
+import { reduxForm, InjectedFormProps } from "redux-form";
+import { Input, MainButton } from "../../all-components";
+
+// TS types
+type Props = {
+    onSubmit: any;
+    children?: never;
+}
+
+const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Props> => {
+    const { handleSubmit } = props;
+
+    return (
+        <form noValidate onSubmit={handleSubmit}>
+            <Input
+                type="text"
+                name="user_name"
+                label="Enter your name"
+                labelPosition="top"
+                validate={[syncValidate.required]}
+            />
+            <Input
+                type="text"
+                name="user_email"
+                label="Enter your email"
+                labelPosition="left"
+                className={styles["input-size"]}
+                warn={[syncValidate.required]}
+            />
+            <Input
+                type="password"
+                name="user_password"
+                label="Enter your password"
+                labelPosition="left"
+                className={styles["input-size"]}
+            />
+            <MainButton type="submit" className="1">Submit form</MainButton>
+        </form>
+    );
+};
+
+export default reduxForm<{}, Props>({
+    form: FormName.Test
+})(TestForm);

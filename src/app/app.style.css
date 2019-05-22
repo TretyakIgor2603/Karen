@@ -3,7 +3,12 @@
 @import "../style/fonts.css";
 @import "../components/buttons/buttons.css";
 
-html { font-size: 10px; }
+html {
+    box-sizing: border-box;
+    font-size: 10px;
+}
+
+*, *::before, *::after { box-sizing: inherit; }
 
 body {
     font-family: var(--font-family__app);

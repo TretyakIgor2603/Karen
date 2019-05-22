@@ -8,6 +8,7 @@ import { incrementAction, decrementAction } from "./redux-duck/actions";
 import { getCounterSelector } from "./redux-duck/selectors";
 // Components
 import { MainButton } from "../all-components";
+import Form from "./components/test-form";
 // TS types
 import { ReduxState } from "../../redux/root-reducer";
 import { ReduxActions } from "../../redux/root-actions-type";
@@ -20,9 +21,14 @@ type MapDispatchToProps = {
 type Props = { children?: never } & MapStateToProps & MapDispatchToProps
 
 const CounterComponent = (props: Props): ReactElement<Props> => {
+    const onSubmitForm = (values: any): void => {
+        console.log("🍆", { values });
+    };
+
     return (
         <section className={styles.wrapper}>
             <h1 className="visually-hidden">Test component</h1>
+            <Form onSubmit={onSubmitForm} />
             <header className={styles.header}>
                 <p className={styles.subtitle}>Counter: {props.counter}</p>
             </header>

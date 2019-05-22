@@ -7,3 +7,7 @@ export enum Postfix {
     Done = "_DONE",
     Error = "_ERROR"
 }
+
+export enum FormName {
+    Test = "TEST"
+}

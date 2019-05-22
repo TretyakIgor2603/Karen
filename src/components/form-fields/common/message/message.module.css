@@ -1,0 +1,5 @@
+.message-wrapper { width: 100%; }
+
+.message-warning { color: var(--field-message__color--warning); }
+
+.message-error { color: var(--field-message__color--error); }

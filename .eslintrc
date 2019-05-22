@@ -24,7 +24,6 @@
         "no-template-curly-in-string": "error",
         "require-atomic-updates": "error",
         "array-callback-return": "error",
-        "consistent-return": "error",
         "default-case": "error",
         "max-classes-per-file": ["error", 1],
         "no-div-regex": "error",
@@ -41,7 +40,6 @@
         "require-await": "error",
         "init-declarations": ["error", "always"],
         "no-shadow": "error",
-        "no-console": ["error", { "allow": ["warn", "error"] }],
         "handle-callback-err": ["error", "error"],
         "no-buffer-constructor": "error",
         "array-bracket-newline": ["error", "consistent"],
@@ -133,6 +131,7 @@
         "react/jsx-no-target-blank": "error",
         "react/jsx-space-before-closing": "error",
 
+        "no-console": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/prefer-interface": "off",

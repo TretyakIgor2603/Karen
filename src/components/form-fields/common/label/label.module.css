@@ -1,0 +1,11 @@
+.label {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.top { margin-bottom: 0.5rem; }
+
+.left {
+    padding-top: 1rem;
+    margin-right: 2rem;
+}

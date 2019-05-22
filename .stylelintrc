@@ -4,6 +4,7 @@
         "color-named": "never",
         "color-hex-length": "short",
         "color-hex-case": "lower",
+        "color-no-invalid-hex": null,
         "function-url-no-scheme-relative": true,
         "keyframes-name-pattern": "a-.+",
         "shorthand-property-no-redundant-values": true,

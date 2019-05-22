@@ -8,9 +8,9 @@ import { noop } from "../../../utils/helpers";
 type Button = "submit" | "button";
 
 type Props = {
-    onClick: () => {};
     children: ReactNode;
     className: string;
+    onClick?: () => {};
     type?: Button;
     disabled?: boolean;
 }

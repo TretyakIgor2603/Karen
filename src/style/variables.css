@@ -1,9 +1,19 @@
 :root {
+    /* Fonts */
+    --font-family__sans-serif: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+
+    --font-family__app: "Open Sans", var(--font-family__sans-serif, "sans-serif");
+    --font-size__app: 1.4rem;
+    --line-height__app: 1.5;
+    --color__app: var(--black__20, #333);
+
     /* Colors */
     --white: #fff;
     --black: #000;
     --black__20: #333;
     --mustard: #c49f68;
+    --orange: #ecb32d;
+    --red: #e74246;
 
     /* Buttons */
     --main-button__color: var(--white, #fff);
@@ -14,11 +24,16 @@
     --main-button__border-color--hover: var(--mustard, #c49f68);
     --main-button__border-color--disabled: #0005;
 
-    /* Fonts */
-    --font-family__sans-serif: -apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
-
-    --font-family__app: "Open Sans", var(--font-family__sans-serif, "sans-serif");
-    --font-size__app: 1.4rem;
-    --line-height__app: 1.5;
-    --color__app: var(--black__20, #333);
+    /* Form fields */
+    --field__color: var(--black__20, #333);
+    --field__background-color: var(--white, #fff);
+    --field__background-color--error: #fbdfdf;
+    --field__background-color--warning: #fcf4e1;
+    --field__border-color: #0005;
+    --field__border-color--hover: #0008;
+    --field__border-color--focus: #000;
+    --field__border-color--error: #eb6568;
+    --field__border-color--warning: #f1c763;
+    --field-message__color--warning: var(--orange, #ecb32d);
+    --field-message__color--error: var(--red, #e74246);
 }
