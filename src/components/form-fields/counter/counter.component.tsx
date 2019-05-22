@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { ReactElement } from "react";
 // Style
 import styles from "./counter.module.css";
 // TS types
@@ -51,4 +51,4 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-export default memo(CounterComponent);
+export default CounterComponent;

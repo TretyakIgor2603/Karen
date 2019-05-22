@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { ReactElement } from "react";
 // Components
 import Field, { InputProps } from "../common/field.component";
 import InputComponent from "./input.component";
@@ -23,4 +23,4 @@ const InputFieldComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-export default memo(InputFieldComponent);
+export default InputFieldComponent;

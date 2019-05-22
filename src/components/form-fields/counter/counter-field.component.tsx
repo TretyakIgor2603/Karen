@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { ReactElement } from "react";
 // Components
 import Field from "../common/field.component";
 import Counter from "./counter.component";
@@ -14,4 +14,4 @@ const CounterFieldComponent = (props: Props): ReactElement<Props> => {
     return <Field name={name} component={Counter} />;
 };
 
-export default memo(CounterFieldComponent);
+export default CounterFieldComponent;

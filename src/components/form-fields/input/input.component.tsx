@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import cn from "classnames";
 // Style
 import styles from "./input.module.css";
@@ -49,4 +49,4 @@ const InputComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-export default memo(InputComponent);
+export default InputComponent;
