@@ -5,13 +5,18 @@ import { Field } from "redux-form";
 import { LabelPosition } from "./label/label.component";
 
 type InputType = "text" | "email" | "password" | "search" | "tel" | "number";
+export type Option = {
+    value: string | number;
+    label: string | number;
+}
 export type InputProps = {
     name: string;
-    type: InputType;
+    type?: InputType;
     className?: string;
     labelPosition?: LabelPosition;
     label?: string;
     placeholder?: string;
+    options?: Option[];
     validate?: any;
     warn?: any;
     children?: never;

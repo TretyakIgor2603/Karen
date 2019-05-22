@@ -22,6 +22,7 @@
     "dependencies": {
         "classnames": "2.2.6",
         "normalize.css": "8.0.1",
+        "rc-select": "9.1.2",
         "react": "16.8.6",
         "react-dom": "16.8.6",
         "react-helmet-async": "1.0.2",
@@ -37,6 +38,7 @@
         "@types/jest": "24.0.13",
         "@types/next-redux-saga": "3.0.1",
         "@types/node": "12.0.2",
+        "@types/rc-select": "5.9.34",
         "@types/react": "16.8.17",
         "@types/react-dom": "16.8.4",
         "@types/react-helmet": "5.0.8",

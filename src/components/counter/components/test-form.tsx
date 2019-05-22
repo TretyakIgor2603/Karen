@@ -6,7 +6,7 @@ import { FormName } from "../../../app-constants";
 import { syncValidate } from "../../form-fields/utils/sync-validate";
 // Components
 import { reduxForm, InjectedFormProps } from "redux-form";
-import { Input, MainButton } from "../../all-components";
+import { Input, Select, MainButton } from "../../all-components";
 
 // TS types
 type Props = {
@@ -31,15 +31,15 @@ const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Pro
                 name="user_email"
                 label="Enter your email"
                 labelPosition="left"
+                placeholder="Email"
                 className={styles["input-size"]}
                 warn={[syncValidate.required]}
             />
-            <Input
-                type="password"
-                name="user_password"
-                label="Enter your password"
-                labelPosition="left"
+            <Select
+                name="user_select"
+                placeholder="Select option"
                 className={styles["input-size"]}
+                options={[{ value: 1, label: "Test 1" }, { value: 2, label: "Test 2" }, { value: 3, label: "Test 3" }]}
             />
             <MainButton type="submit" className="1">Submit form</MainButton>
         </form>
