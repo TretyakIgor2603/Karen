@@ -2,6 +2,7 @@
 @import "~normalize.css";
 @import "../style/fonts.css";
 @import "../components/buttons/buttons.css";
+@import "../style/link.css";
 
 html {
     box-sizing: border-box;
@@ -21,6 +22,8 @@ body {
 h1, h2, h3, h4, h5, h6, p {
     margin-top: 0;
 }
+
+a { text-decoration: none; }
 
 img {
     display: block;

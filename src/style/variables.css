@@ -24,6 +24,9 @@
     --main-button__border-color--hover: var(--mustard, #c49f68);
     --main-button__border-color--disabled: #0005;
 
+    /* Links */
+    --link__color: var(--mustard, #c49f68);
+
     /* Form fields */
     --field__color: var(--black__20, #333);
     --field__background-color: var(--white, #fff);
