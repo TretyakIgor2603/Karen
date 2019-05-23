@@ -5,13 +5,13 @@ import FileUploaderComponent from "./file-uploader.component";
 // TS types
 import { InputProps } from "../common/field.component";
 
-type Props = InputProps
+type Props = { formName: string } & InputProps
 
 const FileUploaderFieldComponent = (props: Props): ReactElement<Props> => {
-    const { name } = props;
+    const { name, formName } = props;
 
     return (
-        <Field name={name} component={FileUploaderComponent} />
+        <Field name={name} formName={formName} component={FileUploaderComponent} />
     );
 };
 

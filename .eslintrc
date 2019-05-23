@@ -62,7 +62,6 @@
         "keyword-spacing": "error",
         "linebreak-style": "error",
         "lines-between-class-members": "error",
-        "max-len": ["error", { "code": 120 }],
         "multiline-comment-style": ["error", "separate-lines"],
         "multiline-ternary": ["error", "always-multiline"],
         "new-cap": "error",
@@ -136,6 +135,6 @@
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/prefer-interface": "off",
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "props" }],
-        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }]
+        "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true, "allowTypedFunctionExpressions": true }]
     }
 }

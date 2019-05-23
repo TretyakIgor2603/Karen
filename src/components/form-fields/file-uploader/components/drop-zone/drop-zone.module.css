@@ -5,6 +5,7 @@
     align-items: center;
     width: 100%;
     min-height: 30rem;
+    padding: 1.5rem;
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 1.4;
@@ -22,10 +23,6 @@
 }
 
 .wrapper:hover { border-color: var(--field__border-color--hover); }
-
-.wrapper-drag-active svg { fill: var(--field__border-color--warning); }
-
-.wrapper:hover svg { fill: var(--field__border-color--hover); }
 
 .wrapper-drag-active {
     border-color: var(--field__border-color--warning);

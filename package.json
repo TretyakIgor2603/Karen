@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "classnames": "2.2.6",
+        "lodash": "4.17.11",
         "normalize.css": "8.0.1",
         "rc-select": "9.1.2",
         "react": "16.8.6",
@@ -28,6 +29,7 @@
         "react-dropzone": "10.1.5",
         "react-helmet-async": "1.0.2",
         "react-redux": "7.0.3",
+        "react-redux-toastr": "7.5.1",
         "react-scripts": "3.0.1",
         "redux": "4.0.1",
         "redux-form": "8.2.0",
@@ -37,6 +39,7 @@
     "devDependencies": {
         "@types/classnames": "2.2.7",
         "@types/jest": "24.0.13",
+        "@types/lodash": "4.14.130",
         "@types/next-redux-saga": "3.0.1",
         "@types/node": "12.0.2",
         "@types/rc-select": "5.9.34",
@@ -45,6 +48,7 @@
         "@types/react-dropzone": "4.2.2",
         "@types/react-helmet": "5.0.8",
         "@types/react-redux": "7.0.9",
+        "@types/react-redux-toastr": "7.4.1",
         "@types/redux-form": "8.1.1",
         "husky": "2.3.0",
         "lint-staged": "8.1.7",

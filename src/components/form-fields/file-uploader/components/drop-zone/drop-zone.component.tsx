@@ -4,14 +4,17 @@ import cn from "classnames";
 import styles from "./drop-zone.module.css";
 // Components
 import FileUploadIcon from "./upload-file-icon.component";
+import Preview from "../preview/preview.component";
 // TS types
 type Props = {
     isDragActive: boolean;
+    formName: string;
+    name: string;
     children?: never;
 }
 
 const DropZoneComponent = (props: Props): ReactElement<Props> => {
-    const { isDragActive } = props;
+    const { isDragActive, formName, name } = props;
 
     const wrapperClassName = cn(`${styles.wrapper}`, {
         [styles["wrapper-drag-active"]]: isDragActive
@@ -19,6 +22,7 @@ const DropZoneComponent = (props: Props): ReactElement<Props> => {
 
     return (
         <div className={wrapperClassName}>
+            <Preview formName={formName} name={name} />
             <div className={styles["icon-wrapper"]}>
                 <FileUploadIcon />
             </div>

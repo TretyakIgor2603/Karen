@@ -1,0 +1,95 @@
+.list {
+    display: flex;
+    align-self: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.item {
+    position: relative;
+    flex-basis: 20rem;
+    height: 20rem;
+    margin: 1rem;
+    list-style-type: none;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.preview {
+    width: 20rem;
+    height: inherit;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.item-hover {
+    z-index: -10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.item:hover .preview {
+    filter: blur(5px);
+}
+
+.item:hover .item-hover {
+    z-index: 10;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.remove-button {
+    z-index: 20;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: 0;
+}
+
+.remove-button svg {
+    fill: #fff;
+    width: 4rem;
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.remove-button:hover svg,
+.remove-button:focus svg { fill: #f00; }
+
+.remove-button:active svg { opacity: 0.7; }
+
+.image {
+    width: 100%;
+    height: 100%;
+}
+
+.subtitle {
+    max-width: 20rem;
+    padding: 5px;
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #000;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.subtitle strong {
+    font-weight: 700;
+    font-size: 1.8rem;
+}

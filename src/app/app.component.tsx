@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react";
 // Style
 import "./app.style.css";
+// Toastr
+import Toastr from "react-redux-toastr";
 // Helmet
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { APP_TITLE } from "../app-constants";
@@ -20,6 +22,16 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                     <title>{APP_TITLE}</title>
                 </Helmet>
                 <Counter />
+                <Toastr
+                    timeOut={4000}
+                    newestOnTop={false}
+                    preventDuplicates
+                    position="top-right"
+                    transitionIn="fadeIn"
+                    transitionOut="fadeOut"
+                    progressBar={false}
+                    closeOnToastrClick
+                />
             </HelmetProvider>
         </Provider>
     );

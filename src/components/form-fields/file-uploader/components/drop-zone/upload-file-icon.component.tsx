@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { memo, ReactElement } from "react";
 // TS types
 type Props = { children?: never }

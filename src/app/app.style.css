@@ -1,3 +1,4 @@
+@import "~react-redux-toastr/lib/css/react-redux-toastr.min.css";
 @import "../style/variables.css";
 @import "~normalize.css";
 @import "../style/fonts.css";
