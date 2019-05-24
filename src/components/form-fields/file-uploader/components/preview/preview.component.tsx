@@ -1,16 +1,19 @@
-import React, { ReactElement, SyntheticEvent } from "react";
+import React, { memo, Suspense, lazy, ReactElement, SyntheticEvent, ComponentType } from "react";
 // Styles
 import styles from "./preview.module.css";
-import iconPDF from "./images/pdf-format.svg";
 // Utils
 import _get from "lodash/fp/get";
 // Redux
 import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
+import { compose } from "redux";
 import { change, FormAction } from "redux-form";
 import { ReduxState } from "../../../../../redux/root-reducer";
 // Components
 import { toastr } from "react-redux-toastr";
 import DeleteButtonIcon from "./delete-button-icon.component";
+import { FileLoader } from "../../../../all-components";
+
+const LazyImage = lazy(() => import("./preview-image.component"));
 // TS types
 type ReduxStateToProps = { files?: File[] }
 
@@ -48,13 +51,9 @@ const PreviewComponent = (props: Props): ReactElement<Props> => {
     const filesBody = (files && files.length) ? (
         files.map((file: File) => (
             <li key={file.name} className={styles.item} onClick={onItemClick}>
-                <div className={styles.preview}>
-                    <img
-                        src={(file.type === "application/pdf") ? iconPDF : URL.createObjectURL(file)}
-                        alt={file.name}
-                        className={styles.image}
-                    />
-                </div>
+                <Suspense fallback={<FileLoader />}>
+                    <LazyImage file={file} />
+                </Suspense>
                 <div className={styles["item-hover"]}>
                     <button
                         type="button"
@@ -91,4 +90,7 @@ const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (
     changeValue: (form, field, value) => dispatch(change(form, field, value))
 });
 
-export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(PreviewComponent);
+export default compose<ComponentType<OwnProps>>(
+    memo,
+    connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)
+)(PreviewComponent);
