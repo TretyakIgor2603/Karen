@@ -38,13 +38,25 @@ const FileUploaderComponent = (props: Props): ReactElement<Props> => {
         props.input.onChange(newFiles);
     }, [props.input, props.files]);
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
+        onDrop,
+        accept: "image/*, application/pdf"
+    });
     const { formName, input } = props;
+
+    if (isDragReject) {
+        toastr.error("Accept formats", "You can upload pdf files and all image file formats");
+    }
 
     return (
         <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <DropZone isDragActive={isDragActive} formName={formName} name={input.name} />
+            <DropZone
+                isDragReject={isDragReject}
+                isDragActive={isDragActive}
+                formName={formName}
+                name={input.name}
+            />
         </div>
     );
 };

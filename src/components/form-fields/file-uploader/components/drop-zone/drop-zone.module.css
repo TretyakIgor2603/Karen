@@ -29,6 +29,11 @@
     background-color: var(--field__background-color--warning);
 }
 
+.wrapper-drag-reject {
+    border-color: var(--field__border-color--error);
+    background-color: var(--field__background-color--error);
+}
+
 .icon-wrapper {
     width: 10rem;
     height: auto;
@@ -39,6 +44,11 @@
 .subtitle {
     margin-bottom: 0;
     color: #9a9a9a;
+}
+
+.subtitle-reject {
+    margin-bottom: 0;
+    color: var(--field-message__color--error);
 }
 
 .link { color: var(--link__color); }

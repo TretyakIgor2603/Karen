@@ -7,6 +7,7 @@ import FileUploadIcon from "./upload-file-icon.component";
 import Preview from "../preview/preview.component";
 // TS types
 type Props = {
+    isDragReject: boolean;
     isDragActive: boolean;
     formName: string;
     name: string;
@@ -14,10 +15,11 @@ type Props = {
 }
 
 const DropZoneComponent = (props: Props): ReactElement<Props> => {
-    const { isDragActive, formName, name } = props;
+    const { isDragReject, isDragActive, formName, name } = props;
 
     const wrapperClassName = cn(`${styles.wrapper}`, {
-        [styles["wrapper-drag-active"]]: isDragActive
+        [styles["wrapper-drag-active"]]: isDragActive,
+        [styles["wrapper-drag-reject"]]: isDragReject
     });
 
     return (
@@ -32,6 +34,9 @@ const DropZoneComponent = (props: Props): ReactElement<Props> => {
             <p className={styles.subtitle}>
                 + Add images of the space or inspirations
             </p>
+            {isDragReject && (
+                <p className={styles["subtitle-reject"]}>You can upload pdf files and all image file formats</p>
+            )}
         </div>
     );
 };
