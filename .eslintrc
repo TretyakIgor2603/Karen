@@ -29,7 +29,6 @@
         "no-div-regex": "error",
         "no-empty-function": "error",
         "no-floating-decimal": "error",
-        "no-magic-numbers": "error",
         "no-multi-spaces": "error",
         "no-new": "error",
         "no-self-compare": "error",

@@ -5,3 +5,5 @@ export { default as Select } from "./form-fields/select/select-field.component";
 export { default as InputCounter } from "./form-fields/counter/counter-field.component";
 export { default as FileUploader } from "./form-fields/file-uploader/file-uploader-field.component";
 export { default as FileLoader } from "./loaders/file-loader/file-loader.component";
+export { default as Stepper } from "./stepper/stepper.component";
+export { default as Step } from "./stepper/components/step.component";

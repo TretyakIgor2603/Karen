@@ -47,4 +47,11 @@
     --field-counter__border-color--hover: #b99f4c;
     --field-counter__button-color: #909090;
     --field-counter__button-color--hover: var(--mustard, #c49f68);
+
+    /* Stepper */
+    --stepper__background-color: var(--mustard, #c49f68);
+    --stepper__border-color--active: #000;
+    --stepper__color--disabled: #ccc;
+    --stepper__border-color--disabled: #ccc;
+    --stepper__background-color--disabled: #ede1d0;
 }
