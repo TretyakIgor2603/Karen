@@ -40,6 +40,8 @@
 .navigation-item.pass::before,
 .navigation-item.current::before { background-color: var(--stepper__background-color); }
 
+.navigation-item.disabled::before { background-color: var(--stepper__background-color--disabled); }
+
 .navigation-item.current .step {
     border-color: var(--stepper__border-color--active);
     background-color: var(--mustard);

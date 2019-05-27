@@ -1,4 +1,6 @@
 import React, { useState, Children, cloneElement, ReactElement, SyntheticEvent, ReactNode } from "react";
+// Utils
+import cn from "classnames";
 // Styles
 import styles from "./stepper.module.css";
 // TS types
@@ -13,6 +15,8 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     const { children } = props;
     const step = 1;
     const minStepIndex = 0;
+    const firstStep = currentStepIndex === 0;
+    const lastStep = currentStepIndex === (children.length - 1);
 
     const onStepClick = (event: SyntheticEvent<HTMLLIElement>): void => {
         const { currentTarget } = event;
@@ -46,6 +50,14 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
         });
     });
 
+    const prevLinkClassNames = cn(styles["prev-link"], {
+        [styles.disabled]: firstStep
+    });
+
+    const nextLinkClassNames = cn(styles["next-link"], {
+        [styles.disabled]: lastStep
+    });
+
     return (
         <div>
             <nav className={styles.navigation}>
@@ -58,9 +70,21 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
                 {renderCurrentStepContent()}
             </div>
 
-            <div>
-                <a href="#" onClick={onPrevButtonClick}>Prev</a>
-                <a href="#" onClick={onNextButtonClick}>Next</a>
+            <div className={styles["links-block-wrapper"]}>
+                <a
+                    href="#prev"
+                    className={prevLinkClassNames}
+                    onClick={onPrevButtonClick}
+                >
+                    Back
+                </a>
+                <a
+                    href="#next"
+                    className={nextLinkClassNames}
+                    onClick={onNextButtonClick}
+                >
+                    Next
+                </a>
             </div>
         </div>
     );

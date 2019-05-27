@@ -1,8 +1,97 @@
 .navigation-list {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     width: 100%;
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
+}
+
+.links-block-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.link {
+    position: relative;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--stepper__link-color);
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.link::before {
+    position: absolute;
+    top: 50%;
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid var(--stepper__link-color);
+    border-right: 2px solid var(--stepper__link-color);
+    transition-property: all;
+    transition-duration: 0.3s;
+}
+
+.link:hover,
+.link:focus { color: var(--stepper__link-color--hover); }
+
+.link:hover::before,
+.link:focus::before {
+    border-top-color: var(--stepper__link-color--hover);
+    border-right-color: var(--stepper__link-color--hover);
+}
+
+.link:active,
+.link:active::before { opacity: 0.7; }
+
+.prev-link {
+    composes: link;
+    margin-right: 15rem;
+    padding-left: 1.8rem;
+    padding-right: 1rem;
+}
+
+.next-link {
+    composes: link;
+    padding-right: 1.8rem;
+    padding-left: 1rem;
+}
+
+.prev-link::before {
+    left: 2px;
+    transform: translateY(-50%) rotate(-135deg);
+}
+
+.next-link::before {
+    right: 2px;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.prev-link.disabled,
+.next-link.disabled,
+.prev-link.disabled::before,
+.next-link.disabled::before,
+.prev-link:hover.disabled,
+.next-link:hover.disabled,
+.prev-link:hover.disabled::before,
+.next-link:hover.disabled::before,
+.prev-link:focus.disabled,
+.next-link:focus.disabled,
+.prev-link:focus.disabled::before,
+.next-link:focus.disabled::before,
+.prev-link:active.disabled,
+.next-link:active.disabled,
+.prev-link:active.disabled::before,
+.next-link:active.disabled::before {
+    color: var(--stepper__link-color--disabled);
+    border-top-color: var(--stepper__link-color--disabled);
+    border-right-color: var(--stepper__link-color--disabled);
+    opacity: 1;
+    cursor: not-allowed;
 }

@@ -54,4 +54,7 @@
     --stepper__color--disabled: #ccc;
     --stepper__border-color--disabled: #ccc;
     --stepper__background-color--disabled: #ede1d0;
+    --stepper__link-color: #3d4149;
+    --stepper__link-color--hover: #26282d;
+    --stepper__link-color--disabled: #ccc;
 }
