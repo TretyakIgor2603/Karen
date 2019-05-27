@@ -16,7 +16,7 @@ type OwnProps = {
 type Props = OwnProps
 
 const StepComponent = (props: Props): ReactElement<Props> => {
-    const { onClick, stepIndex, title, isPass, isActive, isDisabled } = props;
+    const { onClick, stepIndex = 0, title, isPass, isActive, isDisabled } = props;
 
     const navigationItemClassName = cn(styles["navigation-item"], {
         [styles["current"]]: isActive,
@@ -26,7 +26,7 @@ const StepComponent = (props: Props): ReactElement<Props> => {
 
     return (
         <li onClick={onClick} data-index={stepIndex} className={navigationItemClassName}>
-            <p className={styles["step"]}>{stepIndex}</p>
+            <p className={styles["step"]}>{stepIndex + 1}</p>
             <p className={styles["step-title"]}>{title}</p>
         </li>
     );

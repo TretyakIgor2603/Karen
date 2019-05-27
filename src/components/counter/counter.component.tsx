@@ -2,8 +2,7 @@ import React, { ReactElement } from "react";
 // Style
 import styles from "./counter.module.css";
 // Redux
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
+import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
 import { incrementAction, decrementAction } from "./redux-duck/actions";
 import { getCounterSelector } from "./redux-duck/selectors";
 // Components
@@ -11,14 +10,15 @@ import { MainButton } from "../all-components";
 import Form from "./components/test-form";
 // TS types
 import { ReduxState } from "../../redux/root-reducer";
-import { ReduxActions } from "../../redux/root-actions-type";
 
-type MapStateToProps = { counter: number }
-type MapDispatchToProps = {
+type ReduxStateToProps = { counter: number }
+
+type ReduxDispatchToProps = {
     increment: typeof incrementAction;
     decrement: typeof decrementAction;
 }
-type Props = { children?: never } & MapStateToProps & MapDispatchToProps
+type OwnProps = { children?: never }
+type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps
 
 const CounterComponent = (props: Props): ReactElement<Props> => {
     const onSubmitForm = (values: any): void => {
@@ -42,13 +42,13 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapStateToProps = (state: ReduxState): MapStateToProps => ({
+const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
     counter: getCounterSelector(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<ReduxActions>): MapDispatchToProps => ({
+const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     increment: () => dispatch(incrementAction()),
     decrement: () => dispatch(decrementAction())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CounterComponent);
+export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(CounterComponent);

@@ -46,12 +46,12 @@ const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Pro
             <MainButton type="submit" className="1">Submit form</MainButton>
             <hr />
             <Stepper defaultStepIndex={0}>
-                <Step title="Rooms to furnish">Content 0</Step>
-                <Step title="Select furniture">Content 1</Step>
-                <Step title="Design styles">Content 2</Step>
-                <Step title="Personal questions">Content 3</Step>
-                <Step title="Budget">Content 4</Step>
-                <Step title="Authenticate">Content 5</Step>
+                <Step title="Rooms to furnish">Content 1</Step>
+                <Step title="Select furniture">Content 2</Step>
+                <Step title="Design styles">Content 3</Step>
+                <Step title="Personal questions">Content 4</Step>
+                <Step title="Budget">Content 5</Step>
+                <Step title="Authenticate">Content 6</Step>
             </Stepper>
         </form>
     );

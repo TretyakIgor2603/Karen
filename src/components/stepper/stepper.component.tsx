@@ -1,16 +1,29 @@
-import React, { useState, Children, cloneElement, ReactElement, SyntheticEvent, ReactNode } from "react";
+import React, { useEffect, useState, Children, cloneElement, ReactElement, SyntheticEvent, ReactNode } from "react";
 // Utils
 import cn from "classnames";
+import _get from "lodash/fp/get";
+// Redux
+import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
+import { registerStepsAction } from "./redux-duck/actions";
 // Styles
 import styles from "./stepper.module.css";
+import { ReduxState } from "../../redux/root-reducer";
+import { Step } from "./types";
+import { getStepsSelector } from "./redux-duck/selectors";
 // TS types
+type ReduxDispatchToProps = { registerSteps: typeof registerStepsAction };
+type ReduxStateToProps = { steps: Step[] }
 type OwnProps = {
     children: ReactElement[];
     defaultStepIndex: number;
-}
-type Props = OwnProps
+};
+type Props = OwnProps & ReduxDispatchToProps & ReduxStateToProps;
 
 const StepperComponent = (props: Props): ReactElement<Props> => {
+    useEffect(() => {
+        props.registerSteps(props.children);
+        // eslint-disable-next-line
+    }, []);
     const [currentStepIndex, setCurrentStepIndex] = useState(props.defaultStepIndex);
     const { children } = props;
     const step = 1;
@@ -45,8 +58,8 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
             onClick: onStepClick,
             stepIndex: index,
             isActive: index === currentStepIndex,
-            isPass: currentStepIndex > index,
-            isDisabled: index > currentStepIndex
+            isPass: _get(`steps[${index}].pass`, props),
+            isDisabled: _get(`steps[${index}].disabled`, props)
         });
     });
 
@@ -90,4 +103,11 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-export default StepperComponent;
+const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+    steps: getStepsSelector(state)
+});
+const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+    registerSteps: (children) => dispatch(registerStepsAction(children))
+});
+
+export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(StepperComponent);
