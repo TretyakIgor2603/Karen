@@ -1,5 +1,4 @@
-import { Postfix } from "../../../app-constants";
-import { REGISTER_STEPS } from "./constants";
+import * as Type from "./constants";
 // TS types
 import { Step } from "../types";
 import { StepperActions } from "./actions";
@@ -20,7 +19,8 @@ export default (state: StepperState = INITIAL_STATE, action: StepperActions): St
     const { type, payload } = action;
 
     switch (type) {
-        case (REGISTER_STEPS + Postfix.Done):
+        case (Type.REGISTER_STEPS_DONE):
+        case (Type.ALLOW_NEXT_STEP_DONE):
             return {
                 ...state,
                 steps: payload.steps

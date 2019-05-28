@@ -4,17 +4,21 @@ import cn from "classnames";
 import _get from "lodash/fp/get";
 // Redux
 import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
-import { registerStepsAction } from "./redux-duck/actions";
+import { registerStepsAction, allowNextStepAction } from "./redux-duck/actions";
 // Styles
 import styles from "./stepper.module.css";
 import { ReduxState } from "../../redux/root-reducer";
 import { Step } from "./types";
 import { getStepsSelector } from "./redux-duck/selectors";
 // TS types
-type ReduxDispatchToProps = { registerSteps: typeof registerStepsAction };
+type ReduxDispatchToProps = {
+    registerSteps: typeof registerStepsAction;
+    allowNextStep: typeof allowNextStepAction;
+};
 type ReduxStateToProps = { steps: Step[] }
 type OwnProps = {
     children: ReactElement[];
+    invalid: boolean;
     defaultStepIndex: number;
 };
 type Props = OwnProps & ReduxDispatchToProps & ReduxStateToProps;
@@ -25,16 +29,19 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
         // eslint-disable-next-line
     }, []);
     const [currentStepIndex, setCurrentStepIndex] = useState(props.defaultStepIndex);
-    const { children } = props;
+    const { children, invalid } = props;
     const step = 1;
     const minStepIndex = 0;
-    const firstStep = currentStepIndex === 0;
+    const firstStep = currentStepIndex === minStepIndex;
     const lastStep = currentStepIndex === (children.length - 1);
 
     const onStepClick = (event: SyntheticEvent<HTMLLIElement>): void => {
         const { currentTarget } = event;
         const { dataset } = currentTarget;
-        setCurrentStepIndex(Number(dataset.index));
+        const stepIndex = Number(dataset.index);
+
+        if (props.steps[stepIndex].disabled) return;
+        setCurrentStepIndex(stepIndex);
     };
 
     const renderCurrentStepContent = (): ReactNode => children[currentStepIndex].props.children;
@@ -42,8 +49,10 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     const onNextButtonClick = (event: SyntheticEvent<HTMLAnchorElement>): void => {
         event && event.preventDefault && event.preventDefault();
 
-        if (!(currentStepIndex < children.length - 1)) return;
+        if (invalid || lastStep) return;
+        if (props.steps[currentStepIndex].disabled) return;
         setCurrentStepIndex(currentStepIndex + step);
+        props.allowNextStep(currentStepIndex + step);
     };
 
     const onPrevButtonClick = (event: SyntheticEvent<HTMLAnchorElement>): void => {
@@ -68,7 +77,7 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     });
 
     const nextLinkClassNames = cn(styles["next-link"], {
-        [styles.disabled]: lastStep
+        [styles.disabled]: invalid || lastStep
     });
 
     return (
@@ -107,7 +116,8 @@ const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> 
     steps: getStepsSelector(state)
 });
 const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
-    registerSteps: (children) => dispatch(registerStepsAction(children))
+    registerSteps: (children) => dispatch(registerStepsAction(children)),
+    allowNextStep: (stepIndex) => dispatch(allowNextStepAction(stepIndex))
 });
 
 export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(StepperComponent);

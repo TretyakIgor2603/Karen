@@ -45,7 +45,7 @@ const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Pro
             <FileUploader name="user_preview" formName={FormName.Test} />
             <MainButton type="submit" className="1">Submit form</MainButton>
             <hr />
-            <Stepper defaultStepIndex={0}>
+            <Stepper defaultStepIndex={0} invalid={false}>
                 <Step title="Rooms to furnish">Content 1</Step>
                 <Step title="Select furniture">Content 2</Step>
                 <Step title="Design styles">Content 3</Step>

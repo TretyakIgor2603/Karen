@@ -28,7 +28,7 @@
     right: 12.5rem;
     height: 2px;
     width: 16.5rem;
-    background-color: var(--stepper__background-color--disabled);
+    background-color: var(--stepper__background-color);
 }
 
 .navigation-item:first-child::before { display: none; }
@@ -42,16 +42,19 @@
 
 .navigation-item.disabled::before { background-color: var(--stepper__background-color--disabled); }
 
+.navigation-item.current { cursor: default; }
+
 .navigation-item.current .step {
     border-color: var(--stepper__border-color--active);
     background-color: var(--mustard);
 }
 
+.navigation-item.disabled { cursor: not-allowed; }
+
 .navigation-item.disabled .step {
     color: var(--stepper__color--disabled);
     border-color: var(--stepper__border-color--disabled);
     background-color: var(--stepper__background-color--disabled);
-    cursor: not-allowed;
 }
 
 .step-title { text-transform: uppercase; }
