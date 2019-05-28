@@ -10,7 +10,7 @@ type Button = "submit" | "button";
 type Props = {
     children: ReactNode;
     className: string;
-    onClick?: () => {};
+    onClick?: () => any;
     type?: Button;
     disabled?: boolean;
 }

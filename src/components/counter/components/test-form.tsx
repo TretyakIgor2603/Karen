@@ -6,7 +6,7 @@ import { FormName } from "../../../app-constants";
 import { syncValidate } from "../../form-fields/utils/sync-validate";
 // Components
 import { reduxForm, InjectedFormProps } from "redux-form";
-import { Input, Select, InputCounter, FileUploader, MainButton, Stepper, Step } from "../../all-components";
+import { Input, Select, InputCounter, FileUploader, MainButton } from "../../all-components";
 
 // TS types
 type Props = {
@@ -44,15 +44,6 @@ const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Pro
             <InputCounter name="user_counter" />
             <FileUploader name="user_preview" formName={FormName.Test} />
             <MainButton type="submit" className="1">Submit form</MainButton>
-            <hr />
-            <Stepper defaultStepIndex={0} invalid={false}>
-                <Step title="Rooms to furnish">Content 1</Step>
-                <Step title="Select furniture">Content 2</Step>
-                <Step title="Design styles">Content 3</Step>
-                <Step title="Personal questions">Content 4</Step>
-                <Step title="Budget">Content 5</Step>
-                <Step title="Authenticate">Content 6</Step>
-            </Stepper>
         </form>
     );
 };

@@ -10,7 +10,7 @@ import { APP_TITLE } from "../app-constants";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 // Components
-import { Counter } from "../components/all-components";
+import { Stepper, ErrorBoundary, Step } from "../components/all-components";
 // TS types
 type Props = { children?: never }
 
@@ -21,7 +21,16 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                 <Helmet>
                     <title>{APP_TITLE}</title>
                 </Helmet>
-                <Counter />
+                <ErrorBoundary>
+                    <Stepper defaultStepIndex={0} invalid={false}>
+                        <Step title="Rooms to furnish">Content 1</Step>
+                        <Step title="Select furniture">Content 2</Step>
+                        <Step title="Design styles">Content 3</Step>
+                        <Step title="Personal questions">Content 4</Step>
+                        <Step title="Budget">Content 5</Step>
+                        <Step title="Authenticate">Content 6</Step>
+                    </Stepper>
+                </ErrorBoundary>
                 <Toastr
                     timeOut={4000}
                     newestOnTop={false}
