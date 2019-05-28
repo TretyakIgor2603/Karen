@@ -63,12 +63,14 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     };
 
     const renderNavigationWithStepApiAsProps = Children.map(children, (child, index) => {
+        const disabledChild = _get(`steps[${index}].disabled`, props);
+
         return cloneElement(child, {
             onClick: onStepClick,
             stepIndex: index,
             isActive: index === currentStepIndex,
             isPass: _get(`steps[${index}].pass`, props),
-            isDisabled: _get(`steps[${index}].disabled`, props)
+            isDisabled: (disabledChild !== void 0) ? disabledChild : !(index === 0)
         });
     });
 
