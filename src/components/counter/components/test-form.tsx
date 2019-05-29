@@ -41,7 +41,7 @@ const TestForm = (props: Props & InjectedFormProps<{}, Props>): ReactElement<Pro
                 className={styles["input-size"]}
                 options={[{ value: 1, label: "Test 1" }, { value: 2, label: "Test 2" }, { value: 3, label: "Test 3" }]}
             />
-            <InputCounter name="user_counter" />
+            <InputCounter name="user_counter" initialValue={23} />
             <FileUploader name="user_preview" formName={FormName.Test} />
             <MainButton type="submit" className="1">Submit form</MainButton>
         </form>

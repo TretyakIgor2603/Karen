@@ -1,0 +1,18 @@
+.wrapper {
+    max-width: 120rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5rem;
+}
+
+.title {
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.content {
+    min-height: 25rem;
+    margin-bottom: 5rem;
+    padding: 1.5rem;
+}

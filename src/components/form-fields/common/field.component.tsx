@@ -11,6 +11,7 @@ export type Option = {
 }
 export type InputProps = {
     name: string;
+    initialValue?: number;
     type?: InputType;
     className?: string;
     labelPosition?: LabelPosition;

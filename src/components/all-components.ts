@@ -7,3 +7,4 @@ export { default as FileLoader } from "./loaders/file-loader/file-loader.compone
 export { default as Stepper } from "./stepper/stepper.component";
 export { default as Step } from "./stepper/components/step.component";
 export { default as ErrorBoundary } from "./error-boundary/error-boundary.component";
+export { default as CustomPackageStep1 } from "./steps/custom-package/step1/step1.component";

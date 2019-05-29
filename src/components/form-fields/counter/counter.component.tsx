@@ -1,12 +1,22 @@
-import React, { ReactElement } from "react";
+import React, { useEffect, ReactElement } from "react";
 // Style
 import styles from "./counter.module.css";
 // TS types
 import { WrappedFieldProps } from "redux-form";
 
-type Props = { children?: never } & WrappedFieldProps
+type Props = {
+    initialValue: number;
+    children?: never;
+} & WrappedFieldProps
 
 const CounterComponent = (props: Props): ReactElement<Props> => {
+    useEffect(() => {
+        if (props.input.value === "" && props.initialValue) {
+            props.input.onChange(props.initialValue);
+        }
+        // eslint-disable-next-line
+    }, [props.initialValue]);
+
     const { input } = props;
     const { name, value, onChange, ...restInputProps } = input;
     const step = 1;
@@ -39,6 +49,7 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
                 value={value}
                 onChange={onChange}
                 className={`text-ellipsis ${styles.field}`}
+                autoFocus
             />
             <button
                 type="button"

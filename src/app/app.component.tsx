@@ -10,7 +10,7 @@ import { APP_TITLE } from "../app-constants";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 // Components
-import { Stepper, ErrorBoundary, Step } from "../components/all-components";
+import { Stepper, ErrorBoundary, Step, CustomPackageStep1 } from "../components/all-components";
 // TS types
 type Props = { children?: never }
 
@@ -23,7 +23,9 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                 </Helmet>
                 <ErrorBoundary>
                     <Stepper defaultStepIndex={0} invalid={false}>
-                        <Step title="Rooms to furnish">Content 1</Step>
+                        <Step title="Rooms to furnish">
+                            <CustomPackageStep1 />
+                        </Step>
                         <Step title="Select furniture">Content 2</Step>
                         <Step title="Design styles">Content 3</Step>
                         <Step title="Personal questions">Content 4</Step>
