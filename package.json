@@ -7,11 +7,12 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "analyze": "source-map-explorer build/static/js/*.js"
+        "analyze": "source-map-explorer build/static/js/*.js",
+        "lint": "lint-staged"
     },
     "lint-staged": {
-        "*.{ ts, tsx }": "eslint src/",
-        "*.{ css }": "stylelint src/"
+        "*.{ts,tsx}": "eslint src/",
+        "*.{css}": "stylelint  src/"
     },
     "husky": {
         "hooks": {
