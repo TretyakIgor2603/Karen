@@ -22,7 +22,7 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                     <title>{APP_TITLE}</title>
                 </Helmet>
                 <ErrorBoundary>
-                    <Stepper defaultStepIndex={0} invalid={false}>
+                    <Stepper defaultStepIndex={0}>
                         <Step title="Rooms to furnish">
                             <CustomPackageStep1 />
                         </Step>

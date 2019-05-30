@@ -40,10 +40,6 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                     roomImage={"https://s3.amazonaws.com/gofourwalls/globalimages/icons/rooms/living-room.png"}
                 />
             </div>
-
-            <div>
-                <button>test submit</button>
-            </div>
         </form>
     );
 };
