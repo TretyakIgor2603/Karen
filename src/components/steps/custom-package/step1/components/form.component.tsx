@@ -1,6 +1,7 @@
 import React, { ReactElement, ComponentType } from "react";
 import { FormName } from "../../../../../app-constants";
 import { onFormSubmitStep1 } from "../utils";
+import _get from "lodash/fp/get";
 // Styles
 import styles from "./form.module.css";
 // Redux
@@ -30,12 +31,14 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 
     const roomsBody = (rooms && rooms.length) ? (
         rooms.map((room) => {
+            const imageUrl = _get("icon_url.url", room);
+
             return (
                 <div className={styles.field} key={room.value}>
                     <Field
                         name={`room-${room.label}`}
                         component={RoomItem}
-                        roomImage={room.icon_url.url}
+                        roomImage={imageUrl}
                         roomTitle={room.label}
                     />
                 </div>
