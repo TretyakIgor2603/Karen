@@ -4,6 +4,7 @@ import { get } from "local-storage";
 import { initialize } from "redux-form";
 // Redux
 import { connect, MapDispatchToProps } from "react-redux";
+import { getRoomListAction } from "../redux-duck/actions";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form.component";
@@ -12,11 +13,15 @@ import { ReduxState } from "../../../../redux/root-reducer";
 import { CustomPackage } from "./utils";
 // TS types
 type OwnProps = { children?: never }
-type ReduxDispatchToProps = { initializeForm: typeof initialize }
+type ReduxDispatchToProps = {
+    initializeForm: typeof initialize;
+    getRoomList: typeof getRoomListAction;
+}
 type Props = OwnProps & ReduxDispatchToProps
 
 const Step1Component = (props: Props): ReactElement<Props> => {
     useEffect(() => {
+        props.getRoomList();
         props.initializeForm(FormName.CustomPackageStep1, get(CustomPackage.CustomPackageStep1));
         // eslint-disable-next-line
     }, []);
@@ -29,7 +34,8 @@ const Step1Component = (props: Props): ReactElement<Props> => {
 };
 
 const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
-    initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues))
+    initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues)),
+    getRoomList: () => dispatch(getRoomListAction())
 });
 
 export default connect<{}, ReduxDispatchToProps, OwnProps, ReduxState>(null, mapDispatchToProps)(Step1Component);

@@ -1,50 +1,64 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, ComponentType } from "react";
 import { FormName } from "../../../../../app-constants";
 import { onFormSubmitStep1 } from "../utils";
 // Styles
 import styles from "./form.module.css";
+// Redux
+import { connect, MapStateToProps } from "react-redux";
+import { compose } from "redux";
+import { getLoadingSelector, getRoomListSelector } from "../../redux-duck/selectors";
 // Components
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import RoomItem from "./item.component";
+import { MainLoader } from "../../../../all-components";
 // TS types
+import { Room } from "../../types";
+import { ReduxState } from "../../../../../redux/root-reducer";
+
+type ReduxStateToProps = {
+    isLoading: boolean;
+    rooms: Room[];
+}
+
 type OwnProps = {
     children?: never;
 }
-type Props = OwnProps & InjectedFormProps<{}, OwnProps>
+type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps
 
 const FormComponent = (props: Props): ReactElement<Props> => {
-    const { handleSubmit } = props;
+    const { handleSubmit, isLoading, rooms } = props;
+
+    const roomsBody = (rooms && rooms.length) ? (
+        rooms.map((room) => {
+            return (
+                <div className={styles.field} key={room.value}>
+                    <Field
+                        name={`room-${room.label}`}
+                        component={RoomItem}
+                        roomTitle={room.label}
+                    />
+                </div>
+            );
+        })
+    ) : null;
 
     return (
         <form noValidate onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.field}>
-                <Field
-                    name={`rooms-${1}`}
-                    component={RoomItem}
-                    roomTitle={"Bedroom"}
-                />
-            </div>
-            <div className={styles.field}>
-                <Field
-                    name={`rooms-${2}`}
-                    component={RoomItem}
-                    roomTitle={"Dinning Room"}
-                    roomImage={"https://s3.amazonaws.com/gofourwalls/globalimages/icons/rooms/dining-room.png"}
-                />
-            </div>
-            <div className={styles.field}>
-                <Field
-                    name={`rooms-${3}`}
-                    component={RoomItem}
-                    roomTitle={"Living Room"}
-                    roomImage={"https://s3.amazonaws.com/gofourwalls/globalimages/icons/rooms/living-room.png"}
-                />
-            </div>
+            {isLoading ? <MainLoader /> : roomsBody}
         </form>
     );
 };
 
-export default reduxForm<{}, OwnProps>({
-    form: FormName.CustomPackageStep1,
-    onSubmit: onFormSubmitStep1
-})(FormComponent);
+const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+    isLoading: getLoadingSelector(state),
+    rooms: getRoomListSelector(state)
+});
+
+export default compose<ComponentType<OwnProps>>(
+    reduxForm<{}, OwnProps>({
+        form: FormName.CustomPackageStep1,
+        onSubmit: onFormSubmitStep1
+    }),
+    connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)
+)(FormComponent);
+

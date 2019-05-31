@@ -4,7 +4,10 @@
     "private": true,
     "scripts": {
         "dev": "react-scripts start",
-        "build": "react-scripts build",
+        "build:dev": "cp src/env/dev.ts src/env/env.ts & react-scripts build",
+        "build:staging": "cp src/env/staging.ts src/env/env.ts & react-scripts build",
+        "build:prod": "cp src/env/prod.ts src/env/env.ts & react-scripts build",
+        "build:vista": "cp src/env/vista.ts src/env/env.ts & react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "analyze": "source-map-explorer build/static/js/*.js",
@@ -26,6 +29,7 @@
     },
     "dependencies": {
         "@sentry/browser": "5.3.0",
+        "axios": "0.19.0",
         "classnames": "2.2.6",
         "local-storage": "2.0.0",
         "lodash": "4.17.11",
