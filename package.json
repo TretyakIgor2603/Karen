@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "react-scripts start",
+        "dev": "cp src/env/local.ts src/env/env.ts & react-scripts start",
         "build:dev": "cp src/env/dev.ts src/env/env.ts & react-scripts build",
         "build:staging": "cp src/env/staging.ts src/env/env.ts & react-scripts build",
         "build:prod": "cp src/env/prod.ts src/env/env.ts & react-scripts build",
