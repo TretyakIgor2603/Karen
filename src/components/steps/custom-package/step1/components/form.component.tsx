@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { FormName } from "../../../../../app-constants";
+import { onFormSubmitStep1 } from "../utils";
 // Styles
 import styles from "./form.module.css";
 // Components
@@ -7,7 +8,6 @@ import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import RoomItem from "./item.component";
 // TS types
 type OwnProps = {
-    onSubmit: (values: any) => void;
     children?: never;
 }
 type Props = OwnProps & InjectedFormProps<{}, OwnProps>
@@ -45,5 +45,6 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 };
 
 export default reduxForm<{}, OwnProps>({
-    form: FormName.CustomPackageStep1
+    form: FormName.CustomPackageStep1,
+    onSubmit: onFormSubmitStep1
 })(FormComponent);

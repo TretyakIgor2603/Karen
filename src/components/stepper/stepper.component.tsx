@@ -8,6 +8,7 @@ import { ReduxState } from "../../redux/root-reducer";
 import { getStepsSelector } from "./redux-duck/selectors";
 import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
 import { registerStepsAction, allowNextStepAction } from "./redux-duck/actions";
+import { submit } from "redux-form";
 // Styles
 import styles from "./stepper.module.css";
 
@@ -17,6 +18,7 @@ import { Step } from "./types";
 type ReduxDispatchToProps = {
     registerSteps: typeof registerStepsAction;
     allowNextStep: typeof allowNextStepAction;
+    formSubmit: typeof submit;
 };
 type ReduxStateToProps = {
     steps: Step[];
@@ -57,8 +59,11 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
 
         if (isDisabledNextButton || lastStep) return;
         if (props.steps[currentStepIndex].disabled) return;
-        setCurrentStepIndex(currentStepIndex + step);
-        props.allowNextStep(currentStepIndex + step);
+        Promise.resolve(props.formSubmit(Object.keys(props.form)[0]))
+            .then(() => {
+                setCurrentStepIndex(currentStepIndex + step);
+                props.allowNextStep(currentStepIndex + step);
+            });
     };
 
     const onPrevButtonClick = (event: SyntheticEvent<HTMLAnchorElement>): void => {
@@ -126,7 +131,8 @@ const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> 
 });
 const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     registerSteps: (children) => dispatch(registerStepsAction(children)),
-    allowNextStep: (stepIndex) => dispatch(allowNextStepAction(stepIndex))
+    allowNextStep: (stepIndex) => dispatch(allowNextStepAction(stepIndex)),
+    formSubmit: (formName) => dispatch(submit(formName))
 });
 
 export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(StepperComponent);
