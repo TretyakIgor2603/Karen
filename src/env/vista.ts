@@ -1,6 +1,3 @@
-const env = {
-    apiUrl: "https://vista.furnishr.com/api/v1/",
-    domain: "vista.furnishr.com"
-};
+const env = { apiUrl: "https://vista.furnishr.com/api/v1/" };
 
 export default env;

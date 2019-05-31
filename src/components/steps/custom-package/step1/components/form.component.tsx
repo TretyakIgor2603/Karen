@@ -35,6 +35,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                     <Field
                         name={`room-${room.label}`}
                         component={RoomItem}
+                        roomImage={room.icon_url.url}
                         roomTitle={room.label}
                     />
                 </div>

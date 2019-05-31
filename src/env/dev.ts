@@ -1,6 +1,3 @@
-const env = {
-    apiUrl: "https://furnishr.ml/api/v1/",
-    domain: "furnishr.ml"
-};
+const env = { apiUrl: "https://furnishr.ml/api/v1/" };
 
 export default env;
