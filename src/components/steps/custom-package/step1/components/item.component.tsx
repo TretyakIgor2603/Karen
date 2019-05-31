@@ -24,6 +24,7 @@ const ItemComponent = (props: Props): ReactElement<Props> => {
                 className={`${styles.input} visually-hidden`}
                 type="checkbox"
                 id={`${input.name}-id`}
+                checked={input.value}
             />
             <label className={styles.label} htmlFor={`${input.name}-id`}>
                 <img

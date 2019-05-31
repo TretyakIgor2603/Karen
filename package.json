@@ -16,7 +16,7 @@
     "lint-staged": {
         "*.{ts}": "yarn lint:ts",
         "*.{tsx}": "yarn lint:tsx",
-        "*.{css}": "stylelint src/**/*.css"
+        "*.{css}": "yarn lint:css"
     },
     "husky": {
         "hooks": {

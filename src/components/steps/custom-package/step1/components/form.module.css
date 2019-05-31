@@ -47,6 +47,8 @@
     transition-duration: 0.3s;
 }
 
-.input:checked + .label { background-color: var(--cp-step1__background-color--hover); }
+.input:checked + .label,
+.label-checked { background-color: var(--cp-step1__background-color--hover); }
 
+.label-checked .room-item-title,
 .input:checked + .label .room-item-title { color: #fff; }
