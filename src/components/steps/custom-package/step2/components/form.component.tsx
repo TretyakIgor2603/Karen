@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactElement } from "react";
+import React, { useState, ComponentType, ReactElement, ReactEventHandler } from "react";
 // Styles
 import styles from "./form.module.css";
 // Utils
@@ -19,17 +19,41 @@ type ReduxStateToProps = {};
 type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
+    const [isOpen, setIsOpen] = useState(false);
     const { handleSubmit } = props;
 
+    const onButtonSubtitleClick: ReactEventHandler<HTMLButtonElement> = () => setIsOpen(!isOpen);
+
     const furnitureBody = (
-        <div>
-            <Field
-                name={"test-name"}
-                component={FurnitureItem}
-                title="test"
-                image=""
-                initialValue={1}
-            />
+        <div className={styles.wrapper}>
+            <h2 className={styles.title}>Living Room</h2>
+            <p className={styles.subtitle}>Essentials</p>
+            <ul className={styles.list}>
+                <li className={styles["list-item"]}>
+                    <Field
+                        name={"test-name"}
+                        component={FurnitureItem}
+                        title="test"
+                        image=""
+                        initialValue={1}
+                    />
+                </li>
+            </ul>
+
+            <button type="button" className={styles.subtitle} onClick={onButtonSubtitleClick}>
+                Others +
+            </button>
+            {isOpen && <ul className={styles.list}>
+                <li className={styles["list-item"]}>
+                    <Field
+                        name={"test-name-2"}
+                        component={FurnitureItem}
+                        title="test-2"
+                        image=""
+                        initialValue={1}
+                    />
+                </li>
+            </ul>}
         </div>
     );
 

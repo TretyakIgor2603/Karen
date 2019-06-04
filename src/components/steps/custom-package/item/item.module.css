@@ -13,7 +13,7 @@
     justify-content: center;
     min-height: 20rem;
     margin-bottom: 1rem;
-    background-color: var(--cp-step1__background-color);
+    background-color: var(--cp-step__background-color);
     border: 3px solid #333;
     cursor: pointer;
     transition-property: all;
@@ -33,7 +33,7 @@
 }
 
 .input:checked + .label,
-.label-checked { background-color: var(--cp-step1__background-color--hover); }
+.label-checked { background-color: var(--cp-step__background-color--hover); }
 
 .label-checked .item-title,
 .input:checked + .label .item-title { color: #fff; }

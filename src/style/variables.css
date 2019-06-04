@@ -58,7 +58,8 @@
     --stepper__link-color--hover: #26282d;
     --stepper__link-color--disabled: #ccc;
 
-    /* Custom package Step1 */
-    --cp-step1__background-color: #fff;
-    --cp-step1__background-color--hover: #c4b9a5;
+    /* Custom package */
+    --cp-step__background-color: #fff;
+    --cp-step__background-color--hover: #c4b9a5;
+    --cp-step-subtitle-color: #909090;
 }
