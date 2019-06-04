@@ -10,5 +10,6 @@ export enum Postfix {
 
 export enum FormName {
     CustomPackageStep1 = "CUSTOM_PACKAGE_STEP1",
+    CustomPackageStep2 = "CUSTOM_PACKAGE_STEP2",
     Test = "TEST"
 }

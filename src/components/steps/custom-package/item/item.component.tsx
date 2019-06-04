@@ -1,21 +1,22 @@
 import React, { ReactElement } from "react";
 // Styles
-import styles from "./form.module.css";
+import styles from "./item.module.css";
 // Components
 import DefaultImage from "./images/picture.svg";
-import { InputCounter } from "../../../../all-components";
+import { InputCounter } from "../../../all-components";
 // TS types
 import { WrappedFieldProps } from "redux-form";
 
 type OwnProps = {
-    roomTitle: string;
-    roomImage: string;
+    title: string;
+    image: string;
+    initialValue: number;
     children?: never;
 }
 type Props = OwnProps & WrappedFieldProps
 
 const ItemComponent = (props: Props): ReactElement<Props> => {
-    const { roomImage, roomTitle, input } = props;
+    const { image, title, initialValue, input } = props;
 
     return (
         <>
@@ -28,15 +29,15 @@ const ItemComponent = (props: Props): ReactElement<Props> => {
             />
             <label className={styles.label} htmlFor={`${input.name}-id`}>
                 <img
-                    className={styles["room-item-image"]}
-                    src={roomImage ? roomImage : DefaultImage}
-                    alt={roomTitle}
+                    className={styles["item-image"]}
+                    src={image ? image : DefaultImage}
+                    alt={title}
                 />
-                <p className={styles["room-item-title"]}>{roomTitle}</p>
+                <p className={styles["item-title"]}>{title}</p>
             </label>
             {input.value && (
                 <div className={styles.counter}>
-                    <InputCounter name={`${input.name}-count`} initialValue={1} />
+                    <InputCounter name={`${input.name}-count`} initialValue={initialValue} />
                 </div>
             )}
         </>

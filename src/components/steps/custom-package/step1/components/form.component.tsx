@@ -1,6 +1,7 @@
 import React, { ReactElement, ComponentType } from "react";
+// Utils
 import { FormName } from "../../../../../app-constants";
-import { onFormSubmitStep1 } from "../utils";
+import { onFormSubmitStep1 } from "../../utils";
 import _get from "lodash/fp/get";
 // Styles
 import styles from "./form.module.css";
@@ -10,7 +11,7 @@ import { compose } from "redux";
 import { getLoadingSelector, getRoomListSelector } from "../../redux-duck/selectors";
 // Components
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
-import RoomItem from "./item.component";
+import RoomItem from "../../item/item.component";
 import { MainLoader } from "../../../../all-components";
 // TS types
 import { Room } from "../../types";
@@ -24,7 +25,7 @@ type ReduxStateToProps = {
 type OwnProps = {
     children?: never;
 }
-type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps
+type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const { handleSubmit, isLoading, rooms } = props;
@@ -38,8 +39,9 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                     <Field
                         name={`room-${room.label}`}
                         component={RoomItem}
-                        roomImage={imageUrl}
-                        roomTitle={room.label}
+                        image={imageUrl}
+                        title={room.label}
+                        initialValue={1}
                     />
                 </div>
             );
