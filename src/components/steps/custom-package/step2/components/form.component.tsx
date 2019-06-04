@@ -7,20 +7,22 @@ import { onFormSubmitStep2 } from "../../utils";
 // Redux
 import { connect, MapStateToProps } from "react-redux";
 import { compose } from "redux";
+import { getLoadingSelector } from "../../redux-duck/selectors";
 // Components
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import FurnitureItem from "../../item/item.component";
 import { MainLoader } from "../../../../all-components";
 import { ReduxState } from "../../../../../redux/root-reducer";
-
 // TS types
 type OwnProps = { children?: never };
-type ReduxStateToProps = {};
+type ReduxStateToProps = {
+    isLoading: boolean
+};
 type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const [isOpen, setIsOpen] = useState(false);
-    const { handleSubmit } = props;
+    const { handleSubmit, isLoading } = props;
 
     const onButtonSubtitleClick: ReactEventHandler<HTMLButtonElement> = () => setIsOpen(!isOpen);
 
@@ -59,12 +61,14 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 
     return (
         <form noValidate onSubmit={handleSubmit}>
-            {false ? <MainLoader /> : furnitureBody}
+            {isLoading ? <div className={styles.loader}><MainLoader /></div> : furnitureBody}
         </form>
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({});
+const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+    isLoading: getLoadingSelector(state)
+});
 
 export default compose<ComponentType<OwnProps>>(
     reduxForm<{}, OwnProps>({

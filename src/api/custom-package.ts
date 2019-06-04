@@ -1,5 +1,7 @@
 import { http } from "./config";
 
 export default {
-    getRoomList: () => http("GET", "consumer_facing/categories")
+    getRoomList: () => http("GET", "consumer_facing/categories"),
+
+    getFurnitureList: (categoriesIds: number[]) => http("POST", "consumer_facing/categories/select_furniture", categoriesIds)
 };

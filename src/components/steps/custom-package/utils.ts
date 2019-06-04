@@ -1,16 +1,39 @@
+import convertToFormData from "object-to-formdata";
+import store from "../../../redux/store";
 import { set } from "local-storage";
+// Actions
+import { getFurnitureListAction } from "./redux-duck/actions";
+import { getRoomListSelector } from "./redux-duck/selectors";
+// TS types
+import { ReduxState } from "../../../redux/root-reducer";
+import { Room } from "./types";
 
 export enum CustomPackage {
-    CustomPackageStep1 = "CUSTOM-PACKAGE/STEP1",
-    CustomPackageStep2 = "CUSTOM-PACKAGE/STEP2"
+    CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
+    CustomPackageStep2 = "CUSTOM_PACKAGE/STEP2"
 }
 
 export const onFormSubmitStep1 = (values: any): void => {
+    const storeState: ReduxState = store.getState();
+    const rooms: Room[] = getRoomListSelector(storeState);
+
+    const categoriesIds: any = rooms.reduce((acc: any, room) => {
+        if (values[room.custom_label]) {
+            acc.push({
+                id: room.value,
+                count: Number(values[`${room.custom_label}-count`])
+            });
+        }
+
+        return acc;
+    }, []);
+
     set(CustomPackage.CustomPackageStep1, values);
-    console.log("🍆 custom package step1", values);
+    const dataToSend = { selected_design_room_categories: categoriesIds };
+
+    store.dispatch(getFurnitureListAction(convertToFormData(dataToSend)));
 };
 
 export const onFormSubmitStep2 = (values: any): void => {
     set(CustomPackage.CustomPackageStep2, values);
-    console.log("🍆 custom package step2", values);
 };

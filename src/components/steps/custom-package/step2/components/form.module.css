@@ -45,3 +45,8 @@
     padding-bottom: 5rem;
     list-style-type: none;
 }
+
+.loader {
+    display: flex;
+    justify-content: center;
+}
