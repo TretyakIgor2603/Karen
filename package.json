@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "cp src/env/local.ts src/env/env.ts & react-scripts start",
         "build:dev": "cp src/env/dev.ts src/env/env.ts & react-scripts build",
+        "deploy:dev": "rm -rf ./build && yarn build:dev && yarn gulp",
         "build:staging": "cp src/env/staging.ts src/env/env.ts & react-scripts build",
         "build:prod": "cp src/env/prod.ts src/env/env.ts & react-scripts build",
         "build:vista": "cp src/env/vista.ts src/env/env.ts & react-scripts build",
@@ -61,6 +62,8 @@
         "@types/react-redux": "7.0.9",
         "@types/react-redux-toastr": "7.4.1",
         "@types/redux-form": "8.1.1",
+        "del": "4.1.1",
+        "gulp": "4.0.2",
         "husky": "2.3.0",
         "lint-staged": "8.1.7",
         "redux-devtools-extension": "2.13.8",
