@@ -6,6 +6,7 @@ import { WrappedFieldProps } from "redux-form";
 
 type Props = {
     initialValue: number;
+    autoFocus?: boolean;
     children?: never;
 } & WrappedFieldProps
 
@@ -17,7 +18,7 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
         // eslint-disable-next-line
     }, [props.initialValue]);
 
-    const { input } = props;
+    const { input, autoFocus = false } = props;
     const { name, value, onChange, ...restInputProps } = input;
     const step = 1;
     const minValue = 0;
@@ -46,10 +47,10 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
                 type="number"
                 min={minValue}
                 step={step}
-                value={value}
+                value={Number(value)}
                 onChange={onChange}
                 className={`text-ellipsis ${styles.field}`}
-                autoFocus
+                autoFocus={autoFocus}
             />
             <button
                 type="button"

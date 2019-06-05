@@ -12,6 +12,7 @@ export type Option = {
 export type InputProps = {
     name: string;
     initialValue?: number;
+    autoFocus?: boolean;
     type?: InputType;
     className?: string;
     labelPosition?: LabelPosition;

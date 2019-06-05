@@ -2,62 +2,72 @@ import React, { useState, ComponentType, ReactElement, ReactEventHandler } from 
 // Styles
 import styles from "./form.module.css";
 // Utils
+import { get, set } from "local-storage";
 import { FormName } from "../../../../../app-constants";
-import { onFormSubmitStep2 } from "../../utils";
+import { CustomPackage, onFormSubmitStep2 } from "../../utils";
 // Redux
+import { reduxForm, InjectedFormProps } from "redux-form";
 import { connect, MapStateToProps } from "react-redux";
 import { compose } from "redux";
-import { getLoadingSelector } from "../../redux-duck/selectors";
+import { getLoadingSelector, makeGetFurnitureListSelector } from "../../redux-duck/selectors";
 // Components
-import { Field, reduxForm, InjectedFormProps } from "redux-form";
-import FurnitureItem from "../../item/item.component";
 import { MainLoader } from "../../../../all-components";
-import { ReduxState } from "../../../../../redux/root-reducer";
+import FurnitureList from "./furniture-list.component";
 // TS types
+import { FilterFurniture } from "../../types";
+import { ReduxState } from "../../../../../redux/root-reducer";
+
 type OwnProps = { children?: never };
 type ReduxStateToProps = {
-    isLoading: boolean
+    isLoading: boolean,
+    furnitureList: FilterFurniture[];
 };
 type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
-    const [isOpen, setIsOpen] = useState(false);
-    const { handleSubmit, isLoading } = props;
+    const [isOpen, setIsOpen] = useState<{ [x: string]: boolean }>(get(CustomPackage.CustomPackageStep2OpenOther) || {});
 
-    const onButtonSubtitleClick: ReactEventHandler<HTMLButtonElement> = () => setIsOpen(!isOpen);
+    const { handleSubmit, isLoading, furnitureList } = props;
 
-    const furnitureBody = (
-        <div className={styles.wrapper}>
-            <h2 className={styles.title}>Living Room</h2>
+    const onButtonSubtitleClick: ReactEventHandler<HTMLButtonElement> = (event) => {
+        const { dataset } = event.target as HTMLButtonElement;
+        const newIsOpen = {
+            ...isOpen,
+            [`${dataset.furniture}`]: !isOpen[`${dataset.furniture}`]
+        };
+        setIsOpen(newIsOpen);
+        set(CustomPackage.CustomPackageStep2OpenOther, newIsOpen);
+    };
+
+    const furnitureBody = furnitureList.map((furniture) => (
+        <div className={styles.wrapper} key={furniture.label}>
+            <h2 className={styles.title}>
+                {furniture.label}
+            </h2>
             <p className={styles.subtitle}>Essentials</p>
-            <ul className={styles.list}>
-                <li className={styles["list-item"]}>
-                    <Field
-                        name={"test-name"}
-                        component={FurnitureItem}
-                        title="test"
-                        image=""
-                        initialValue={1}
-                    />
-                </li>
-            </ul>
-
-            <button type="button" className={styles.subtitle} onClick={onButtonSubtitleClick}>
+            <FurnitureList
+                furniture={furniture.essentials}
+                furnitureName={furniture.label}
+                checked={true}
+            />
+            <button
+                type="button"
+                data-furniture={furniture.label}
+                className={styles.subtitle}
+                onClick={onButtonSubtitleClick}
+            >
                 Others +
             </button>
-            {isOpen && <ul className={styles.list}>
-                <li className={styles["list-item"]}>
-                    <Field
-                        name={"test-name-2"}
-                        component={FurnitureItem}
-                        title="test-2"
-                        image=""
-                        initialValue={1}
-                    />
-                </li>
-            </ul>}
+            {isOpen[furniture.label] && (
+                <FurnitureList
+                    furniture={furniture.others}
+                    furnitureName={furniture.label}
+                    checked={false}
+                    initialValue={1}
+                />
+            )}
         </div>
-    );
+    ));
 
     return (
         <form noValidate onSubmit={handleSubmit}>
@@ -66,14 +76,23 @@ const FormComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
-    isLoading: getLoadingSelector(state)
-});
+const makeMapStateToProps = () => {
+    const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => {
+        const getFurnitureListSelector = makeGetFurnitureListSelector();
+
+        return {
+            isLoading: getLoadingSelector(state),
+            furnitureList: getFurnitureListSelector(state)
+        };
+    };
+
+    return mapStateToProps;
+};
 
 export default compose<ComponentType<OwnProps>>(
     reduxForm<{}, OwnProps>({
         form: FormName.CustomPackageStep2,
         onSubmit: onFormSubmitStep2
     }),
-    connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)
+    connect<ReduxStateToProps, {}, OwnProps, ReduxState>(makeMapStateToProps)
 )(FormComponent);
