@@ -1,7 +1,7 @@
 import * as Type from "./constants";
 import { AxiosError } from "axios";
 // TS type
-import { Room, Furniture } from "../types";
+import { Room, Furniture, DesignStyle } from "../types";
 
 type WatchAction = { type: string }
 type ActionError = {
@@ -14,8 +14,6 @@ type GetRoomListDone = {
     payload: { roomList: Room[] };
 }
 
-
-
 export type GetFurnitureList = {
     type: string;
     payload: any;
@@ -25,12 +23,18 @@ type GetFurnitureListDone = {
     payload: { furnitureList: Furniture[] };
 }
 
+export type GetDesignStylesListDone = {
+    type: string;
+    payload: { designStyleList: DesignStyle[] };
+}
+
 export type CustomPackageActions =
     WatchAction
     & GetRoomListDone
     & ActionError
     & GetFurnitureList
-    & GetFurnitureListDone;
+    & GetFurnitureListDone
+    & GetDesignStylesListDone;
 
 export const getRoomListAction = (): WatchAction => ({ type: Type.GET_ROOM_LIST });
 export const getRoomListDoneAction = (roomList: Room[]): GetRoomListDone => ({
@@ -52,5 +56,15 @@ export const getFurnitureListDoneAction = (furnitureList: Furniture[]): GetFurni
 });
 export const getFurnitureListErrorAction = (error: AxiosError): ActionError => ({
     type: Type.GET_FURNITURE_LIST_ERROR,
+    payload: { error }
+});
+
+export const getDesignStylesListAction = (): WatchAction => ({ type: Type.GET_DESIGN_STYLES_LIST });
+export const getDesignStylesListDoneAction = (designStyleList: DesignStyle[]): GetDesignStylesListDone => ({
+    type: Type.GET_DESIGN_STYLES_LIST_DONE,
+    payload: { designStyleList }
+});
+export const getDesignStylesListErrorAction = (error: AxiosError): ActionError => ({
+    type: Type.GET_DESIGN_STYLES_LIST_ERROR,
     payload: { error }
 });

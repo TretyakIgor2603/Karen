@@ -1,7 +1,7 @@
 import * as Type from "./constants";
 // TS types
 import { CustomPackageActions } from "./actions";
-import { Room, Furniture } from "../types";
+import { Room, Furniture, DesignStyleRequest } from "../types";
 import { AxiosError } from "axios";
 
 export type CustomPackageState = {
@@ -9,13 +9,15 @@ export type CustomPackageState = {
     error: null | string | AxiosError;
     roomList: Room[];
     furnitureList: Furniture[];
+    designStyleList: DesignStyleRequest;
 }
 
 const INITIAL_STATE = Object.freeze({
     loading: false,
     error: null,
     roomList: [],
-    furnitureList: []
+    furnitureList: [],
+    designStyleList: {}
 });
 
 export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackageActions): CustomPackageState => {
@@ -24,6 +26,7 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
     switch (type) {
         case (Type.GET_ROOM_LIST):
         case (Type.GET_FURNITURE_LIST):
+        case (Type.GET_DESIGN_STYLES_LIST):
             return {
                 ...state,
                 loading: true,
@@ -60,6 +63,20 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
                 furnitureList: []
             };
 
+        case (Type.GET_DESIGN_STYLES_LIST_DONE):
+            return {
+                ...state,
+                loading: false,
+                designStyleList: payload.designStyleList
+            };
+
+        case (Type.GET_DESIGN_STYLES_LIST_ERROR):
+            return {
+                ...state,
+                loading: false,
+                error: payload.error,
+                designStyleList: {}
+            };
 
         default:
             return state;

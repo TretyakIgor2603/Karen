@@ -32,3 +32,19 @@ export type FilterFurniture = {
     essentials: FurnitureItem[];
     others: FurnitureItem[];
 }
+
+export type DesignStyle = {
+    value: number;
+    label: string;
+    image_url: any;
+    description: any;
+    design_styles_colors: any;
+    design_styles_rules: any;
+    design_styles_textures: any;
+};
+
+export type DesignStyleRequest = {
+    is_logged?: boolean;
+    style_quiz?: boolean;
+    design_styles?: DesignStyle[];
+}

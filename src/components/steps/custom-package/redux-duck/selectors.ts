@@ -2,14 +2,15 @@ import { MODULE_NAME } from "./constants";
 import { createSelector } from "reselect";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
-import { Room, Furniture, FilterFurniture, FurnitureItem } from "../types";
+import { Room, Furniture, FilterFurniture, FurnitureItem, DesignStyleRequest } from "../types";
 
 export const getRoomListSelector = (state: ReduxState): Room[] => state[MODULE_NAME].roomList;
 export const getLoadingSelector = (state: ReduxState): boolean => state[MODULE_NAME].loading;
+export const getDesignStyleListSelector = (state: ReduxState): DesignStyleRequest => state[MODULE_NAME].designStyleList;
 
 const filterFurnitureList = (array: FurnitureItem[], type: string): any => {
     return array
-        .map((parent) => parent.children.filter((child: any) => child.variation === type))
+        .map((parent) => parent.children.filter((child) => child.variation === type))
         .flat(1);
 };
 

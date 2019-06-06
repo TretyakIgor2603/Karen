@@ -11,7 +11,8 @@ import { Room } from "./types";
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
     CustomPackageStep2 = "CUSTOM_PACKAGE/STEP2",
-    CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER"
+    CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER",
+    CustomPackageStep3 = "CUSTOM_PACKAGE/STEP3"
 }
 
 export const onFormSubmitStep1 = (values: any): void => {
@@ -37,8 +38,12 @@ export const onFormSubmitStep1 = (values: any): void => {
 
 export const onFormSubmitStep2 = (values: any): void => {
     set(CustomPackage.CustomPackageStep2, values);
+};
+
+export const onFormSubmitStep3 = (values: any): void => {
+    set(CustomPackage.CustomPackageStep3, values);
     console.log(
-        "🍆 Utils.ts, string: 40",
-        "---values", values
+        "🍆 Utils.ts, string: 50",
+        "---values step3", values
     );
 };

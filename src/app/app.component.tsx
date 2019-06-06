@@ -10,7 +10,14 @@ import { APP_TITLE } from "../app-constants";
 import { Provider } from "react-redux";
 import store from "../redux/store";
 // Components
-import { Stepper, ErrorBoundary, Step, CustomPackageStep1, CustomPackageStep2 } from "../components/all-components";
+import {
+    Stepper,
+    ErrorBoundary,
+    Step,
+    CustomPackageStep1,
+    CustomPackageStep2,
+    CustomPackageStep3
+} from "../components/all-components";
 // TS types
 type Props = { children?: never }
 
@@ -29,7 +36,9 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                         <Step title="Select furniture">
                             <CustomPackageStep2 />
                         </Step>
-                        <Step title="Design styles">Content 3</Step>
+                        <Step title="Design styles">
+                            <CustomPackageStep3 />
+                        </Step>
                         <Step title="Personal questions">Content 4</Step>
                         <Step title="Budget">Content 5</Step>
                         <Step title="Authenticate">Content 6</Step>

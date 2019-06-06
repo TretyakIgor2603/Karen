@@ -10,3 +10,4 @@ export { default as Step } from "./stepper/components/step.component";
 export { default as ErrorBoundary } from "./error-boundary/error-boundary.component";
 export { default as CustomPackageStep1 } from "./steps/custom-package/step1/step1.component";
 export { default as CustomPackageStep2 } from "./steps/custom-package/step2/step2.component";
+export { default as CustomPackageStep3 } from "./steps/custom-package/step3/step3.component";

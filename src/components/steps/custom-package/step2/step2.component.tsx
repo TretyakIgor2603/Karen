@@ -12,11 +12,9 @@ import Form from "./components/form.component";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
 
-type OwnProps = { children?: never }
-type ReduxDispatchToProps = {
-    initializeForm: typeof initialize;
-}
-type Props = OwnProps & ReduxDispatchToProps
+type OwnProps = { children?: never };
+type ReduxDispatchToProps = { initializeForm: typeof initialize };
+type Props = OwnProps & ReduxDispatchToProps;
 
 const Step2Component = (props: Props): ReactElement<Props> => {
     useEffect(() => {
