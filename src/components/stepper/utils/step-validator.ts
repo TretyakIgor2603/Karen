@@ -10,10 +10,15 @@ export const disableNextButton = (data: any): boolean => {
 
     const userAnswers = Object.values(values);
 
-    if (formName === FormName.CustomPackageStep3) {
-        const answers = userAnswers.filter((answer) => answer === true);
-        return answers.length !== 3;
-    }
+    switch (formName) {
+        case(FormName.CustomPackageStep3):
+            const answers = userAnswers.filter((answer) => answer === true);
+            return answers.length !== 3;
 
-    return !userAnswers.includes(true);
+        case(FormName.CustomPackageStep4):
+            return false;
+
+        default:
+            return !userAnswers.includes(true);
+    }
 };

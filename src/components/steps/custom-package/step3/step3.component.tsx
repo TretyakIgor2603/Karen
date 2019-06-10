@@ -3,6 +3,7 @@ import React, { useEffect, ReactElement } from "react";
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils";
+import { get } from "local-storage";
 // Redux
 import { connect, MapDispatchToProps } from "react-redux";
 import { getDesignStylesListAction } from "../redux-duck/actions";
@@ -11,7 +12,6 @@ import Layout from "../../layout/layout.component";
 import Form from "./components/form/form.component";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
-import { get } from "local-storage";
 
 type OwnProps = { children?: never };
 type ReduxDispatchToProps = {
