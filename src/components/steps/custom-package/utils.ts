@@ -13,7 +13,8 @@ export enum CustomPackage {
     CustomPackageStep2 = "CUSTOM_PACKAGE/STEP2",
     CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER",
     CustomPackageStep3 = "CUSTOM_PACKAGE/STEP3",
-    CustomPackageStep4 = "CUSTOM_PACKAGE/STEP4"
+    CustomPackageStep4 = "CUSTOM_PACKAGE/STEP4",
+    CustomPackageStep5 = "CUSTOM_PACKAGE/STEP5",
 }
 
 export const onFormSubmitStep1 = (values: any): void => {
@@ -47,4 +48,8 @@ export const onFormSubmitStep3 = (values: any): void => {
 
 export const onFormSubmitStep4 = (values: any): void => {
     set(CustomPackage.CustomPackageStep4, values);
+};
+
+export const onFormSubmitStep5 = (values: any): void => {
+    set(CustomPackage.CustomPackageStep5, values);
 };

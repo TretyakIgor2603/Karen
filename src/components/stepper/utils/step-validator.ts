@@ -18,6 +18,9 @@ export const disableNextButton = (data: any): boolean => {
         case(FormName.CustomPackageStep4):
             return false;
 
+        case(FormName.CustomPackageStep5):
+            return false;
+
         default:
             return !userAnswers.includes(true);
     }

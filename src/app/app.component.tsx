@@ -17,7 +17,8 @@ import {
     CustomPackageStep1,
     CustomPackageStep2,
     CustomPackageStep3,
-    CustomPackageStep4
+    CustomPackageStep4,
+    CustomPackageStep5
 } from "../components/all-components";
 // TS types
 type Props = { children?: never }
@@ -43,7 +44,9 @@ const AppComponent = (props: Props): ReactElement<Props> => {
                         <Step title="Personal questions">
                             <CustomPackageStep4 />
                         </Step>
-                        <Step title="Budget">Content 5</Step>
+                        <Step title="Budget">
+                            <CustomPackageStep5 />
+                        </Step>
                         <Step title="Authenticate">Content 6</Step>
                     </Stepper>
                 </ErrorBoundary>
