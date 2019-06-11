@@ -55,9 +55,15 @@ export const onFormSubmitStep5 = (values: any): void => {
 };
 
 export const onFormSubmitStep6Registration = (values: any): void => {
-    // set(CustomPackage.CustomPackageStep5, values);
     console.log(
         "🍆 Utils.ts, string: 60",
         "---registration form", values
+    );
+};
+
+export const onFormSubmitStep6Login = (values: any): void => {
+    console.log(
+        "🍆 Utils.ts, string: 60",
+        "---login form", values
     );
 };

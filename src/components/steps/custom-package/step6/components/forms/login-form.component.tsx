@@ -3,7 +3,7 @@ import React, { ComponentType, ReactElement } from "react";
 import styles from "./form.module.css";
 // Utils
 import { FormName } from "../../../../../../app-constants";
-import { onFormSubmitStep6Registration } from "../../../utils";
+import { onFormSubmitStep6Login } from "../../../utils";
 import { syncValidate, validate } from "../../../../../form-fields/utils/sync-validate";
 // Redux
 import { reduxForm, InjectedFormProps } from "redux-form";
@@ -20,12 +20,8 @@ type ReduxStateToProps = {
     isLoading: boolean;
 };
 type FormData = {
-    first_name: string;
-    last_name: string;
     email: string;
-    phone_number: number;
     password: string;
-    confirm_password: string;
 }
 type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
 
@@ -41,23 +37,10 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                     </div>
                 ) : (
                     <>
-                        <h1 className={styles.title}>Registration account</h1>
-                        <fieldset className={styles.fieldset} disabled={submitting}>
-                            <div className={styles["field-wrapper"]}>
-                                <Input
-                                    name="first_name"
-                                    label="First name"
-                                    validate={[syncValidate.required]}
-                                />
-                            </div>
-                            <div className={styles["field-wrapper"]}>
-                                <Input
-                                    name="last_name"
-                                    label="Last name"
-                                    validate={[syncValidate.required]}
-                                />
-                            </div>
-                        </fieldset>
+                        <header className={styles.header}>
+                            <h1 className={styles.title}>Welcome Back!</h1>
+                            <p className={styles.text}>Sign in to your Furnishr account</p>
+                        </header>
                         <fieldset className={styles.fieldset} disabled={submitting}>
                             <div className={styles["field-wrapper"]}>
                                 <Input
@@ -69,30 +52,13 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                             </div>
                             <div className={styles["field-wrapper"]}>
                                 <Input
-                                    name="phone_number"
-                                    type="tel"
-                                    label="Phone number"
-                                    validate={[syncValidate.required, syncValidate.phone]}
-                                />
-                            </div>
-                        </fieldset>
-                        <fieldset className={styles.fieldset} disabled={submitting}>
-                            <div className={styles["field-wrapper"]}>
-                                <Input
                                     name="password"
                                     type="password"
                                     label="Password"
                                     validate={[syncValidate.required]}
                                 />
                             </div>
-                            <div className={styles["field-wrapper"]}>
-                                <Input
-                                    name="confirm_password"
-                                    type="password"
-                                    label="Confirm password"
-                                    validate={[syncValidate.required]}
-                                />
-                            </div>
+                            <a href="#password-recovery" className={styles.link}>Forgot your password?</a>
                         </fieldset>
                         <div className={styles["submit-button-wrapper"]}>
                             <MainButton
@@ -103,8 +69,8 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                 Continue
                             </MainButton>
                         </div>
-                        <p className={styles.text}>Already have account?
-                            <a href="#login" className={styles.link}> Log in</a>
+                        <p className={styles.text}>Don't have an account?
+                            <a href="#create-account" className={styles.link}> Create one now</a>
                         </p>
                     </>
                 )
@@ -119,8 +85,8 @@ const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> 
 
 export default compose<ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
-        form: FormName.CustomPackageStep6Registration,
-        onSubmit: onFormSubmitStep6Registration,
+        form: FormName.CustomPackageStep6Login,
+        onSubmit: onFormSubmitStep6Login,
         validate
     }),
     connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)

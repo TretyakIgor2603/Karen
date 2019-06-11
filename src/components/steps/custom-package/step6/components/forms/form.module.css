@@ -11,6 +11,20 @@
     text-align: center;
 }
 
+.text {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.header .title { margin-bottom: 1rem; }
+
+.header .text {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+}
+
 .fieldset {
     width: 50%;
     padding: 0;
@@ -28,12 +42,6 @@
 }
 
 .submit-button { width: 24rem; }
-
-.text {
-    font-weight: 700;
-    font-size: 1.2rem;
-    text-align: center;
-}
 
 .link {
     position: relative;

@@ -8,6 +8,7 @@ import { connect, MapDispatchToProps } from "react-redux";
 // Components
 import Layout from "../../layout/layout.component";
 import RegistrationForm from "./components/forms/registration-form.component";
+import LoginForm from "./components/forms/login-form.component";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
 // import { get } from "local-storage";
@@ -25,7 +26,7 @@ const Step6Component = (props: Props): ReactElement<Props> => {
     }, []);
     return (
         <Layout title="Get Your Custom Room">
-            <RegistrationForm />
+            {false ? <RegistrationForm /> : <LoginForm />}
         </Layout>
     );
 };
