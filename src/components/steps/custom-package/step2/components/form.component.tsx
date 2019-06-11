@@ -22,7 +22,10 @@ type ReduxStateToProps = {
     isLoading: boolean,
     furnitureList: FilterFurniture[];
 };
-type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
+type FormData = {
+    [key: string]: boolean | string | number
+};
+type Props = OwnProps & InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const [isOpen, setIsOpen] = useState<{ [x: string]: boolean }>(get(CustomPackage.CustomPackageStep2OpenOther) || {});
@@ -90,7 +93,7 @@ const makeMapStateToProps = () => {
 };
 
 export default compose<ComponentType<OwnProps>>(
-    reduxForm<{}, OwnProps>({
+    reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep2,
         onSubmit: onFormSubmitStep2
     }),

@@ -62,4 +62,6 @@
     --cp-step__background-color: #fff;
     --cp-step__background-color--hover: #c4b9a5;
     --cp-step-subtitle-color: #909090;
+    --cp-step-link__color: var(--color__app, #333);
+    --cp-step-link__color--hover: #000;
 }

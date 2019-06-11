@@ -86,7 +86,8 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
     });
 
     const prevLinkClassNames = cn(styles["prev-link"], {
-        [styles.disabled]: firstStep
+        [styles.disabled]: firstStep,
+        [styles["last-step"]]: lastStep
     });
 
     const nextLinkClassNames = cn(styles["next-link"], {
@@ -113,13 +114,17 @@ const StepperComponent = (props: Props): ReactElement<Props> => {
                 >
                     Back
                 </a>
-                <a
-                    href="#next"
-                    className={nextLinkClassNames}
-                    onClick={onNextButtonClick}
-                >
-                    Next
-                </a>
+                {
+                    !lastStep && (
+                        <a
+                            href="#next"
+                            className={nextLinkClassNames}
+                            onClick={onNextButtonClick}
+                        >
+                            Next
+                        </a>
+                    )
+                }
             </div>
         </div>
     );

@@ -18,7 +18,14 @@ type OwnProps = { children?: never; };
 type ReduxStateToProps = {
     isLoading: boolean;
 };
-type Props = OwnProps & ReduxStateToProps & InjectedFormProps<{}, OwnProps>;
+type FormData = {
+    city: string;
+    dropzone: any;
+    people_counter: number | string;
+    reason_id: string;
+    "style_report[prefer_delivery_month]": string;
+};
+type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const { handleSubmit, isLoading } = props;
@@ -68,7 +75,7 @@ const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> 
 });
 
 export default compose<ComponentType<OwnProps>>(
-    reduxForm<{}, OwnProps>({
+    reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep4,
         onSubmit: onFormSubmitStep4
     }),

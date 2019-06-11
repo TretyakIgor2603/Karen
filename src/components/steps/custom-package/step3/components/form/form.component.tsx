@@ -23,7 +23,10 @@ type ReduxStateToProps = {
     isLoading: boolean;
     designStylesList: DesignStyleRequest;
 };
-type Props = OwnProps & InjectedFormProps<{}, OwnProps> & ReduxStateToProps;
+type FormData = {
+    [key: string]: boolean
+};
+type Props = OwnProps & InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const { handleSubmit, isLoading, designStylesList } = props;
@@ -80,7 +83,7 @@ const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> 
 });
 
 export default compose<ComponentType<OwnProps>>(
-    reduxForm<{}, OwnProps>({
+    reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep3,
         onSubmit: onFormSubmitStep3
     }),

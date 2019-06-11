@@ -73,6 +73,8 @@
     transform: translateY(-50%) rotate(45deg);
 }
 
+.prev-link.last-step { margin-right: 0; }
+
 .prev-link.disabled,
 .next-link.disabled,
 .prev-link.disabled::before,
