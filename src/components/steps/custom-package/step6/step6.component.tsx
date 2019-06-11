@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 // Utils
 import { initialize } from "redux-form";
 // import { FormName } from "../../../../app-constants";
@@ -24,9 +24,13 @@ const Step6Component = (props: Props): ReactElement<Props> => {
         // props.initializeForm(FormName.CustomPackageStep6, get(CustomPackage.CustomPackageStep6));
         // eslint-disable-next-line
     }, []);
+    const [isNewUser, setNewUser] = useState<boolean>(true);
+
+    const switchFrom = (): void => setNewUser(!isNewUser);
+
     return (
         <Layout title="Get Your Custom Room">
-            {false ? <RegistrationForm /> : <LoginForm />}
+            {isNewUser ? <RegistrationForm switchFrom={switchFrom} /> : <LoginForm switchFrom={switchFrom} />}
         </Layout>
     );
 };

@@ -35,6 +35,13 @@
 
 .field-wrapper { margin-bottom: 1.5rem; }
 
+.fieldset-column {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fieldset-column .field-wrapper { width: 48.5%; }
+
 .submit-button-wrapper {
     margin-bottom: 1.5rem;
     padding-top: 4.5rem;

@@ -15,7 +15,10 @@ import { MainLoader, Input, MainButton } from "../../../../../all-components";
 // TS types
 import { ReduxState } from "../../../../../../redux/root-reducer";
 
-type OwnProps = { children?: never; };
+type OwnProps = {
+    children?: never;
+    switchFrom: () => void;
+}
 type ReduxStateToProps = {
     isLoading: boolean;
 };
@@ -30,7 +33,7 @@ type FormData = {
 type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
 
 const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
-    const { handleSubmit, isLoading, invalid, submitting, pristine } = props;
+    const { switchFrom, handleSubmit, isLoading, invalid, submitting, pristine } = props;
 
     return (
         <form noValidate onSubmit={handleSubmit} className={styles.form}>
@@ -42,7 +45,7 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                 ) : (
                     <>
                         <h1 className={styles.title}>Registration account</h1>
-                        <fieldset className={styles.fieldset} disabled={submitting}>
+                        <div className={styles["fieldset-column"]}>
                             <div className={styles["field-wrapper"]}>
                                 <Input
                                     name="first_name"
@@ -57,8 +60,8 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                     validate={[syncValidate.required]}
                                 />
                             </div>
-                        </fieldset>
-                        <fieldset className={styles.fieldset} disabled={submitting}>
+                        </div>
+                        <div className={styles["fieldset-column"]}>
                             <div className={styles["field-wrapper"]}>
                                 <Input
                                     name="email"
@@ -75,8 +78,8 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                     validate={[syncValidate.required, syncValidate.phone]}
                                 />
                             </div>
-                        </fieldset>
-                        <fieldset className={styles.fieldset} disabled={submitting}>
+                        </div>
+                        <div className={styles["fieldset-column"]}>
                             <div className={styles["field-wrapper"]}>
                                 <Input
                                     name="password"
@@ -93,7 +96,7 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                     validate={[syncValidate.required]}
                                 />
                             </div>
-                        </fieldset>
+                        </div>
                         <div className={styles["submit-button-wrapper"]}>
                             <MainButton
                                 className={styles["submit-button"]}
@@ -103,8 +106,8 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                 Continue
                             </MainButton>
                         </div>
-                        <p className={styles.text}>Already have account?
-                            <a href="#login" className={styles.link}> Log in</a>
+                        <p className={styles.text}>Already have account?{" "}
+                            <a href="#login" className={styles.link} onClick={switchFrom}>Log in</a>
                         </p>
                     </>
                 )

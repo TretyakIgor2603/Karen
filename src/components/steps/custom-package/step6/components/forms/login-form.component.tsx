@@ -15,7 +15,10 @@ import { MainLoader, Input, MainButton } from "../../../../../all-components";
 // TS types
 import { ReduxState } from "../../../../../../redux/root-reducer";
 
-type OwnProps = { children?: never; };
+type OwnProps = {
+    children?: never;
+    switchFrom: () => void;
+};
 type ReduxStateToProps = {
     isLoading: boolean;
 };
@@ -26,7 +29,7 @@ type FormData = {
 type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
 
 const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
-    const { handleSubmit, isLoading, invalid, submitting, pristine } = props;
+    const { switchFrom, handleSubmit, isLoading, invalid, submitting, pristine } = props;
 
     return (
         <form noValidate onSubmit={handleSubmit} className={styles.form}>
@@ -69,8 +72,8 @@ const RegistrationFormComponent = (props: Props): ReactElement<Props> => {
                                 Continue
                             </MainButton>
                         </div>
-                        <p className={styles.text}>Don't have an account?
-                            <a href="#create-account" className={styles.link}> Create one now</a>
+                        <p className={styles.text}>Don't have an account?{" "}
+                            <a href="#create-account" className={styles.link} onClick={switchFrom}>Create one now</a>
                         </p>
                     </>
                 )
