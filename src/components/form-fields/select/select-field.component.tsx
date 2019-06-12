@@ -6,19 +6,21 @@ import SelectComponent from "./select.component";
 export type SelectProps = {
     name: string;
     className: string;
-    placeholder: string;
+    placeholder?: string;
+    label?: string;
     options: Option[];
 };
 type Props = { children?: never } & SelectProps
 
 const SelectFieldComponent = (props: Props): ReactElement<Props> => {
-    const { name, placeholder, className, options } = props;
+    const { name, placeholder, label, className, options } = props;
 
     return (
         <Field
             name={name}
             className={className}
             placeholder={placeholder}
+            label={label}
             component={SelectComponent}
             options={options}
         />

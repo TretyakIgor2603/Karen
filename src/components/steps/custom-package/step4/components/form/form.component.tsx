@@ -10,7 +10,7 @@ import { connect, MapStateToProps } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector } from "../../../redux-duck/selectors";
 // Components
-import { MainLoader } from "../../../../../all-components";
+import { MainLoader, Input, Select, FileUploader } from "../../../../../all-components";
 // TS types
 import { ReduxState } from "../../../../../../redux/root-reducer";
 
@@ -18,14 +18,28 @@ type OwnProps = { children?: never; };
 type ReduxStateToProps = {
     isLoading: boolean;
 };
-type FormData = {
+export type FormData = {
     city: string;
     dropzone: any;
     people_counter: number | string;
     reason_id: string;
-    "style_report[prefer_delivery_month]": string;
+    delivery: string;
 };
 type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
+
+const reasonOptions = [
+    { value: "1", label: "investment property" },
+    { value: "2", label: "moving for work" },
+    { value: "3", label: "first home" },
+    { value: "4", label: "redecorating" }
+];
+
+const deliveryOptions = [
+    { value: "1", label: "within 1 month" },
+    { value: "2", label: "in 2-3 months" },
+    { value: "3", label: "3 months later" },
+    { value: "4", label: "no plan to move" }
+];
 
 const FormComponent = (props: Props): ReactElement<Props> => {
     const { handleSubmit, isLoading } = props;
@@ -39,30 +53,46 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                     </div>
                 ) : (
                     <>
-                        <ul>
-                            <li>Q1: reason for this project:
-                                <ol>
-                                    select from:
-                                    <li>investment property</li>
-                                    <li>moving for work</li>
-                                    <li>first home</li>
-                                    <li>redecorating</li>
-                                </ol>
-                            </li>
-                            <li>Q2: which city will this property be in?</li>
-                            <li>Q3: when do you need this property furnished?
-                                <ol>
-                                    select from:
-                                    <li>within 1 month</li>
-                                    <li>in 2-3 months</li>
-                                    <li>3 months</li>
-                                    <li>later</li>
-                                    <li>no plan to move</li>
-                                </ol>
-                            </li>
-                            <li>Q4: how many people (max) will live in the property?</li>
-                            <li>Q5: allow user to upload files in image formats and pdf</li>
-                        </ul>
+                        <div className={styles.fieldset}>
+                            <div className={styles["field-wrapper"]}>
+                                <Select
+                                    className={styles.select}
+                                    name="reason_id"
+                                    label="Reason for this project"
+                                    placeholder="Select"
+                                    options={reasonOptions}
+                                />
+                            </div>
+                            <div className={styles["field-wrapper"]}>
+                                <Input
+                                    name="city"
+                                    label="Which city will this property be in?"
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.fieldset}>
+                            <div className={styles["field-wrapper"]}>
+                                <Select
+                                    className={styles.select}
+                                    name="delivery"
+                                    label="When do you need this property furnished?"
+                                    placeholder="Select"
+                                    options={deliveryOptions}
+                                />
+                            </div>
+                            <div className={styles["field-wrapper"]}>
+                                <Input
+                                    name="people_counter"
+                                    label="how many people (max) will live in the property?"
+                                    type="number"
+                                />
+                            </div>
+                        </div>
+                        <FileUploader
+                            name="dropzone"
+                            formName={FormName.CustomPackageStep4}
+                            label="Allow user to upload files in image formats and pdf"
+                        />
                     </>
                 )
             }

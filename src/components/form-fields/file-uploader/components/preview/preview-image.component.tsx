@@ -12,7 +12,6 @@ type Props = OwnProps
 
 const PreviewImageComponent = (props: Props): ReactElement<Props> => {
     const { file } = props;
-
     return (
         <div className={styles.preview}>
             <img

@@ -1,0 +1,9 @@
+.fieldset {
+    display: flex;
+    justify-content: space-between;
+}
+
+.field-wrapper {
+    width: 48.5%;
+    margin-bottom: 1.5rem;
+}

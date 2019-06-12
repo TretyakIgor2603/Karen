@@ -8,12 +8,13 @@ import Select, { Option } from "rc-select";
 // TS types
 import { WrappedFieldProps } from "redux-form";
 import { SelectProps } from "./select-field.component";
+import Label from "../common/label/label.component";
 
 type Props = { children?: never } & WrappedFieldProps & SelectProps
 
 const SelectComponent = (props: Props): ReactElement<Props> => {
-    const { className, placeholder, input, options } = props;
-    const { value, onChange } = input;
+    const { className, placeholder, label, input, options } = props;
+    const { value, onChange, name } = input;
 
     const wrapperClassName = cn(`${className}`, {
         placeholder: !value
@@ -25,6 +26,7 @@ const SelectComponent = (props: Props): ReactElement<Props> => {
 
     return (
         <div className={wrapperClassName}>
+            <Label fieldId={`${name}-id`}>{label}</Label>
             <Select
                 className="select"
                 dropdownClassName="select__dropdown"
