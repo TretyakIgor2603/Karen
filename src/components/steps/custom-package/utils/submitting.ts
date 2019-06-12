@@ -1,16 +1,16 @@
-import http from "../../../api/authentication";
+import http from "../../../../api/authentication";
 import convertToFormData from "object-to-formdata";
-import store from "../../../redux/store";
+import store from "../../../../redux/store";
 import { set } from "local-storage";
-import env from "../../../env/env";
-import { getAxiosError } from "../../../utils/helpers";
+import env from "../../../../env/env";
+import { getAxiosError } from "../../../../utils/helpers";
 import { toastr } from "react-redux-toastr";
 // Actions
-import { getFurnitureListAction } from "./redux-duck/actions";
-import { getRoomListSelector } from "./redux-duck/selectors";
+import { getFurnitureListAction } from "../redux-duck/actions";
+import { getRoomListSelector } from "../redux-duck/selectors";
 // TS types
-import { ReduxState } from "../../../redux/root-reducer";
-import { Room } from "./types";
+import { ReduxState } from "../../../../redux/root-reducer";
+import { Room } from "../types";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -59,18 +59,28 @@ export const onFormSubmitStep5 = (values: any): void => {
 };
 
 export const onFormSubmitRegistration = async (values: any): Promise<void> => {
-    const data = {
+    const userData = {
         user: {
             ...values,
             receive_email: true
         }
     };
 
+    // Step 1 - categories: [{id: 12, count: 2},{}]
+    // Step 2 - selected_furniture: [{product_category_id: 12, count: 4}, {}]
+    // Step 3 - design_styles[]: 1, design_styles[]: 2, design_styles[]: 3
+    // Step 4 - (reason_id: 1, preferred_delivery_date: 2, deliver_city: 'Toronto', people_counter: 3, "styles":[]
+    // Step 5 -     {"BudgetString":"$1500 to $3500"}
+
+    const surveysData = {
+
+    };
+
     try {
-        const response = await http.registerUser(convertToFormData(data));
-        await set("token", `Bearer ${response.data.user.authentication_token}`);
-        window.location.replace(`${env.domain}/style_report`);
-        toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
+        // const response = await http.registerUser(convertToFormData(userData));
+        // await set("token", `Bearer ${response.data.user.authentication_token}`);
+        // window.location.replace(`${env.domain}/style_report`);
+        // toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
     } catch (error) {
         const err = getAxiosError(error);
         toastr.error("Register error", err);

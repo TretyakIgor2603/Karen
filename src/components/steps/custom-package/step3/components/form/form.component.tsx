@@ -5,7 +5,7 @@ import styles from "./form.module.css";
 import _snakeCase from "lodash/fp/snakeCase";
 import env from "../../../../../../env/env";
 import { FormName } from "../../../../../../app-constants";
-import { onFormSubmitStep3 } from "../../../utils";
+import { onFormSubmitStep3 } from "../../../utils/submitting";
 // Redux
 import { Field, reduxForm, InjectedFormProps } from "redux-form";
 import { connect, MapStateToProps } from "react-redux";

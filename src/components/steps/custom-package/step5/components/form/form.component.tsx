@@ -3,7 +3,7 @@ import React, { ComponentType, ReactElement } from "react";
 import styles from "./form.module.css";
 // Utils
 import { FormName } from "../../../../../../app-constants";
-import { onFormSubmitStep5 } from "../../../utils";
+import { onFormSubmitStep5 } from "../../../utils/submitting";
 // Redux
 import { reduxForm, InjectedFormProps } from "redux-form";
 import { connect, MapStateToProps } from "react-redux";

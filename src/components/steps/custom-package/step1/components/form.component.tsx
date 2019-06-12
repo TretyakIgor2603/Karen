@@ -1,7 +1,7 @@
 import React, { ReactElement, ComponentType } from "react";
 // Utils
 import { FormName } from "../../../../../app-constants";
-import { onFormSubmitStep1 } from "../../utils";
+import { onFormSubmitStep1 } from "../../utils/submitting";
 import _get from "lodash/fp/get";
 // Styles
 import styles from "./form.module.css";

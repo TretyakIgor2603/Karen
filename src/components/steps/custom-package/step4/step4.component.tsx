@@ -2,7 +2,7 @@ import React, { useEffect, ReactElement } from "react";
 // Utils
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
-import { CustomPackage } from "../utils";
+import { CustomPackage } from "../utils/submitting";
 import { get } from "local-storage";
 import _get from "lodash/fp/get";
 // Redux
@@ -22,12 +22,7 @@ type Props = OwnProps & ReduxDispatchToProps;
 
 const Step4Component = (props: Props): ReactElement<Props> => {
     useEffect(() => {
-        // props.initializeForm(FormName.CustomPackageStep4, get(CustomPackage.CustomPackageStep4));
         const formFields: FormData = get(CustomPackage.CustomPackageStep4);
-        console.log(
-            "🍆 Step4.component.tsx, string: 27",
-            "---formFields", formFields
-        );
         props.initializeForm(FormName.CustomPackageStep4, {
             "reason_id": _get("reason_id", formFields),
             "city": _get("city", formFields),

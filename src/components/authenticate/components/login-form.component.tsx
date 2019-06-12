@@ -3,7 +3,7 @@ import React, { ComponentType, ReactElement } from "react";
 import styles from "./form.module.css";
 // Utils
 import { FormName } from "../../../app-constants";
-import { onFormSubmitLogin } from "../../steps/custom-package/utils";
+import { onFormSubmitLogin } from "../../steps/custom-package/utils/submitting";
 import { syncValidate, validate } from "../../form-fields/utils/sync-validate";
 // Redux
 import { reduxForm, InjectedFormProps } from "redux-form";

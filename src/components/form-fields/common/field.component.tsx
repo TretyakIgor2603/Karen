@@ -1,6 +1,6 @@
 import React, { memo, ReactElement, ReactNode } from "react";
 // Components
-import { Field } from "redux-form";
+import { Field, FieldsWarnerOrValidator } from "redux-form";
 // TS types
 import { LabelPosition } from "./label/label.component";
 
@@ -11,7 +11,7 @@ export type Option = {
 }
 export type InputProps = {
     name: string;
-    initialValue?: number;
+    initialValue?: number | string;
     autoFocus?: boolean;
     type?: InputType;
     className?: string;
@@ -19,7 +19,7 @@ export type InputProps = {
     label?: string;
     placeholder?: string;
     options?: Option[];
-    validate?: any;
+    validate?: FieldsWarnerOrValidator;
     warn?: any;
     children?: never;
 }

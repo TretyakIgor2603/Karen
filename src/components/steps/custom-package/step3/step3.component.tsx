@@ -2,7 +2,7 @@ import React, { useEffect, ReactElement } from "react";
 // Utils
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
-import { CustomPackage } from "../utils";
+import { CustomPackage } from "../utils/submitting";
 import { get } from "local-storage";
 // Redux
 import { connect, MapDispatchToProps } from "react-redux";

@@ -3,7 +3,8 @@ import React, { ComponentType, ReactElement } from "react";
 import styles from "./form.module.css";
 // Utils
 import { FormName } from "../../../../../../app-constants";
-import { onFormSubmitStep4 } from "../../../utils";
+import { onFormSubmitStep4 } from "../../../utils/submitting";
+import { syncValidate } from "../../../../../form-fields/utils/sync-validate";
 // Redux
 import { reduxForm, InjectedFormProps } from "redux-form";
 import { connect, MapStateToProps } from "react-redux";
@@ -61,12 +62,14 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                                     label="Reason for this project"
                                     placeholder="Select"
                                     options={reasonOptions}
+                                    validate={[syncValidate.required]}
                                 />
                             </div>
                             <div className={styles["field-wrapper"]}>
                                 <Input
                                     name="city"
                                     label="Which city will this property be in?"
+                                    validate={[syncValidate.required]}
                                 />
                             </div>
                         </div>
@@ -78,6 +81,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                                     label="When do you need this property furnished?"
                                     placeholder="Select"
                                     options={deliveryOptions}
+                                    validate={[syncValidate.required]}
                                 />
                             </div>
                             <div className={styles["field-wrapper"]}>
@@ -85,6 +89,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                                     name="people_counter"
                                     label="how many people (max) will live in the property?"
                                     type="number"
+                                    validate={[syncValidate.required]}
                                 />
                             </div>
                         </div>
