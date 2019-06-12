@@ -14,3 +14,4 @@ export { default as CustomPackageStep3 } from "./steps/custom-package/step3/step
 export { default as CustomPackageStep4 } from "./steps/custom-package/step4/step4.component";
 export { default as CustomPackageStep5 } from "./steps/custom-package/step5/step5.component";
 export { default as CustomPackageStep6 } from "./steps/custom-package/step6/step6.component";
+export { default as Authenticate } from "./authenticate/auth.component";

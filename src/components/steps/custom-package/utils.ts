@@ -1,6 +1,10 @@
+import http from "../../../api/authentication";
 import convertToFormData from "object-to-formdata";
 import store from "../../../redux/store";
 import { set } from "local-storage";
+import env from "../../../env/env";
+import { getAxiosError } from "../../../utils/helpers";
+import { toastr } from "react-redux-toastr";
 // Actions
 import { getFurnitureListAction } from "./redux-duck/actions";
 import { getRoomListSelector } from "./redux-duck/selectors";
@@ -54,14 +58,26 @@ export const onFormSubmitStep5 = (values: any): void => {
     set(CustomPackage.CustomPackageStep5, values);
 };
 
-export const onFormSubmitStep6Registration = (values: any): void => {
-    console.log(
-        "🍆 Utils.ts, string: 60",
-        "---registration form", values
-    );
+export const onFormSubmitRegistration = async (values: any): Promise<void> => {
+    const data = {
+        user: {
+            ...values,
+            receive_email: true
+        }
+    };
+
+    try {
+        const response = await http.registerUser(convertToFormData(data));
+        await set("token", `Bearer ${response.data.user.authentication_token}`);
+        window.location.replace(`${env.domain}/style_report`);
+        toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
+    } catch (error) {
+        const err = getAxiosError(error);
+        toastr.error("Register error", err);
+    }
 };
 
-export const onFormSubmitStep6Login = (values: any): void => {
+export const onFormSubmitLogin = (values: any): void => {
     console.log(
         "🍆 Utils.ts, string: 60",
         "---login form", values

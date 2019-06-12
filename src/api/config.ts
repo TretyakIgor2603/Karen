@@ -17,7 +17,7 @@ export const http = (method: RequestMethod, url: string, data?: any): any => {
     return axiosInstance({ method, url, data });
 };
 
-const token = JSON.parse(get("token"));
+const token = get("token");
 
 if (token) {
     axios.defaults.headers.common["Authorization"] = token;
