@@ -13,47 +13,31 @@ export const getCategories = (values: { [key: string]: string }) => {
     return categories;
 };
 
-export const getSelectedFurniture = (values: { [key: string]: string }) => {
-    const selectedFurniture = [];
+export const getSelectedFurniture = (values: { [key: string]: any }) => {
 
-    let categoryName = "",
-        categoryId = "",
-        furnitureId = "",
-        countFurniture = "";
-
-    // {
-    //     category_name: 'Living_Room 1',
-    //     category_room_id: 12 ,
-    //     furniture: [
-    //         {product_category_id: 12, count: 4},
-    //         {product_category_id: 11, count: 2}
-    //     ]
-    // },
+    const selected_furniture: any = {};
 
     for (const [key, value] of Object.entries(values)) {
 
-        if (value && !key.includes("count")) {
-            const temp = key.split("_");
+        selected_furniture[key] = {
+            category_name: key,
+            category_room_id: value.category_room_id,
+            furniture: []
+        };
 
-            categoryId = temp[temp.length - 2];
-            furnitureId = temp[temp.length - 1];
-            categoryName = key.substring(0, (key.length - (categoryId.length + furnitureId.length + 2)));
-
-            selectedFurniture.push({
-                category_name: categoryName,
-                category_room_id: categoryId,
-                furniture: [
-                    {
-                        product_category_id: furnitureId,
-                        count: values[`${key}-count`]
-                    }
-                ]
-            });
-
+        for (const [k, v] of Object.entries(value)) {
+            if (v && !k.endsWith("-id") && k !== "category_room_id") {
+                if (values[key][`${k}-id`] && values[key][key][`${k}-count`]) {
+                    selected_furniture[key].furniture.push({
+                        product_category_id: values[key][`${k}-id`],
+                        count: parseInt(values[key][key][`${k}-count`], 10)
+                    });
+                }
+            }
         }
     }
 
-    return selectedFurniture;
+    return selected_furniture;
 };
 
 export const getStyles = (values: { [key: string]: string }) => {

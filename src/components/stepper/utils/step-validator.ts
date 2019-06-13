@@ -14,6 +14,9 @@ export const disableNextButton = (data: any): boolean => {
     const userAnswers = Object.values(values);
 
     switch (formName) {
+        case(FormName.CustomPackageStep2):
+            return false;
+
         case(FormName.CustomPackageStep3):
             const answers = userAnswers.filter((answer) => answer === true);
             return answers.length !== 3;

@@ -7,7 +7,7 @@ const config: AxiosRequestConfig = {
     baseURL: Env.apiUrl,
     headers: {
         "Access-Control-Allow-Origin": "*",
-        "Authorization": get("token") ? get("token") : null,
+        "Authorization": get("token") ? get("token") : "",
         "withCredentials": true
     }
 };

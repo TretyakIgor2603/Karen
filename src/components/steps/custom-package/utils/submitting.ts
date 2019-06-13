@@ -9,7 +9,6 @@ import { toastr } from "react-redux-toastr";
 import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
-import axios from "axios";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -31,8 +30,6 @@ export const onFormSubmitStep1 = (values: any): void => {
 
 export const onFormSubmitStep2 = (values: any): void => {
     set(CustomPackage.CustomPackageStep2, values);
-    // const categories = getCategories(get(CustomPackage.CustomPackageStep1));
-    // const selected_furniture = getSelectedFurniture(get(CustomPackage.CustomPackageStep2));
 };
 
 export const onFormSubmitStep3 = (values: any): void => {
@@ -55,34 +52,28 @@ export const onFormSubmitRegistration = async (values: any): Promise<void> => {
         }
     };
 
-    // Step 2 - selected_furniture: [{product_category_id: 12, count: 4}, {}]
-
     const categories = getCategories(get(CustomPackage.CustomPackageStep1));
-    // const selected_furniture = getSelectedFurniture(get(CustomPackage.CustomPackageStep2));
-    const selected_furniture = {
-        category_name: "living_room",
-        category_room_id: 67,
-        furniture: [
-            { product_category_id: 25, count: 1 },
-            { product_category_id: 34, count: 3 }
-        ]
-    };
+    const selected_furniture = getSelectedFurniture(get(CustomPackage.CustomPackageStep2));
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
     const personal_question = getPersonalQuestions(get(CustomPackage.CustomPackageStep4));
-
-    const surveysData = {
-        categories,
-        selected_furniture,
-        design_styles,
-        personal_question,
-        budget_string: "$1500 to $3500"
-    };
 
     try {
         const response = await http.registerUser(convertToFormData(userData));
         await set("token", `Bearer ${response.data.user.authentication_token}`);
-        const surveysRespomse = await httpCustomPackage.createStyleReport(convertToFormData(surveysData));
-        console.log("--surveyResponse", surveysRespomse);
+
+        const surveysData: any = {
+            categories,
+            selected_furniture,
+            design_styles,
+            personal_question,
+            budget_string: "$1500 to $3500",
+            user_id: response.data.user.id
+        };
+
+        const surveysResponse = await httpCustomPackage.createStyleReport(convertToFormData(surveysData));
+
+        console.log("--surveyResponse", surveysResponse);
+
         window.location.replace(`${env.domain}/style_report`);
         toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
     } catch (error) {

@@ -11,7 +11,8 @@ import { connect, MapStateToProps } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector, makeGetFurnitureListSelector } from "../../redux-duck/selectors";
 // Components
-import { MainLoader } from "../../../../all-components";
+import { FormSection } from "redux-form";
+import { MainLoader, HiddenInput } from "../../../../all-components";
 import FurnitureList from "./furniture-list.component";
 // TS types
 import { FilterFurniture } from "../../types";
@@ -44,31 +45,32 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 
     const furnitureBody = furnitureList.map((furniture) => (
         <div className={styles.wrapper} key={furniture.label}>
-            <h2 className={styles.title}>
-                {furniture.label}
-            </h2>
-            <p className={styles.subtitle}>Essentials</p>
-            <FurnitureList
-                furniture={furniture.essentials}
-                furnitureName={`${furniture.label}_${furniture.category_room_id}`}
-                checked={true}
-            />
-            <button
-                type="button"
-                data-furniture={furniture.label}
-                className={styles.subtitle}
-                onClick={onButtonSubtitleClick}
-            >
-                Others +
-            </button>
-            {isOpen[furniture.label] && (
+            <FormSection name={furniture.label}>
+                <HiddenInput name="category_room_id" initialValue={furniture.category_room_id} />
+                <h2 className={styles.title}>
+                    {furniture.label}
+                </h2>
+                <p className={styles.subtitle}>Essentials</p>
                 <FurnitureList
-                    furniture={furniture.others}
-                    furnitureName={`${furniture.label}_${furniture.category_room_id}`}
-                    checked={false}
-                    initialValue={1}
+                    furniture={furniture.essentials}
+                    checked={true}
                 />
-            )}
+                <button
+                    type="button"
+                    data-furniture={furniture.label}
+                    className={styles.subtitle}
+                    onClick={onButtonSubtitleClick}
+                >
+                    Others +
+                </button>
+                {isOpen[furniture.label] && (
+                    <FurnitureList
+                        furniture={furniture.others}
+                        checked={false}
+                        initialValue={1}
+                    />
+                )}
+            </FormSection>
         </div>
     ));
 
