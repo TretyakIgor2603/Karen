@@ -1,7 +1,7 @@
 import React, { useEffect, ReactElement } from "react";
 // Utils
 import { get } from "local-storage";
-import { initialize } from "redux-form";
+import { FormAction, initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 // Redux
@@ -35,7 +35,7 @@ const Step1Component = (props: Props): ReactElement<Props> => {
 };
 
 const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
-    initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues)),
+    initializeForm: (formName: string, initialValues: any): FormAction => dispatch(initialize(formName, initialValues)),
     getRoomList: () => dispatch(getRoomListAction())
 });
 

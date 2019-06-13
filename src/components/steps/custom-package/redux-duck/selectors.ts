@@ -20,6 +20,7 @@ const getFurnitureList = (state: ReduxState): FilterFurniture[] => {
     return furniture.map((item: Furniture) => {
         return {
             label: item.label,
+            category_room_id: item.value,
             essentials: filterFurnitureList(item.style_design_categories_with_parent, "essential"),
             others: filterFurnitureList(item.style_design_categories_with_parent, "other")
         };

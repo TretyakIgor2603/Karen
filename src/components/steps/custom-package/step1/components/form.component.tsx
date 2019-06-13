@@ -40,7 +40,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
             return (
                 <div className={styles.field} key={room.value}>
                     <Field
-                        name={room.custom_label}
+                        name={`f-${room.value}`}
                         component={RoomItem}
                         image={imageUrl}
                         title={room.label}

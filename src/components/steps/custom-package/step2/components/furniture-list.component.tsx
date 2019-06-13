@@ -25,7 +25,7 @@ const FurnitureListComponent = (props: Props): ReactElement<Props> => {
         <ul className={styles.list}>
             {
                 furniture.map((item: FurnitureItemType) => {
-                    const name = _snakeCase(`${furnitureName}-${item.label}`);
+                    const name = _snakeCase(`${furnitureName}-${item.value}`);
 
                     return (
                         <li className={styles["list-item"]} key={name}>

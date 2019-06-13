@@ -2,7 +2,6 @@ import React, { ComponentType, ReactElement } from "react";
 // Styles
 import styles from "./form.module.css";
 // Utils
-import _snakeCase from "lodash/fp/snakeCase";
 import env from "../../../../../../env/env";
 import { FormName } from "../../../../../../app-constants";
 import { onFormSubmitStep3 } from "../../../utils/submitting";
@@ -34,7 +33,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 
     const designStylesBody = (design_styles && design_styles.length) ? (
         design_styles.map((designStyle) => {
-            const name = _snakeCase(designStyle.label);
+            const name = `f_${designStyle.value}`;
 
             return (
                 <li key={designStyle.value} className={styles["list-item"]}>

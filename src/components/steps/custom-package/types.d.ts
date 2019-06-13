@@ -29,6 +29,7 @@ export type FurnitureItem = {
 
 export type FilterFurniture = {
     label: string;
+    category_room_id: number,
     essentials: FurnitureItem[];
     others: FurnitureItem[];
 }

@@ -20,26 +20,26 @@ type ReduxStateToProps = {
     isLoading: boolean;
 };
 export type FormData = {
-    city: string;
-    dropzone: any;
+    deliver_city: string;
+    styles: any;
     people_counter: number | string;
     reason_id: string;
-    delivery: string;
+    preferred_delivery_date: string;
 };
 type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
 
 const reasonOptions = [
-    { value: "1", label: "investment property" },
-    { value: "2", label: "moving for work" },
-    { value: "3", label: "first home" },
-    { value: "4", label: "redecorating" }
+    { value: "1", label: "1. investment property" },
+    { value: "2", label: "2. moving for work" },
+    { value: "3", label: "3. first home" },
+    { value: "4", label: "4. redecorating" }
 ];
 
 const deliveryOptions = [
-    { value: "1", label: "within 1 month" },
-    { value: "2", label: "in 2-3 months" },
-    { value: "3", label: "3 months later" },
-    { value: "4", label: "no plan to move" }
+    { value: "1", label: "1. within 1 month" },
+    { value: "2", label: "2. in 2-3 months" },
+    { value: "3", label: "3. 3 months later" },
+    { value: "4", label: "4. no plan to move" }
 ];
 
 const FormComponent = (props: Props): ReactElement<Props> => {
@@ -67,7 +67,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                             </div>
                             <div className={styles["field-wrapper"]}>
                                 <Input
-                                    name="city"
+                                    name="deliver_city"
                                     label="Which city will this property be in?"
                                     validate={[syncValidate.required]}
                                 />
@@ -77,7 +77,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                             <div className={styles["field-wrapper"]}>
                                 <Select
                                     className={styles.select}
-                                    name="delivery"
+                                    name="preferred_delivery_date"
                                     label="When do you need this property furnished?"
                                     placeholder="Select"
                                     options={deliveryOptions}
@@ -94,7 +94,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
                             </div>
                         </div>
                         <FileUploader
-                            name="dropzone"
+                            name="styles"
                             formName={FormName.CustomPackageStep4}
                             label="Allow user to upload files in image formats and pdf"
                         />

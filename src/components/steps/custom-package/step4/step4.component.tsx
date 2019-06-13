@@ -25,10 +25,9 @@ const Step4Component = (props: Props): ReactElement<Props> => {
         const formFields: FormData = get(CustomPackage.CustomPackageStep4);
         props.initializeForm(FormName.CustomPackageStep4, {
             "reason_id": _get("reason_id", formFields),
-            "city": _get("city", formFields),
-            "delivery": _get("delivery", formFields),
-            "people_counter": _get("people_counter", formFields),
-            "dropzone": "" // file uploader
+            "deliver_city": _get("deliver_city", formFields),
+            "preferred_delivery_date": _get("preferred_delivery_date", formFields),
+            "people_counter": _get("people_counter", formFields)
         });
         // eslint-disable-next-line
     }, []);

@@ -50,7 +50,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
             <p className={styles.subtitle}>Essentials</p>
             <FurnitureList
                 furniture={furniture.essentials}
-                furnitureName={furniture.label}
+                furnitureName={`${furniture.label}_${furniture.category_room_id}`}
                 checked={true}
             />
             <button
@@ -64,7 +64,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
             {isOpen[furniture.label] && (
                 <FurnitureList
                     furniture={furniture.others}
-                    furnitureName={furniture.label}
+                    furnitureName={`${furniture.label}_${furniture.category_room_id}`}
                     checked={false}
                     initialValue={1}
                 />

@@ -5,5 +5,7 @@ export default {
 
     getFurnitureList: (categoriesIds: number[]) => http("POST", "consumer_facing/categories/select_furniture", categoriesIds),
 
-    getDesignStylesList: () => http("GET", "consumer_facing/design_styles")
+    getDesignStylesList: () => http("GET", "consumer_facing/design_styles"),
+
+    createStyleReport: (styleReportData: any) => http("POST", "consumer_facing/surveys", styleReportData)
 };
