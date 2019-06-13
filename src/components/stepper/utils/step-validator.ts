@@ -1,6 +1,7 @@
 import { FormName } from "../../../app-constants";
 import _get from "lodash/fp/get";
 import _isEmpty from "lodash/fp/isEmpty";
+import _includes from "lodash/fp/includes";
 import { getFormSyncErrors } from "redux-form";
 import store from "../../../redux/store";
 
@@ -15,7 +16,12 @@ export const disableNextButton = (data: any): boolean => {
 
     switch (formName) {
         case(FormName.CustomPackageStep2):
-            return false;
+            const allValues = Object.values(values);
+            const isExists = allValues.map((item: any) => {
+                return _includes(true, item);
+            });
+
+            return !isExists.includes(true);
 
         case(FormName.CustomPackageStep3):
             const answers = userAnswers.filter((answer) => answer === true);

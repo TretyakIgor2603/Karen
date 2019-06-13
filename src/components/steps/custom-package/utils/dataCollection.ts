@@ -1,3 +1,6 @@
+import { toastr } from "react-redux-toastr";
+import { getAxiosError } from "../../../../utils/helpers";
+
 export const getCategories = (values: { [key: string]: string }) => {
     const categories = [];
 
@@ -14,27 +17,31 @@ export const getCategories = (values: { [key: string]: string }) => {
 };
 
 export const getSelectedFurniture = (values: { [key: string]: any }) => {
-
     const selected_furniture: any = {};
 
-    for (const [key, value] of Object.entries(values)) {
+    try {
+        for (const [key, value] of Object.entries(values)) {
 
-        selected_furniture[key] = {
-            category_name: key,
-            category_room_id: value.category_room_id,
-            furniture: []
-        };
+            selected_furniture[key] = {
+                category_name: key,
+                category_room_id: value.category_room_id,
+                furniture: []
+            };
 
-        for (const [k, v] of Object.entries(value)) {
-            if (v && !k.endsWith("-id") && k !== "category_room_id") {
-                if (values[key][`${k}-id`] && values[key][key][`${k}-count`]) {
-                    selected_furniture[key].furniture.push({
-                        product_category_id: values[key][`${k}-id`],
-                        count: parseInt(values[key][key][`${k}-count`], 10)
-                    });
+            for (const [k, v] of Object.entries(value)) {
+                if (v && !k.endsWith("-id") && k !== "category_room_id") {
+                    if (values[key][`${k}-id`] && values[key][key][`${k}-count`]) {
+                        selected_furniture[key].furniture.push({
+                            product_category_id: values[key][`${k}-id`],
+                            count: parseInt(values[key][key][`${k}-count`], 10)
+                        });
+                    }
                 }
             }
         }
+    } catch (error) {
+        const err = getAxiosError(error);
+        toastr.error("Step 2 error", err);
     }
 
     return selected_furniture;

@@ -57,24 +57,23 @@ export const onFormSubmitRegistration = async (values: any): Promise<void> => {
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
     const personal_question = getPersonalQuestions(get(CustomPackage.CustomPackageStep4));
 
+    const surveysData: any = {
+        categories,
+        selected_furniture,
+        design_styles,
+        personal_question,
+        budget_string: "$1500 to $3500"
+    };
+
     try {
         const response = await http.registerUser(convertToFormData(userData));
         await set("token", `Bearer ${response.data.user.authentication_token}`);
-
-        const surveysData: any = {
-            categories,
-            selected_furniture,
-            design_styles,
-            personal_question,
-            budget_string: "$1500 to $3500",
-            user_id: response.data.user.id
-        };
-
+        surveysData.user_id = response.data.user.id;
         const surveysResponse = await httpCustomPackage.createStyleReport(convertToFormData(surveysData));
 
         console.log("--surveyResponse", surveysResponse);
 
-        window.location.replace(`${env.domain}/style_report`);
+        window.location.replace(`${env.domain}/style_report?auth_token=${response.data.user.authentication_token}`);
         toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
     } catch (error) {
         const err = getAxiosError(error);
