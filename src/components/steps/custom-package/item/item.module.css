@@ -27,7 +27,13 @@
 }
 
 .item-title {
+    max-height: 11rem;
+    margin-bottom: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     font-weight: 700;
+    text-align: center;
+    overflow-y: hidden;
     transition-property: all;
     transition-duration: 0.3s;
 }

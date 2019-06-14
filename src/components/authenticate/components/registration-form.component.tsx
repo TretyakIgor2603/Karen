@@ -125,10 +125,10 @@ export default compose<ComponentType<OwnProps>>(
         form: FormName.Registration,
         onSubmit: onFormSubmitRegistration,
         initialValues: {
-            first_name: "Test User Name",
-            last_name: "Test User Last name",
-            email: "test@email.com",
-            phone_number: parseInt("5555555555", 10),
+            first_name: "Test User 06/14/2019",
+            last_name: "Test User Last Name 06/14/2019",
+            email: "testUserEmail@test.com",
+            phone_number: parseInt("8885557777", 10),
             password: "123456789",
             password_confirmation: "123456789"
         },

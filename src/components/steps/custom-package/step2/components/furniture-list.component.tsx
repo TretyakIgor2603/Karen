@@ -31,7 +31,7 @@ const FurnitureListComponent = (props: Props): ReactElement<Props> => {
                                 component={FurnitureItem}
                                 title={item.label}
                                 image={item.icon_url.url ? item.icon_url.url : item.remote_icon_url}
-                                initialValue={initialValue ? initialValue : item.quantity}
+                                initialValue={initialValue ? initialValue : item.quantity > 0 ? item.quantity : 1}
                                 checked={checked}
                             />
                         </li>

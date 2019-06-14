@@ -59,3 +59,9 @@ export type UserRegistration = {
     password_confirmation: string;
     receive_email: boolean;
 }
+
+export type UserLogin = {
+    email: string;
+    password: string;
+    remember_me: 0;
+}

@@ -1,23 +1,36 @@
 import { toastr } from "react-redux-toastr";
 import { getAxiosError } from "../../../../utils/helpers";
 
+type Furniture = {
+    product_category_id: string;
+    count: number;
+};
+
+type SelectedFurniture = {
+    [key: string]: {
+        category_name: string;
+        category_room_id: string;
+        furniture: Furniture[];
+    }
+}
+
 export const getCategories = (values: { [key: string]: string }) => {
-    const categories = [];
+    const tempArray = [];
 
     for (const [key, value] of Object.entries(values)) {
         if (value && !key.includes("count")) {
-            categories.push({
+            tempArray.push({
                 id: key.substring(2),
                 count: Number(values[`${key}-count`])
             });
         }
     }
 
-    return categories;
+    return tempArray;
 };
 
 export const getSelectedFurniture = (values: { [key: string]: any }) => {
-    const selected_furniture: any = {};
+    const selected_furniture: SelectedFurniture = {};
 
     try {
         for (const [key, value] of Object.entries(values)) {

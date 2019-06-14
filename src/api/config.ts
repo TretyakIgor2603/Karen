@@ -7,13 +7,20 @@ const config: AxiosRequestConfig = {
     baseURL: Env.apiUrl,
     headers: {
         "Access-Control-Allow-Origin": "*",
-        "Authorization": get("token") ? get("token") : "",
         "withCredentials": true
     }
 };
 
-const axiosInstance: AxiosInstance = axios.create(config);
-
 export const http = (method: RequestMethod, url: string, data?: any): any => {
+    const token = get("token");
+
+    if (token) {
+        axios.defaults.headers.common["Authorization"] = token;
+    } else {
+        delete axios.defaults.headers.common["Authorization"];
+    }
+
+    const axiosInstance: AxiosInstance = axios.create(config);
+
     return axiosInstance({ method, url, data });
 };

@@ -9,6 +9,7 @@ import { toastr } from "react-redux-toastr";
 import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
+import { AxiosError } from "axios";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -44,7 +45,7 @@ export const onFormSubmitStep5 = (values: any): void => {
     set(CustomPackage.CustomPackageStep5, values);
 };
 
-export const onFormSubmitRegistration = async (values: any): Promise<void> => {
+export const onFormSubmitRegistration = (values: any): void => {
     const userData = {
         user: {
             ...values,
@@ -52,6 +53,52 @@ export const onFormSubmitRegistration = async (values: any): Promise<void> => {
         }
     };
 
+    http.registerUser(convertToFormData(userData))
+        .then((response: any) => {
+            set("token", `Bearer ${response.data.user.authentication_token}`);
+            return response.data;
+        })
+        .then((data: any) => {
+            const userName = data.user.first_name;
+            const token = data.user.authentication_token;
+            const id = data.user.id;
+
+            createStyleReport(id, token, userName);
+        })
+        .catch((error: AxiosError) => {
+            const err = getAxiosError(error);
+            toastr.error("Registration error", err);
+        });
+};
+
+export const onFormSubmitLogin = (values: any): void => {
+    const userData = {
+        user: {
+            ...values,
+            remember_me: 0
+        },
+        commit: "CONTINUE"
+    };
+
+    http.loginUser(convertToFormData(userData))
+        .then((response: any) => {
+            set("token", `Bearer ${response.data.user.authentication_token}`);
+            return response.data;
+        })
+        .then((data: any) => {
+            const userName = data.user.first_name;
+            const token = data.user.authentication_token;
+            const id = data.user.id;
+
+            createStyleReport(id, token, userName);
+        })
+        .catch((error: AxiosError) => {
+            const err = getAxiosError(error);
+            toastr.error("Login error", err);
+        });
+};
+
+function createStyleReport(userId: number, token: string, userName: string) {
     const categories = getCategories(get(CustomPackage.CustomPackageStep1));
     const selected_furniture = getSelectedFurniture(get(CustomPackage.CustomPackageStep2));
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
@@ -62,28 +109,18 @@ export const onFormSubmitRegistration = async (values: any): Promise<void> => {
         selected_furniture,
         design_styles,
         personal_question,
-        budget_string: "$1500 to $3500"
+        budget_string: "$1500 to $3500",
+        user_id: userId
     };
 
-    try {
-        const response = await http.registerUser(convertToFormData(userData));
-        await set("token", `Bearer ${response.data.user.authentication_token}`);
-        surveysData.user_id = response.data.user.id;
-        const surveysResponse = await httpCustomPackage.createStyleReport(convertToFormData(surveysData));
-
-        console.log("--surveyResponse", surveysResponse);
-
-        window.location.replace(`${env.domain}/style_report?auth_token=${response.data.user.authentication_token}`);
-        toastr.success(`Welcome, ${response.data.user.first_name} ${response.data.user.last_name}`, "");
-    } catch (error) {
-        const err = getAxiosError(error);
-        toastr.error("Register error", err);
-    }
-};
-
-export const onFormSubmitLogin = (values: any): void => {
-    console.log(
-        "🍆 Utils.ts, string: 60",
-        "---login form", values
-    );
-};
+    httpCustomPackage.createStyleReport(convertToFormData(surveysData))
+        .then((data: any) => {
+            console.log("--create user data--", data);
+            window.location.replace(`${env.domain}/style_report?auth_token=${token}`);
+            toastr.success(`Welcome, ${userName}`, "");
+        })
+        .catch((error: AxiosError) => {
+            const err = getAxiosError(error);
+            toastr.error("StyleReport error", err);
+        });
+}
