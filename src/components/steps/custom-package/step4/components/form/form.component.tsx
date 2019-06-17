@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactElement } from "react";
+import React from "react";
 // Styles
 import styles from "./form.module.css";
 // Utils
@@ -6,8 +6,8 @@ import { FormName } from "../../../../../../app-constants";
 import { onFormSubmitStep4 } from "../../../utils/submitting";
 import { syncValidate } from "../../../../../form-fields/utils/sync-validate";
 // Redux
-import { reduxForm, InjectedFormProps } from "redux-form";
-import { connect, MapStateToProps } from "react-redux";
+import form, { reduxForm } from "redux-form";
+import redux, { connect } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector } from "../../../redux-duck/selectors";
 // Components
@@ -26,7 +26,7 @@ export type FormData = {
     reason_id: string;
     preferred_delivery_date: string;
 };
-type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
+type Props = OwnProps & ReduxStateToProps & form.InjectedFormProps<FormData, OwnProps>;
 
 const reasonOptions = [
     { value: "1", label: "1. investment property" },
@@ -42,7 +42,7 @@ const deliveryOptions = [
     { value: "4", label: "4. no plan to move" }
 ];
 
-const FormComponent = (props: Props): ReactElement<Props> => {
+const FormComponent = (props: Props): React.ReactElement<Props> => {
     const { handleSubmit, isLoading } = props;
 
     return (
@@ -105,11 +105,11 @@ const FormComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
     isLoading: getLoadingSelector(state)
 });
 
-export default compose<ComponentType<OwnProps>>(
+export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep4,
         onSubmit: onFormSubmitStep4

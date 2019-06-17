@@ -1,11 +1,11 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useEffect } from "react";
 // Utils
 import { get } from "local-storage";
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 // Redux
-import { connect, MapDispatchToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form.component";
@@ -16,7 +16,7 @@ type OwnProps = { children?: never };
 type ReduxDispatchToProps = { initializeForm: typeof initialize };
 type Props = OwnProps & ReduxDispatchToProps;
 
-const Step2Component = (props: Props): ReactElement<Props> => {
+const Step2Component = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         props.initializeForm(FormName.CustomPackageStep2, get(CustomPackage.CustomPackageStep2));
         // eslint-disable-next-line
@@ -29,7 +29,7 @@ const Step2Component = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues))
 });
 

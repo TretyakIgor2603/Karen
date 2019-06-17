@@ -1,12 +1,12 @@
-import React, { ComponentType, ReactElement } from "react";
+import React from "react";
 // Styles
 import styles from "./form.module.css";
 // Utils
 import { FormName } from "../../../../../../app-constants";
 import { onFormSubmitStep5 } from "../../../utils/submitting";
 // Redux
-import { reduxForm, InjectedFormProps } from "redux-form";
-import { connect, MapStateToProps } from "react-redux";
+import form, { reduxForm } from "redux-form";
+import redux, { connect } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector } from "../../../redux-duck/selectors";
 // Components
@@ -21,9 +21,9 @@ type ReduxStateToProps = {
 type FormData = {
     BudgetString: string
 };
-type Props = OwnProps & ReduxStateToProps & InjectedFormProps<FormData, OwnProps>;
+type Props = OwnProps & ReduxStateToProps & form.InjectedFormProps<FormData, OwnProps>;
 
-const FormComponent = (props: Props): ReactElement<Props> => {
+const FormComponent = (props: Props): React.ReactElement<Props> => {
     const { handleSubmit, isLoading } = props;
 
     return (
@@ -41,11 +41,11 @@ const FormComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
     isLoading: getLoadingSelector(state)
 });
 
-export default compose<ComponentType<OwnProps>>(
+export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep5,
         onSubmit: onFormSubmitStep5

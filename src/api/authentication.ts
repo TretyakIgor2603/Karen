@@ -1,6 +1,6 @@
 import { http } from "./config";
 // TS types
-import { UserRegistration, UserLogin } from "../components/steps/custom-package/types";
+import { UserRegistration, UserLogin } from "../types/authentication";
 
 export default {
     registerUser: (user: UserRegistration) => http("POST", "consumer_facing/register", user),

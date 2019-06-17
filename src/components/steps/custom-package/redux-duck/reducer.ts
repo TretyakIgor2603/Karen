@@ -1,12 +1,12 @@
 import * as Type from "./constants";
 // TS types
 import { CustomPackageActions } from "./actions";
-import { Room, Furniture, DesignStyleRequest } from "../types";
-import { AxiosError } from "axios";
+import { Room, Furniture, DesignStyleRequest } from "../../../../types/custom-package";
+import { Error } from "../../../../types/axios";
 
 export type CustomPackageState = {
     loading: boolean;
-    error: null | string | AxiosError;
+    error: null | string | Error;
     roomList: Room[];
     furnitureList: Furniture[];
     designStyleList: DesignStyleRequest;

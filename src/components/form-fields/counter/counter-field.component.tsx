@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Components
 import Field from "../common/field.component";
 import Counter from "./counter.component";
@@ -10,7 +10,7 @@ type Props = {
     children?: never;
 }
 
-const CounterFieldComponent = (props: Props): ReactElement<Props> => {
+const CounterFieldComponent = (props: Props): React.ReactElement<Props> => {
     const { name, initialValue, autoFocus } = props;
 
     return <Field name={name} component={Counter} initialValue={initialValue} autoFocus={autoFocus} />;

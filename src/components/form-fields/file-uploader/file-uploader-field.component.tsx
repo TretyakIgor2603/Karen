@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Components
 import { Field } from "redux-form";
 import FileUploaderComponent from "./file-uploader.component";
@@ -7,7 +7,7 @@ import { InputProps } from "../common/field.component";
 
 type Props = { formName: string } & InputProps
 
-const FileUploaderFieldComponent = (props: Props): ReactElement<Props> => {
+const FileUploaderFieldComponent = (props: Props): React.ReactElement<Props> => {
     const { name, formName } = props;
 
     return (

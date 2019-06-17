@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { memo } from "react";
 // Styles
 import styles from "./form.module.css";
 // Components
@@ -6,7 +6,7 @@ import { Field } from "redux-form";
 import { HiddenInput } from "../../../../all-components";
 import FurnitureItem from "../../item/item.component";
 // TS types
-import { FurnitureItem as FurnitureItemType } from "../../types";
+import { FurnitureItem as FurnitureItemType } from "../../../../../types/custom-package";
 
 type OwnProps = {
     furniture: FurnitureItemType[];
@@ -16,7 +16,7 @@ type OwnProps = {
 }
 type Props = OwnProps
 
-const FurnitureListComponent = (props: Props): ReactElement<Props> => {
+const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
     const { furniture, initialValue, checked } = props;
 
     return (

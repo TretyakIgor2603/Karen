@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useEffect } from "react";
 // Utils
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
@@ -6,7 +6,7 @@ import { CustomPackage } from "../utils/submitting";
 import { get } from "local-storage";
 import _get from "lodash/fp/get";
 // Redux
-import { connect, MapDispatchToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form/form.component";
@@ -20,7 +20,7 @@ type ReduxDispatchToProps = {
 }
 type Props = OwnProps & ReduxDispatchToProps;
 
-const Step4Component = (props: Props): ReactElement<Props> => {
+const Step4Component = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         const formFields: FormData = get(CustomPackage.CustomPackageStep4);
         props.initializeForm(FormName.CustomPackageStep4, {
@@ -38,7 +38,7 @@ const Step4Component = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues))
 });
 

@@ -1,7 +1,8 @@
-import { SagaIterator } from "@redux-saga/core";
 import { put, takeLatest } from "redux-saga/effects";
 import { REGISTER_STEPS } from "../constants";
 import { registerStepsActionDone, RegisterStepsAction } from "../actions";
+// TS types
+import { SagaIterator } from "@redux-saga/core";
 
 function* registerStepsSaga({ payload }: RegisterStepsAction): SagaIterator {
     const { componentChildren } = payload;

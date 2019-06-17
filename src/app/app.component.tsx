@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Style
 import "./app.style.css";
 // Toastr
@@ -24,7 +24,7 @@ import {
 // TS types
 type Props = { children?: never }
 
-const AppComponent = (props: Props): ReactElement<Props> => {
+const AppComponent = (props: Props): React.ReactElement<Props> => {
     return (
         <Provider store={store}>
             <HelmetProvider>

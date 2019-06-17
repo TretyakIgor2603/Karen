@@ -1,4 +1,4 @@
-import React, { useState, ComponentType, ReactElement, ReactEventHandler } from "react";
+import React, { useState } from "react";
 // Styles
 import styles from "./form.module.css";
 // Utils
@@ -6,8 +6,8 @@ import { get, set } from "local-storage";
 import { FormName } from "../../../../../app-constants";
 import { CustomPackage, onFormSubmitStep2 } from "../../utils/submitting";
 // Redux
-import { reduxForm, InjectedFormProps } from "redux-form";
-import { connect, MapStateToProps } from "react-redux";
+import form, { reduxForm } from "redux-form";
+import redux, { connect } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector, makeGetFurnitureListSelector } from "../../redux-duck/selectors";
 // Components
@@ -15,7 +15,7 @@ import { FormSection } from "redux-form";
 import { MainLoader, HiddenInput } from "../../../../all-components";
 import FurnitureList from "./furniture-list.component";
 // TS types
-import { FilterFurniture } from "../../types";
+import { FilterFurniture } from "../../../../../types/custom-package";
 import { ReduxState } from "../../../../../redux/root-reducer";
 
 type OwnProps = { children?: never };
@@ -26,14 +26,14 @@ type ReduxStateToProps = {
 type FormData = {
     [key: string]: boolean | string | number
 };
-type Props = OwnProps & InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
+type Props = OwnProps & form.InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
 
-const FormComponent = (props: Props): ReactElement<Props> => {
+const FormComponent = (props: Props): React.ReactElement<Props> => {
     const [isOpen, setIsOpen] = useState<{ [x: string]: boolean }>(get(CustomPackage.CustomPackageStep2OpenOther) || {});
 
     const { handleSubmit, isLoading, furnitureList } = props;
 
-    const onButtonSubtitleClick: ReactEventHandler<HTMLButtonElement> = (event) => {
+    const onButtonSubtitleClick: React.ReactEventHandler<HTMLButtonElement> = (event) => {
         const { dataset } = event.target as HTMLButtonElement;
         const newIsOpen = {
             ...isOpen,
@@ -82,7 +82,7 @@ const FormComponent = (props: Props): ReactElement<Props> => {
 };
 
 const makeMapStateToProps = () => {
-    const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => {
+    const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => {
         const getFurnitureListSelector = makeGetFurnitureListSelector();
 
         return {
@@ -94,7 +94,7 @@ const makeMapStateToProps = () => {
     return mapStateToProps;
 };
 
-export default compose<ComponentType<OwnProps>>(
+export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep2,
         onSubmit: onFormSubmitStep2

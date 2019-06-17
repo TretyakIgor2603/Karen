@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { useState } from "react";
 import cn from "classnames";
 // Style
 import "rc-select/assets/index.css";
@@ -8,12 +8,12 @@ import Select, { Option } from "rc-select";
 import Label from "../common/label/label.component";
 import Message from "../common/message/message.component";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 import { SelectProps } from "./select-field.component";
 
-type Props = { children?: never } & WrappedFieldProps & SelectProps
+type Props = { children?: never } & form.WrappedFieldProps & SelectProps
 
-const SelectComponent = (props: Props): ReactElement<Props> => {
+const SelectComponent = (props: Props): React.ReactElement<Props> => {
     const [touch, setTouch] = useState<boolean>(false);
     const { className, placeholder, label, input, options, meta } = props;
     const { value, onChange, name } = input;

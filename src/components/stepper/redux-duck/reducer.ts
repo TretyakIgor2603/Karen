@@ -1,6 +1,6 @@
 import * as Type from "./constants";
 // TS types
-import { Step } from "../types";
+import { Step } from "../../../types/stepper";
 import { StepperActions } from "./actions";
 
 export type StepperState = {

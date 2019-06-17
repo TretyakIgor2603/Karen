@@ -1,9 +1,11 @@
-import { SagaIterator } from "@redux-saga/core";
 import { put, takeLatest, select } from "redux-saga/effects";
 import { ALLOW_NEXT_STEP } from "../constants";
 import { AllowNextStep, allowNextStepActionDone } from "../actions";
 import { getStepsSelector } from "../selectors";
-import { Step } from "../../types";
+
+// TS types
+import { SagaIterator } from "@redux-saga/core";
+import { Step } from "../../../../types/stepper";
 
 function* allowNextStepSaga({ payload }: AllowNextStep): SagaIterator {
     const { indexStep } = payload;

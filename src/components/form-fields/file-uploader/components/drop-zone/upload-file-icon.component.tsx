@@ -1,8 +1,8 @@
-import React, { memo, ReactElement } from "react";
+import React, { memo } from "react";
 // TS types
 type Props = { children?: never }
 
-const UploadFileIconComponent = (props: Props): ReactElement<Props> => {
+const UploadFileIconComponent = (props: Props): React.ReactElement<Props> => {
     return (
         <svg viewBox="-32 0 447 447.496" xmlns="http://www.w3.org/2000/svg" fill="gray">
             <path

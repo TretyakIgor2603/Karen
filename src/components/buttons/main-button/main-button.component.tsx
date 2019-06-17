@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, ReactNode } from "react";
+import React, { memo } from "react";
 // Style
 import styles from "./main-button.module.css";
 // Utils
@@ -8,14 +8,14 @@ import { noop } from "../../../utils/helpers";
 type Button = "submit" | "button";
 
 type Props = {
-    children: ReactNode;
+    children: React.ReactNode;
     className: string;
     onClick?: () => any;
     type?: Button;
     disabled?: boolean;
 }
 
-const MainButtonComponent = (props: Props): ReactElement<Props> => {
+const MainButtonComponent = (props: Props): React.ReactElement<Props> => {
     const {
         children,
         className,

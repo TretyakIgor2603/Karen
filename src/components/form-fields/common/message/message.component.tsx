@@ -1,4 +1,4 @@
-import React, { memo, ReactElement } from "react";
+import React, { memo } from "react";
 // Style
 import styles from "./message.module.css";
 // TS types
@@ -8,7 +8,7 @@ type Props = {
     children?: never;
 }
 
-const MessageComponent = (props: Props): ReactElement<Props> => {
+const MessageComponent = (props: Props): React.ReactElement<Props> => {
     const { warning, error } = props;
 
     return (

@@ -1,11 +1,11 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useEffect } from "react";
 // Utils
 import { get } from "local-storage";
-import { FormAction, initialize } from "redux-form";
+import form, { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 // Redux
-import { connect, MapDispatchToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 import { getRoomListAction } from "../redux-duck/actions";
 // Components
 import Layout from "../../layout/layout.component";
@@ -20,7 +20,7 @@ type ReduxDispatchToProps = {
 }
 type Props = OwnProps & ReduxDispatchToProps
 
-const Step1Component = (props: Props): ReactElement<Props> => {
+const Step1Component = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         props.getRoomList();
         props.initializeForm(FormName.CustomPackageStep1, get(CustomPackage.CustomPackageStep1));
@@ -34,8 +34,8 @@ const Step1Component = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
-    initializeForm: (formName: string, initialValues: any): FormAction => dispatch(initialize(formName, initialValues)),
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+    initializeForm: (formName: string, initialValues: any): form.FormAction => dispatch(initialize(formName, initialValues)),
     getRoomList: () => dispatch(getRoomListAction())
 });
 

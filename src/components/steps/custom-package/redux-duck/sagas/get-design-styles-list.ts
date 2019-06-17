@@ -1,10 +1,11 @@
-import { SagaIterator } from "@redux-saga/core";
 import { put, call, takeLatest } from "redux-saga/effects";
 import { GET_DESIGN_STYLES_LIST } from "../constants";
 import { getDesignStylesListErrorAction, getDesignStylesListDoneAction } from "../actions";
 import Http from "../../../../../api/custom-package";
 import { getAxiosError } from "../../../../../utils/helpers";
 import { toastr } from "react-redux-toastr";
+// TS types
+import { SagaIterator } from "@redux-saga/core";
 
 function* getDesignStylesListSaga(): SagaIterator {
     try {

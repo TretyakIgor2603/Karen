@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import cn from "classnames";
 // Styles
 import styles from "./drop-zone.module.css";
@@ -14,7 +14,7 @@ type Props = {
     children?: never;
 }
 
-const DropZoneComponent = (props: Props): ReactElement<Props> => {
+const DropZoneComponent = (props: Props): React.ReactElement<Props> => {
     const { isDragReject, isDragActive, formName, name } = props;
 
     const wrapperClassName = cn(`${styles.wrapper}`, {

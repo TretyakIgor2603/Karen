@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Styles
 import styles from "./error.module.css";
 // Components
@@ -12,7 +12,7 @@ type OwnProps = {
 }
 type Props = OwnProps
 
-const ErrorComponent = (props: Props): ReactElement<Props> => {
+const ErrorComponent = (props: Props): React.ReactElement<Props> => {
     const { reportError, error, eventId } = props;
 
     const onBackToHomeButtonClick = (): string => window.location.href = "/";

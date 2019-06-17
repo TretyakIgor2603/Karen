@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, ReactNode } from "react";
+import React, { memo } from "react";
 import cn from "classnames";
 // Style
 import styles from "./label.module.css";
@@ -6,11 +6,11 @@ import styles from "./label.module.css";
 export type LabelPosition = "top" | "left";
 type Props = {
     fieldId: string;
-    children: ReactNode;
+    children: React.ReactNode;
     labelPosition?: LabelPosition;
 }
 
-const LabelComponent = (props: Props): ReactElement<Props> => {
+const LabelComponent = (props: Props): React.ReactElement<Props> => {
     const { children, fieldId, labelPosition } = props;
 
     const classNames = cn(`${styles.label}`, {

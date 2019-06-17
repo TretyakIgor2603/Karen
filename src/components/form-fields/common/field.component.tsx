@@ -1,6 +1,6 @@
-import React, { memo, ReactElement, ReactNode } from "react";
+import React, { memo } from "react";
 // Components
-import { Field, FieldsWarnerOrValidator } from "redux-form";
+import form, { Field } from "redux-form";
 // TS types
 import { LabelPosition } from "./label/label.component";
 
@@ -19,13 +19,13 @@ export type InputProps = {
     label?: string;
     placeholder?: string;
     options?: Option[];
-    validate?: FieldsWarnerOrValidator;
+    validate?: form.FieldsWarnerOrValidator;
     warn?: any;
     children?: never;
 }
-type Props = { component: ReactNode } & InputProps
+type Props = { component: React.ReactNode } & InputProps
 
-const FieldComponent = (props: Props): ReactElement<Props> => {
+const FieldComponent = (props: Props): React.ReactElement<Props> => {
     const { component: Component, ...restProps } = props;
 
     return <Field {...restProps} component={Component} />;

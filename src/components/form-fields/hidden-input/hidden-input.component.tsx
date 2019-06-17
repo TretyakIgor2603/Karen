@@ -1,11 +1,11 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { useEffect } from "react";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 import { InputProps } from "../common/field.component";
 
-type Props = InputProps & WrappedFieldProps;
+type Props = InputProps & form.WrappedFieldProps;
 
-const HiddenInputComponent = (props: Props): ReactElement<Props> => {
+const HiddenInputComponent = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         if (props.initialValue) {
             props.input.onChange(props.initialValue);

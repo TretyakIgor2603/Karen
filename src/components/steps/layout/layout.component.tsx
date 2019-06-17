@@ -1,14 +1,14 @@
-import React, { ReactElement, ReactNode } from "react";
+import React from "react";
 // Styles
 import styles from "./layout.module.css";
 // TS types
 type OwnProps = {
     title: string;
-    children: ReactNode;
+    children: React.ReactNode;
 }
 type Props = OwnProps
 
-const LayoutComponent = (props: Props): ReactElement<Props> => {
+const LayoutComponent = (props: Props): React.ReactElement<Props> => {
     const { title, children } = props;
 
     return (

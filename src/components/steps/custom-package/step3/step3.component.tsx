@@ -1,11 +1,11 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useEffect } from "react";
 // Utils
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 import { get } from "local-storage";
 // Redux
-import { connect, MapDispatchToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 import { getDesignStylesListAction } from "../redux-duck/actions";
 // Components
 import Layout from "../../layout/layout.component";
@@ -20,7 +20,7 @@ type ReduxDispatchToProps = {
 };
 type Props = OwnProps & ReduxDispatchToProps;
 
-const Step3Component = (props: Props): ReactElement<Props> => {
+const Step3Component = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         props.initializeForm(FormName.CustomPackageStep3, get(CustomPackage.CustomPackageStep3));
         props.getDesignStylesList();
@@ -34,7 +34,7 @@ const Step3Component = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues)),
     getDesignStylesList: () => dispatch(getDesignStylesListAction())
 });

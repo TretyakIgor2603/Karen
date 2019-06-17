@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
 import * as Type from "./constants";
 // TS types
-import { Step } from "../types";
+import { Step } from "../../../types/stepper";
+import { ReactElement } from "react";
 
 export type RegisterStepsAction = {
     type: string;

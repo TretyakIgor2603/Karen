@@ -1,4 +1,4 @@
-import { FormErrors } from "redux-form";
+import form from "redux-form";
 
 export const syncValidate = {
     required(value: string): void | string {
@@ -21,7 +21,7 @@ export const syncValidate = {
     }
 };
 
-export const validate = (values: any): FormErrors<{}> => {
+export const validate = (values: any): form.FormErrors<{}> => {
     const errors: { [key: string]: string } = {};
     const { password, password_confirmation } = values;
 

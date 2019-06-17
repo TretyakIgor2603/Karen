@@ -1,16 +1,16 @@
-import React, { useEffect, ReactElement } from "react";
+import React, { useEffect } from "react";
 // Style
 import styles from "./counter.module.css";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 
 type Props = {
     initialValue: number;
     autoFocus?: boolean;
     children?: never;
-} & WrappedFieldProps
+} & form.WrappedFieldProps
 
-const CounterComponent = (props: Props): ReactElement<Props> => {
+const CounterComponent = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         if (props.input.value === "" && props.initialValue) {
             props.input.onChange(props.initialValue);
@@ -23,12 +23,12 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
     const step = 1;
     const minValue = 0;
 
-    const increment = (): void => onChange(Number(value) + step);
+    const increment = (): void => onChange(parseInt(value, 10) + step);
 
     const decrement = (): void | number => {
-        if (value <= minValue) return Number(value);
+        if (value <= minValue) return parseInt(value, 10);
 
-        onChange(Number(value) - step);
+        onChange(parseInt(value, 10) - step);
     };
 
     return (
@@ -47,7 +47,7 @@ const CounterComponent = (props: Props): ReactElement<Props> => {
                 type="number"
                 min={minValue}
                 step={step}
-                value={Number(value)}
+                value={parseInt(value, 10)}
                 onChange={onChange}
                 className={`text-ellipsis ${styles.field}`}
                 autoFocus={autoFocus}

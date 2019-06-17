@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, ReactElement } from "react";
+import React, { useEffect, useRef } from "react";
 // Styles
 import styles from "./item.module.css";
 // Utils
@@ -6,7 +6,7 @@ import { defaultImageSrc } from "../../../../app-constants";
 // Components
 import { InputCounter } from "../../../all-components";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 
 type OwnProps = {
     title: string;
@@ -15,9 +15,9 @@ type OwnProps = {
     checked?: boolean;
     children?: never;
 }
-type Props = OwnProps & WrappedFieldProps
+type Props = OwnProps & form.WrappedFieldProps
 
-const ItemComponent = (props: Props): ReactElement<Props> => {
+const ItemComponent = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
         if (props.checked) { props.input.onChange(true); }
         // eslint-disable-next-line

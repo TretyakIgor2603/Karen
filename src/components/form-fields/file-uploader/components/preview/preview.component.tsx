@@ -1,12 +1,12 @@
-import React, { memo, Suspense, lazy, ReactElement, SyntheticEvent, ComponentType } from "react";
+import React, { memo, Suspense, lazy } from "react";
 // Styles
 import styles from "./preview.module.css";
 // Utils
 import _get from "lodash/fp/get";
 // Redux
-import { connect, MapDispatchToProps, MapStateToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 import { compose } from "redux";
-import { change, FormAction } from "redux-form";
+import form, { change } from "redux-form";
 import { ReduxState } from "../../../../../redux/root-reducer";
 // Components
 import { toastr } from "react-redux-toastr";
@@ -17,7 +17,7 @@ const LazyImage = lazy(() => import("./preview-image.component"));
 // TS types
 type ReduxStateToProps = { files?: File[] }
 
-type ReduxDispatchToProps = { changeValue: (form: string, field: string, value: any) => FormAction }
+type ReduxDispatchToProps = { changeValue: (form: string, field: string, value: any) => form.FormAction }
 
 type OwnProps = {
     name: string;
@@ -25,9 +25,9 @@ type OwnProps = {
     children?: never;
 }
 
-type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps
+type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
-const PreviewComponent = (props: Props): ReactElement<Props> => {
+const PreviewComponent = (props: Props): React.ReactElement<Props> => {
     const { files = [], formName, name, changeValue } = props;
 
     const calculateBytesToKilobytes = (bytes: number): number => {
@@ -35,9 +35,9 @@ const PreviewComponent = (props: Props): ReactElement<Props> => {
         return Math.floor(bytes / oneKB);
     };
 
-    const onItemClick = (event: SyntheticEvent<HTMLLIElement>): void => event && event.stopPropagation && event.stopPropagation();
+    const onItemClick = (event: React.SyntheticEvent<HTMLLIElement>): void => event && event.stopPropagation && event.stopPropagation();
 
-    const onDeletePreviewButtonClick = (event: SyntheticEvent<HTMLButtonElement>): void => {
+    const onDeletePreviewButtonClick = (event: React.SyntheticEvent<HTMLButtonElement>): void => {
         event && event.stopPropagation && event.stopPropagation();
         const newFiles = files.filter((file: File) => file.name !== event.currentTarget.dataset.id);
 
@@ -82,15 +82,15 @@ const PreviewComponent = (props: Props): ReactElement<Props> => {
 };
 
 // Enhancer
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state, ownProps) => ({
+const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state, ownProps) => ({
     files: _get(`form[${ownProps.formName}]values[${ownProps.name}]`, state)
 });
 
-const mapDispatchToProps: MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     changeValue: (form, field, value) => dispatch(change(form, field, value))
 });
 
-export default compose<ComponentType<OwnProps>>(
+export default compose<React.ComponentType<OwnProps>>(
     memo,
     connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)
 )(PreviewComponent);

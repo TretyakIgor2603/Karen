@@ -1,4 +1,4 @@
-import React, { ReactElement, ComponentType } from "react";
+import React from "react";
 // Utils
 import { FormName } from "../../../../../app-constants";
 import { onFormSubmitStep1 } from "../../utils/submitting";
@@ -6,16 +6,16 @@ import _get from "lodash/fp/get";
 // Styles
 import styles from "./form.module.css";
 // Redux
-import { connect, MapStateToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector, getRoomListSelector } from "../../redux-duck/selectors";
 // Components
-import { Field, reduxForm, InjectedFormProps } from "redux-form";
+import form, { Field, reduxForm } from "redux-form";
 import RoomItem from "../../item/item.component";
 import { MainLoader } from "../../../../all-components";
 // TS types
-import { Room } from "../../types";
 import { ReduxState } from "../../../../../redux/root-reducer";
+import { Room } from "../../../../../types/custom-package";
 
 type ReduxStateToProps = {
     isLoading: boolean;
@@ -28,9 +28,9 @@ type OwnProps = {
 type FormData = {
     [key: string]: boolean
 }
-type Props = OwnProps & InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
+type Props = OwnProps & form.InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
 
-const FormComponent = (props: Props): ReactElement<Props> => {
+const FormComponent = (props: Props): React.ReactElement<Props> => {
     const { handleSubmit, isLoading, rooms } = props;
 
     const roomsBody = (rooms && rooms.length) ? (
@@ -58,12 +58,12 @@ const FormComponent = (props: Props): ReactElement<Props> => {
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
+const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
     isLoading: getLoadingSelector(state),
     rooms: getRoomListSelector(state)
 });
 
-export default compose<ComponentType<OwnProps>>(
+export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep1,
         onSubmit: onFormSubmitStep1

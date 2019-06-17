@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import cn from "classnames";
 // Style
 import styles from "./input.module.css";
@@ -6,12 +6,12 @@ import styles from "./input.module.css";
 import Label from "../common/label/label.component";
 import Message from "../common/message/message.component";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 import { InputProps } from "../common/field.component";
 
-type Props = InputProps & WrappedFieldProps
+type Props = InputProps & form.WrappedFieldProps
 
-const InputComponent = (props: Props): ReactElement<Props> => {
+const InputComponent = (props: Props): React.ReactElement<Props> => {
     const { type, label, placeholder, labelPosition, className, meta, input } = props;
     const { warning, error, touched, invalid } = meta;
 

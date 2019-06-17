@@ -2,7 +2,7 @@ import http from "../../../../api/authentication";
 import httpCustomPackage from "../../../../api/custom-package";
 import convertToFormData from "object-to-formdata";
 import store from "../../../../redux/store";
-import { set, get } from "local-storage";
+import { set, get, remove } from "local-storage";
 import env from "../../../../env/env";
 import { getAxiosError } from "../../../../utils/helpers";
 import { toastr } from "react-redux-toastr";
@@ -10,6 +10,8 @@ import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } 
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
 import { AxiosError } from "axios";
+import { User } from "../../../../types/authentication";
+import { StyleReportData } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -54,17 +56,18 @@ export const onFormSubmitRegistration = (values: any): void => {
     };
 
     http.registerUser(convertToFormData(userData))
-        .then((response: any) => {
+        .then((response: { data: { user: User } }) => {
             set("token", `Bearer ${response.data.user.authentication_token}`);
             return response.data;
         })
-        .then((data: any) => {
+        .then((data: { user: User }) => {
             const userName = data.user.first_name;
             const token = data.user.authentication_token;
             const id = data.user.id;
 
             createStyleReport(id, token, userName);
         })
+        .then(() => clearStorage())
         .catch((error: AxiosError) => {
             const err = getAxiosError(error);
             toastr.error("Registration error", err);
@@ -81,17 +84,18 @@ export const onFormSubmitLogin = (values: any): void => {
     };
 
     http.loginUser(convertToFormData(userData))
-        .then((response: any) => {
+        .then((response: { data: { user: User } }) => {
             set("token", `Bearer ${response.data.user.authentication_token}`);
             return response.data;
         })
-        .then((data: any) => {
+        .then((data: { user: User }) => {
             const userName = data.user.first_name;
             const token = data.user.authentication_token;
             const id = data.user.id;
 
             createStyleReport(id, token, userName);
         })
+        .then(() => clearStorage())
         .catch((error: AxiosError) => {
             const err = getAxiosError(error);
             toastr.error("Login error", err);
@@ -104,6 +108,7 @@ function createStyleReport(userId: number, token: string, userName: string) {
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
     const personal_question = getPersonalQuestions(get(CustomPackage.CustomPackageStep4));
 
+    // const surveysData: StyleReportData = {
     const surveysData: any = {
         categories,
         selected_furniture,
@@ -114,8 +119,7 @@ function createStyleReport(userId: number, token: string, userName: string) {
     };
 
     httpCustomPackage.createStyleReport(convertToFormData(surveysData))
-        .then((data: any) => {
-            console.log("--create user data--", data);
+        .then((data: { data: { style_report_url: string } }) => {
             window.location.replace(`${env.domain}/style_report?auth_token=${token}`);
             toastr.success(`Welcome, ${userName}`, "");
         })
@@ -123,4 +127,12 @@ function createStyleReport(userId: number, token: string, userName: string) {
             const err = getAxiosError(error);
             toastr.error("StyleReport error", err);
         });
+}
+
+function clearStorage(): void {
+    remove(CustomPackage.CustomPackageStep1);
+    remove(CustomPackage.CustomPackageStep2);
+    remove(CustomPackage.CustomPackageStep3);
+    remove(CustomPackage.CustomPackageStep4);
+    remove(CustomPackage.CustomPackageStep5);
 }

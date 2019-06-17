@@ -1,5 +1,6 @@
-import { SagaIterator } from "@redux-saga/core";
 import { all, spawn } from "redux-saga/effects";
+// TS types
+import { SagaIterator } from "@redux-saga/core";
 // All sagas
 import { default as stepper } from "../components/stepper/redux-duck/saga";
 import { default as customPackage } from "../components/steps/custom-package/redux-duck/saga";

@@ -1,19 +1,19 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Styles
 import styles from "./list-item.module.css";
 // Utils
 import { defaultImageSrc } from "../../../../../../app-constants";
 // TS types
-import { WrappedFieldProps } from "redux-form";
+import form from "redux-form";
 
 type OwnProps = {
     label: string;
     image: string;
     children?: never;
 }
-type Props = OwnProps & WrappedFieldProps
+type Props = OwnProps & form.WrappedFieldProps
 
-const ListItemComponent = (props: Props): ReactElement<Props> => {
+const ListItemComponent = (props: Props): React.ReactElement<Props> => {
     const { image, input, label } = props;
 
     return (

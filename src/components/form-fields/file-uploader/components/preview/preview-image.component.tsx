@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Styles
 import styles from "./preview.module.css";
 // Images
@@ -10,7 +10,7 @@ type OwnProps = {
 }
 type Props = OwnProps
 
-const PreviewImageComponent = (props: Props): ReactElement<Props> => {
+const PreviewImageComponent = (props: Props): React.ReactElement<Props> => {
     const { file } = props;
     return (
         <div className={styles.preview}>

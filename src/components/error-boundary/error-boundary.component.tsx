@@ -1,9 +1,9 @@
-import React, { Component, ReactElement, ErrorInfo } from "react";
+import React, { Component } from "react";
 import * as Sentry from "@sentry/browser";
 // Components
 import ErrorPage from "./components/error.component";
 // TS types
-type OwnProps = { children: ReactElement }
+type OwnProps = { children: React.ReactElement }
 type Props = OwnProps
 type State = {
     hasError: boolean;
@@ -24,7 +24,7 @@ class ErrorBoundaryComponent extends Component<Props, State> {
         return { hasError: true, error };
     }
 
-    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
         this.setState({ error });
 
         Sentry.withScope((scope) => {
@@ -39,7 +39,7 @@ class ErrorBoundaryComponent extends Component<Props, State> {
         Sentry.showReportDialog({ eventId });
     };
 
-    render(): ReactElement {
+    render(): React.ReactElement {
         const { hasError, eventId, error } = this.state;
 
         if (hasError) {

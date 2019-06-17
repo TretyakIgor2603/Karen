@@ -1,4 +1,6 @@
 import { http } from "./config";
+// TS types
+import { StyleReportData } from "../types/custom-package";
 
 export default {
     getRoomList: () => http("GET", "consumer_facing/categories"),
@@ -7,5 +9,5 @@ export default {
 
     getDesignStylesList: () => http("GET", "consumer_facing/design_styles"),
 
-    createStyleReport: (styleReportData: any) => http("POST", "consumer_facing/surveys", styleReportData)
+    createStyleReport: (styleReportData: StyleReportData) => http("POST", "consumer_facing/surveys", styleReportData)
 };

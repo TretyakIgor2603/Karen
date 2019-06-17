@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // Components
 import Field, { InputProps } from "../common/field.component";
 import InputComponent from "./input.component";
 
 type Props = InputProps
 
-const InputFieldComponent = (props: Props): ReactElement<Props> => {
+const InputFieldComponent = (props: Props): React.ReactElement<Props> => {
     const { name, type, label, placeholder, labelPosition, className = "", warn, validate } = props;
 
     return (

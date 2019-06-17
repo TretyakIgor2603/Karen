@@ -1,3 +1,34 @@
+type Category = {
+    id: number | string,
+    count: number
+}
+
+type FurnitureSend = {
+    product_category_id: number;
+    count: number
+}
+
+type SelectedFurniture = {
+    category_name: string;
+    category_room_id: number;
+    furniture: FurnitureSend[];
+}
+
+type PersonalQuestions = {
+    reason_id: number;
+    deliver_city: string;
+    preferred_delivery_date: string;
+    people_counter: number;
+}
+
+export type StyleReportData = {
+    categories: Category[];
+    selected_furniture: SelectedFurniture[];
+    design_styles: number[];
+    personal_question: PersonalQuestions;
+    budget_string: string;
+    user_id: number;
+}
 export type Room = {
     value: number;
     label: string;
@@ -48,20 +79,4 @@ export type DesignStyleRequest = {
     is_logged?: boolean;
     style_quiz?: boolean;
     design_styles?: DesignStyle[];
-}
-
-export type UserRegistration = {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone_number: string;
-    password: string;
-    password_confirmation: string;
-    receive_email: boolean;
-}
-
-export type UserLogin = {
-    email: string;
-    password: string;
-    remember_me: 0;
 }

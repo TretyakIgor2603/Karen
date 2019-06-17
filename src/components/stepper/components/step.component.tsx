@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from "react";
+import React from "react";
 // Utils
 import cn from "classnames";
 // Styles
@@ -11,11 +11,11 @@ type OwnProps = {
     isPass?: number;
     isActive?: boolean;
     isDisabled?: boolean;
-    children: ReactNode;
+    children: React.ReactNode;
 }
 type Props = OwnProps
 
-const StepComponent = (props: Props): ReactElement<Props> => {
+const StepComponent = (props: Props): React.ReactElement<Props> => {
     const { onClick, stepIndex = 0, title, isPass, isActive, isDisabled } = props;
 
     const navigationItemClassName = cn(styles["navigation-item"], {

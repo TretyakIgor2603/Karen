@@ -1,9 +1,9 @@
-import React, { memo, ReactElement } from "react";
+import React, { memo } from "react";
 // TS types
 type OwnProps = { children?: never }
 type Props = OwnProps
 
-const DeleteButtonIconComponent = (props: Props): ReactElement<Props> => {
+const DeleteButtonIconComponent = (props: Props): React.ReactElement<Props> => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
             <path

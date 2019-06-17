@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
+import React from "react";
 // TS types
 type OwnProps = { children?: never }
 type Props = OwnProps
 
-const DefaultImageComponent = (props: Props): ReactElement<Props> => {
+const DefaultImageComponent = (props: Props): React.ReactElement<Props> => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58">
             <path
