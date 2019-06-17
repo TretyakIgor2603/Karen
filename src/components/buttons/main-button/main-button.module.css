@@ -1,5 +1,9 @@
 .button {
+    min-height: 58px;
+    margin: 0;
     padding: 2rem;
+    float: none;
+    text-indent: 0;
     text-transform: uppercase;
     color: var(--main-button__color);
     background-color: var(--main-button__background-color);
@@ -7,6 +11,7 @@
     border-radius: 0.5rem;
     transition-property: all;
     transition-duration: 0.3s;
+    background-image: none;
 }
 
 .button:hover,
