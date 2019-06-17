@@ -9,7 +9,7 @@ import { toastr } from "react-redux-toastr";
 import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
-import { AxiosError } from "axios";
+import { Error } from "../../../../types/axios";
 import { User } from "../../../../types/authentication";
 import { StyleReportData } from "../../../../types/custom-package";
 
@@ -68,7 +68,7 @@ export const onFormSubmitRegistration = (values: any): void => {
             createStyleReport(id, token, userName);
         })
         .then(() => clearStorage())
-        .catch((error: AxiosError) => {
+        .catch((error: Error) => {
             const err = getAxiosError(error);
             toastr.error("Registration error", err);
         });
@@ -96,7 +96,7 @@ export const onFormSubmitLogin = (values: any): void => {
             createStyleReport(id, token, userName);
         })
         .then(() => clearStorage())
-        .catch((error: AxiosError) => {
+        .catch((error: Error) => {
             const err = getAxiosError(error);
             toastr.error("Login error", err);
         });
@@ -108,8 +108,7 @@ function createStyleReport(userId: number, token: string, userName: string) {
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
     const personal_question = getPersonalQuestions(get(CustomPackage.CustomPackageStep4));
 
-    // const surveysData: StyleReportData = {
-    const surveysData: any = {
+    const surveysData: StyleReportData = {
         categories,
         selected_furniture,
         design_styles,
@@ -119,11 +118,11 @@ function createStyleReport(userId: number, token: string, userName: string) {
     };
 
     httpCustomPackage.createStyleReport(convertToFormData(surveysData))
-        .then((data: { data: { style_report_url: string } }) => {
+        .then(() => {
             window.location.replace(`${env.domain}/style_report?auth_token=${token}`);
             toastr.success(`Welcome, ${userName}`, "");
         })
-        .catch((error: AxiosError) => {
+        .catch((error: Error) => {
             const err = getAxiosError(error);
             toastr.error("StyleReport error", err);
         });

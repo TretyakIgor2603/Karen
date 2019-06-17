@@ -1,5 +1,7 @@
 import { toastr } from "react-redux-toastr";
 import { getAxiosError } from "../../../../utils/helpers";
+// TS types
+import { PersonalQuestions } from "../../../../types/custom-package";
 
 type Furniture = {
     product_category_id: string;
@@ -73,10 +75,11 @@ export const getStyles = (values: { [key: string]: string }) => {
 };
 
 export const getPersonalQuestions = (values: { [key: string]: string }) => {
-    const answers: { [key: string]: string | File[] | undefined } = {};
+    const answers: PersonalQuestions = {};
 
     for (const [key, value] of Object.entries(values)) {
         if (key === "preferred_delivery_date" || key === "reason_id") {
+            // @ts-ignore
             answers[key] = value.substring(0, 1);
         } else {
             answers[key] = value;

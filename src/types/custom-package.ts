@@ -3,27 +3,17 @@ type Category = {
     count: number
 }
 
-type FurnitureSend = {
-    product_category_id: number;
-    count: number
-}
-
-type SelectedFurniture = {
-    category_name: string;
-    category_room_id: number;
-    furniture: FurnitureSend[];
-}
-
-type PersonalQuestions = {
-    reason_id: number;
-    deliver_city: string;
-    preferred_delivery_date: string;
-    people_counter: number;
+export type PersonalQuestions = {
+    reason_id?: number;
+    deliver_city?: string;
+    preferred_delivery_date?: string;
+    people_counter?: number;
+    [question: string]: string | number | File[] | undefined;
 }
 
 export type StyleReportData = {
     categories: Category[];
-    selected_furniture: SelectedFurniture[];
+    selected_furniture: any;
     design_styles: number[];
     personal_question: PersonalQuestions;
     budget_string: string;

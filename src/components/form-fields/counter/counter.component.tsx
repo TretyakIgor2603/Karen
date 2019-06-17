@@ -47,7 +47,7 @@ const CounterComponent = (props: Props): React.ReactElement<Props> => {
                 type="number"
                 min={minValue}
                 step={step}
-                value={parseInt(value, 10)}
+                value={+(value)}
                 onChange={onChange}
                 className={`text-ellipsis ${styles.field}`}
                 autoFocus={autoFocus}
