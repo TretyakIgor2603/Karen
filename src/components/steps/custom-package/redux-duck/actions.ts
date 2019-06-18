@@ -28,13 +28,19 @@ export type GetDesignStylesListDone = {
     payload: { designStyleList: DesignStyle[] };
 }
 
+export type Loading = {
+    type: string;
+    payload: { loading: boolean }
+}
+
 export type CustomPackageActions =
     WatchAction
     & GetRoomListDone
     & ActionError
     & GetFurnitureList
     & GetFurnitureListDone
-    & GetDesignStylesListDone;
+    & GetDesignStylesListDone
+    & Loading;
 
 export const getRoomListAction = (): WatchAction => ({ type: Type.GET_ROOM_LIST });
 export const getRoomListDoneAction = (roomList: Room[]): GetRoomListDone => ({
@@ -67,4 +73,9 @@ export const getDesignStylesListDoneAction = (designStyleList: DesignStyle[]): G
 export const getDesignStylesListErrorAction = (error: Error): ActionError => ({
     type: Type.GET_DESIGN_STYLES_LIST_ERROR,
     payload: { error }
+});
+
+export const loadingAction = (loading: boolean): Loading => ({
+    type: Type.LOADING,
+    payload: { loading }
 });

@@ -13,7 +13,7 @@ import { getFurnitureListAction } from "../redux-duck/actions";
 // TS types
 import { Error } from "../../../../types/axios";
 import { User } from "../../../../types/authentication";
-import { StyleReportData, PostFiles } from "../../../../types/custom-package";
+import { StyleReportData, PostFiles, CustomPackageStep4File } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -47,16 +47,23 @@ export const onFormSubmitStep4 = (values: any): void => {
 
     const files = _get("styles", values);
 
-    if (files) {
-        const data = {
-            survey_image: {
-                aws_path: files[0],
-                name: files[0].name
-            }
-        };
+    if (files && files.length) {
+        const images = files.map((file: File) => ({
+            aws_path: file,
+            name: file.name
+        }));
+
+        const data = { survey: { images } };
         httpCustomPackage.postFiles(convertToFormData(data))
             .then((response: PostFiles) => {
-                set(CustomPackage.CustomPackageStep4Styles, [response.data]);
+                const alreadySelect: CustomPackageStep4File[] = get(CustomPackage.CustomPackageStep4Styles);
+
+                if (alreadySelect && alreadySelect.length) {
+                    set(CustomPackage.CustomPackageStep4Styles, alreadySelect.concat(response.data));
+                } else {
+                    set(CustomPackage.CustomPackageStep4Styles, response.data);
+                }
+
             })
             .catch((error: Error) => {
                 const err = getAxiosError(error);

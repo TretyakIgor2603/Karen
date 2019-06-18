@@ -77,7 +77,6 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
                 error: payload.error,
                 designStyleList: {}
             };
-
         default:
             return state;
     }

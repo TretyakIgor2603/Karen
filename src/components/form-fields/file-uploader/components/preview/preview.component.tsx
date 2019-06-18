@@ -62,25 +62,27 @@ const PreviewComponent = (props: Props): React.ReactElement<Props> => {
         const id = event.currentTarget.dataset.id;
 
         if (id) {
-            http.deleteFile(id)
-                .then(() => {
-                    if (previews) {
-                        const newPreviews = previews.filter((item) => item.id !== parseInt(id, 10));
-                        set(CustomPackage.CustomPackageStep4Styles, newPreviews);
-                        setPreviews(newPreviews);
-                    }
-                })
-                .catch((error: Error) => {
-                    const err = getAxiosError(error);
-                    toastr.error("Delete file error", err);
-                });
-        }
+            const deleteFile = () => {
+                http.deleteFile(id)
+                    .then(() => {
+                        if (previews) {
+                            const newPreviews = previews.filter((item) => item.id !== parseInt(id, 10));
+                            set(CustomPackage.CustomPackageStep4Styles, newPreviews);
+                            setPreviews(newPreviews);
+                        }
+                    })
+                    .catch((error: Error) => {
+                        const err = getAxiosError(error);
+                        toastr.error("Delete file error", err);
+                    });
+            };
 
-        const toastrConfirmOptions = {
-            onOk: () => changeValue(formName, name, () => {}),
-            onCancel: () => undefined
-        };
-        toastr.confirm("Are you sure about that!", toastrConfirmOptions);
+            const toastrConfirmOptions = {
+                onOk: () => deleteFile(),
+                onCancel: () => undefined
+            };
+            toastr.confirm("Are you sure about that!", toastrConfirmOptions);
+        }
     };
 
     const filesBody = (files && files.length) ? (
