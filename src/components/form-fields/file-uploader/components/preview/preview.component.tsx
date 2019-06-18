@@ -1,8 +1,11 @@
-import React, { memo, Suspense, lazy } from "react";
+import React, { memo, Suspense, lazy, useState } from "react";
 // Styles
 import styles from "./preview.module.css";
 // Utils
 import _get from "lodash/fp/get";
+import { get, set } from "local-storage";
+import http from "../../../../../api/custom-package";
+import { getAxiosError } from "../../../../../utils/helpers";
 // Redux
 import redux, { connect } from "react-redux";
 import { compose } from "redux";
@@ -10,8 +13,13 @@ import form, { change } from "redux-form";
 import { ReduxState } from "../../../../../redux/root-reducer";
 // Components
 import { toastr } from "react-redux-toastr";
-import DeleteButtonIcon from "./delete-button-icon.component";
+import PreviewHover from "./preview-hover.component";
 import { FileLoader } from "../../../../all-components";
+import iconPDF from "./images/pdf-format.svg";
+import { CustomPackage } from "../../../../steps/custom-package/utils/submitting";
+// TS types
+import { CustomPackageStep4File } from "../../../../../types/custom-package";
+import { Error } from "../../../../../types/axios";
 
 const LazyImage = lazy(() => import("./preview-image.component"));
 // TS types
@@ -28,6 +36,7 @@ type OwnProps = {
 type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
 const PreviewComponent = (props: Props): React.ReactElement<Props> => {
+    const [previews, setPreviews] = useState<CustomPackageStep4File[] | undefined>(get(CustomPackage.CustomPackageStep4Styles));
     const { files = [], formName, name, changeValue } = props;
 
     const calculateBytesToKilobytes = (bytes: number): number => {
@@ -48,35 +57,75 @@ const PreviewComponent = (props: Props): React.ReactElement<Props> => {
         toastr.confirm("Are you sure about that!", toastrConfirmOptions);
     };
 
+    const onDeletePreviewButtonClickHttp = (event: React.SyntheticEvent<HTMLButtonElement>): void => {
+        event && event.stopPropagation && event.stopPropagation();
+        const id = event.currentTarget.dataset.id;
+
+        if (id) {
+            http.deleteFile(id)
+                .then(() => {
+                    if (previews) {
+                        const newPreviews = previews.filter((item) => item.id !== parseInt(id, 10));
+                        set(CustomPackage.CustomPackageStep4Styles, newPreviews);
+                        setPreviews(newPreviews);
+                    }
+                })
+                .catch((error: Error) => {
+                    const err = getAxiosError(error);
+                    toastr.error("Delete file error", err);
+                });
+        }
+
+        const toastrConfirmOptions = {
+            onOk: () => changeValue(formName, name, () => {}),
+            onCancel: () => undefined
+        };
+        toastr.confirm("Are you sure about that!", toastrConfirmOptions);
+    };
+
     const filesBody = (files && files.length) ? (
         files.map((file: File) => (
             <li key={file.name} className={styles.item} onClick={onItemClick}>
                 <Suspense fallback={<FileLoader />}>
-                    <LazyImage file={file} />
+                    <LazyImage
+                        src={(file.type === "application/pdf") ? iconPDF : URL.createObjectURL(file)}
+                        alt={file.name}
+                    />
                 </Suspense>
-                <div className={styles["item-hover"]}>
-                    <button
-                        type="button"
-                        data-id={file.name}
-                        className={styles["remove-button"]}
-                        onClick={onDeletePreviewButtonClick}
-                    >
-                        <DeleteButtonIcon />
-                        <span className="visually-hidden">Delete preview</span>
-                    </button>
-                    <p className={`text-ellipsis ${styles.subtitle}`}>
-                        <strong>{calculateBytesToKilobytes(file.size)}</strong> KB
-                    </p>
-                    <p className={`text-ellipsis ${styles.subtitle}`}>{file.name}</p>
-                </div>
+                <PreviewHover
+                    id={file.name}
+                    fileName={file.name}
+                    fileSize={calculateBytesToKilobytes(file.size)}
+                    onDeletePreviewButtonClick={onDeletePreviewButtonClick}
+                />
             </li>
         ))
 
     ) : null;
 
+    const previewBody = (previews && Array.isArray(previews)) ? (
+        previews.map((arrayItem) => (
+            <li key={arrayItem.id} className={styles.item} onClick={onItemClick}>
+                <Suspense fallback={<FileLoader />}>
+                    <LazyImage
+                        src={(arrayItem.aws_path.url.endsWith(".pdf")) ? iconPDF : arrayItem.aws_path.url}
+                        alt={arrayItem.aws_path.url}
+                    />
+                    <PreviewHover
+                        id={arrayItem.id}
+                        fileName={arrayItem.aws_path.url}
+                        fileSize={calculateBytesToKilobytes(arrayItem.size)}
+                        onDeletePreviewButtonClick={onDeletePreviewButtonClickHttp}
+                    />
+                </Suspense>
+            </li>
+        ))
+    ) : null;
+
     return (
         <ul className={styles.list}>
             {filesBody}
+            {previewBody}
         </ul>
     );
 };

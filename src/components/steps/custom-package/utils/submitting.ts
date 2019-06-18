@@ -6,12 +6,14 @@ import { set, get, remove } from "local-storage";
 import env from "../../../../env/env";
 import { getAxiosError } from "../../../../utils/helpers";
 import { toastr } from "react-redux-toastr";
+import _get from "lodash/fp/get";
 import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
+// TS types
 import { Error } from "../../../../types/axios";
 import { User } from "../../../../types/authentication";
-import { StyleReportData } from "../../../../types/custom-package";
+import { StyleReportData, PostFiles } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -19,6 +21,7 @@ export enum CustomPackage {
     CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER",
     CustomPackageStep3 = "CUSTOM_PACKAGE/STEP3",
     CustomPackageStep4 = "CUSTOM_PACKAGE/STEP4",
+    CustomPackageStep4Styles = "CUSTOM_PACKAGE/STEP4_STYLES",
     CustomPackageStep5 = "CUSTOM_PACKAGE/STEP5",
 }
 
@@ -41,6 +44,25 @@ export const onFormSubmitStep3 = (values: any): void => {
 
 export const onFormSubmitStep4 = (values: any): void => {
     set(CustomPackage.CustomPackageStep4, values);
+
+    const files = _get("styles", values);
+
+    if (files) {
+        const data = {
+            survey_image: {
+                aws_path: files[0],
+                name: files[0].name
+            }
+        };
+        httpCustomPackage.postFiles(convertToFormData(data))
+            .then((response: PostFiles) => {
+                set(CustomPackage.CustomPackageStep4Styles, [response.data]);
+            })
+            .catch((error: Error) => {
+                const err = getAxiosError(error);
+                toastr.error("Save files error", err);
+            });
+    }
 };
 
 export const onFormSubmitStep5 = (values: any): void => {

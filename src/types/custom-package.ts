@@ -70,3 +70,21 @@ export type DesignStyleRequest = {
     style_quiz?: boolean;
     design_styles?: DesignStyle[];
 }
+
+export type PostFiles = {
+    data: CustomPackageStep4File;
+}
+
+export type CustomPackageStep4File = {
+    aws_path: {
+        catalog: { url: string };
+        large: { url: string };
+        medium: { url: string };
+        thumb: { url: string };
+        url: string;
+    };
+    created_at: string;
+    id: number;
+    size: number;
+    updated_at: string;
+}

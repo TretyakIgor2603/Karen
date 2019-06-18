@@ -9,5 +9,9 @@ export default {
 
     getDesignStylesList: () => http("GET", "consumer_facing/design_styles"),
 
-    createStyleReport: (styleReportData: StyleReportData) => http("POST", "consumer_facing/surveys", styleReportData)
+    createStyleReport: (styleReportData: StyleReportData) => http("POST", "consumer_facing/surveys", styleReportData),
+
+    postFiles: (files: File[]) => http("POST", "consumer_facing/surveys/upload_survey_image", files),
+
+    deleteFile: (id: string) => http("DELETE", `consumer_facing/surveys/${id}/destroy_survey_image`)
 };
