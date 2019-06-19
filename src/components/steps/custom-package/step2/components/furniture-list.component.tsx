@@ -1,6 +1,10 @@
 import React, { memo } from "react";
 // Styles
 import styles from "./form.module.css";
+// Utils
+import { get } from "local-storage";
+import { CustomPackage } from "../../utils/submitting";
+import _find from "lodash/fp/find";
 // Components
 import { Field } from "redux-form";
 import { HiddenInput } from "../../../../all-components";
@@ -10,19 +14,25 @@ import { FurnitureItem as FurnitureItemType } from "../../../../../types/custom-
 
 type OwnProps = {
     furniture: FurnitureItemType[];
-    checked: boolean;
+    checked?: boolean;
     initialValue?: number;
     children?: never;
+    category?: string;
 }
 type Props = OwnProps
 
 const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
-    const { furniture, initialValue, checked } = props;
+    const { furniture, initialValue, checked, category } = props;
+    const checkedCategories: any = get(CustomPackage.CustomPackageStep2);
 
     return (
         <ul className={styles.list}>
             {
                 furniture.map((item: FurnitureItemType) => {
+                    const find = _find(checkedCategories, item);
+
+                    const isChecked = (checkedCategories && category && checkedCategories[category]) ? !!find : true;
+
                     return (
                         <li className={styles["list-item"]} key={item.value}>
                             <HiddenInput name={`${item.label}-id`} initialValue={item.value} />
@@ -32,7 +42,7 @@ const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
                                 title={item.label}
                                 image={item.icon_url.url ? item.icon_url.url : item.remote_icon_url}
                                 initialValue={initialValue ? initialValue : item.quantity > 0 ? item.quantity : 1}
-                                checked={checked}
+                                checked={checked ? checked : isChecked}
                             />
                         </li>
                     );

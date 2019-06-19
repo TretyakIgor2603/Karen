@@ -53,7 +53,7 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
                 <p className={styles.subtitle}>Essentials</p>
                 <FurnitureList
                     furniture={furniture.essentials}
-                    checked={true}
+                    category={furniture.label}
                 />
                 <button
                     type="button"
