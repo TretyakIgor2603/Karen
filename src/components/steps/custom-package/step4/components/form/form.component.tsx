@@ -16,6 +16,8 @@ import form, { reduxForm } from "redux-form";
 import redux, { connect } from "react-redux";
 import { compose } from "redux";
 import { getLoadingSelector } from "../../../redux-duck/selectors";
+// Actions
+import { disabledButtonAction } from "../../../../../stepper/redux-duck/actions";
 // Components
 import { MainLoader, Input, Select, FileUploader } from "../../../../../all-components";
 // TS types
@@ -27,6 +29,9 @@ type OwnProps = { children?: never; };
 type ReduxStateToProps = {
     isLoading: boolean;
 };
+type ReduxDispatchToProps = {
+    disabledNextButton: typeof disabledButtonAction;
+}
 export type FormData = {
     deliver_city: string;
     styles: any;
@@ -34,7 +39,7 @@ export type FormData = {
     reason_id: string;
     preferred_delivery_date: string;
 };
-type Props = OwnProps & ReduxStateToProps & form.InjectedFormProps<FormData, OwnProps>;
+type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps & form.InjectedFormProps<FormData, OwnProps>;
 
 const reasonOptions = [
     { value: "1", label: "1. investment property" },
@@ -52,7 +57,8 @@ const deliveryOptions = [
 
 const FormComponent = (props: Props): React.ReactElement<Props> => {
         const [preview, setPreview] = useState<CustomPackageStep4File[] | []>(get(CustomPackage.CustomPackageStep4Styles) || []);
-        const { handleSubmit, isLoading } = props;
+        const [loading, setLoading] = useState<boolean>(false);
+        const { handleSubmit, isLoading, disabledNextButton } = props;
 
         const deleteFile = (id: string): void => {
             const newPreviews = preview.filter((item) => item.id !== parseInt(id, 10));
@@ -76,6 +82,9 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
         };
 
         const uploadFiles = (files: File[]) => {
+            setLoading(true);
+            disabledNextButton(true);
+
             const images = files.map((file: File) => ({
                 aws_path: file,
                 name: file.name
@@ -94,10 +103,13 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
                         setPreview(response.data);
                     }
 
+                    setLoading(false);
+                    disabledNextButton(false);
                 })
                 .catch((error: Error) => {
                     const err = getAxiosError(error);
                     toastr.error("Save files error", err);
+                    setLoading(false);
                 });
         };
 
@@ -151,6 +163,7 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
                             </div>
                             <FileUploader
                                 name="styles"
+                                isLoading={loading}
                                 uploadFunction={uploadFiles}
                                 preview={preview}
                                 deletePreview={deletePreview}
@@ -169,10 +182,14 @@ const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxS
     isLoading: getLoadingSelector(state)
 });
 
+const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
+    disabledNextButton: (disabled) => dispatch(disabledButtonAction(disabled))
+});
+
 export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.CustomPackageStep4,
         onSubmit: onFormSubmitStep4
     }),
-    connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)
+    connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)
 )(FormComponent);

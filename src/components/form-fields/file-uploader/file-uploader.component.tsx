@@ -17,6 +17,7 @@ type OwnProps = {
     uploadFunction: (acceptedFiles: File[]) => void;
     preview: any;
     deletePreview: (id: string) => void;
+    isLoading: boolean;
 } & form.WrappedFieldProps;
 type ReduxStateToProps = { files: File[] };
 type Props = OwnProps & form.WrappedFieldProps & ReduxStateToProps;
@@ -32,7 +33,7 @@ const FileUploaderComponent = (props: Props): React.ReactElement<Props> => {
         onDrop,
         accept: "image/*, application/pdf"
     });
-    const { formName, input, deletePreview, preview } = props;
+    const { formName, input, deletePreview, preview, isLoading } = props;
 
     if (isDragReject) {
         toastr.error("Accept formats", "You can upload pdf files and all image file formats");
@@ -48,6 +49,7 @@ const FileUploaderComponent = (props: Props): React.ReactElement<Props> => {
                 name={input.name}
                 preview={preview}
                 deletePreview={deletePreview}
+                isLoading={isLoading}
             />
         </div>
     );

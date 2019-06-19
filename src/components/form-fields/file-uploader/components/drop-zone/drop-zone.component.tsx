@@ -14,10 +14,11 @@ type Props = {
     children?: never;
     preview: any;
     deletePreview: (id: string) => void;
+    isLoading: boolean;
 }
 
 const DropZoneComponent = (props: Props): React.ReactElement<Props> => {
-    const { isDragReject, isDragActive, formName, name, preview, deletePreview } = props;
+    const { isDragReject, isDragActive, formName, name, preview, deletePreview, isLoading } = props;
 
     const wrapperClassName = cn(`${styles.wrapper}`, {
         [styles["wrapper-drag-active"]]: isDragActive,
@@ -26,21 +27,29 @@ const DropZoneComponent = (props: Props): React.ReactElement<Props> => {
 
     return (
         <div className={wrapperClassName}>
-            <Preview
-                formName={formName}
-                name={name}
-                preview={preview}
-                deletePreview={deletePreview}
-            />
-            <div className={styles["icon-wrapper"]}>
-                <FileUploadIcon />
-            </div>
-            <p className={styles.title}>
-                <span className={`link ${styles.link}`}>Upload Photos</span> or just drag and drop
-            </p>
-            <p className={styles.subtitle}>
-                + Add images of the space or inspirations
-            </p>
+            {
+                isLoading ? (
+                    <div>File uploading, please wait...</div>
+                ) : (
+                    <>
+                        <Preview
+                            formName={formName}
+                            name={name}
+                            preview={preview}
+                            deletePreview={deletePreview}
+                        />
+                        <div className={styles["icon-wrapper"]}>
+                            <FileUploadIcon />
+                        </div>
+                        <p className={styles.title}>
+                            <span className={`link ${styles.link}`}>Upload Photos</span> or just drag and drop
+                        </p>
+                        <p className={styles.subtitle}>
+                            + Add images of the space or inspirations
+                        </p>
+                    </>
+                )
+            }
             {isDragReject && (
                 <p className={styles["subtitle-reject"]}>You can upload pdf files and all image file formats</p>
             )}

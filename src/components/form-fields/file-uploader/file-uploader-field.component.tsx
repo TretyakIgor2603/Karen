@@ -10,10 +10,11 @@ type Props = {
     uploadFunction: (acceptedFiles: File[]) => void;
     preview: any;
     deletePreview: (id: string) => void;
+    isLoading: boolean;
 } & InputProps
 
 const FileUploaderFieldComponent = (props: Props): React.ReactElement<Props> => {
-    const { name, formName, uploadFunction, preview, deletePreview } = props;
+    const { name, formName, uploadFunction, preview, deletePreview, isLoading } = props;
 
     return (
         <Field
@@ -23,6 +24,7 @@ const FileUploaderFieldComponent = (props: Props): React.ReactElement<Props> => 
             component={FileUploaderComponent}
             preview={preview}
             deletePreview={deletePreview}
+            isLoading={isLoading}
         />
     );
 };

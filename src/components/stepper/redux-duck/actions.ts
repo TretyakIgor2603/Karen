@@ -55,7 +55,7 @@ export const allowNextStepActionDone = (steps: Step[]): AllowNextStepDone => ({
     payload: { steps }
 });
 
-export const disabledButton = (disabled: boolean): DisabledButton => ({
+export const disabledButtonAction = (disabled: boolean): DisabledButton => ({
     type: Type.DISABLED_NEXT_BUTTON,
     payload: { disabled }
 });
