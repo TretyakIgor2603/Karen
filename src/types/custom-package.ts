@@ -8,7 +8,7 @@ export type PersonalQuestions = {
     deliver_city?: string;
     preferred_delivery_date?: string;
     people_counter?: number;
-    [question: string]: string | number | File[] | undefined;
+    [question: string]: string | string[] | number | File[] | undefined;
 }
 
 export type StyleReportData = {

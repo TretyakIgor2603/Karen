@@ -135,7 +135,14 @@ function createStyleReport(userId: number, token: string, userName: string) {
     const categories = getCategories(get(CustomPackage.CustomPackageStep1));
     const selected_furniture = getSelectedFurniture(get(CustomPackage.CustomPackageStep2));
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
-    const personal_question = getPersonalQuestions(get(CustomPackage.CustomPackageStep4));
+    const personal_question = {
+        ...getPersonalQuestions(get(CustomPackage.CustomPackageStep4)),
+        styles: [
+            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1417/download.jpeg",
+            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1418/download.jpg",
+            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1419/error_F.jpg"
+        ]
+    };
 
     const surveysData: StyleReportData = {
         categories,
