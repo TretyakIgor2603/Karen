@@ -12,10 +12,12 @@ type Props = {
     formName: string;
     name: string;
     children?: never;
+    preview: any;
+    deletePreview: (id: string) => void;
 }
 
 const DropZoneComponent = (props: Props): React.ReactElement<Props> => {
-    const { isDragReject, isDragActive, formName, name } = props;
+    const { isDragReject, isDragActive, formName, name, preview, deletePreview } = props;
 
     const wrapperClassName = cn(`${styles.wrapper}`, {
         [styles["wrapper-drag-active"]]: isDragActive,
@@ -24,7 +26,12 @@ const DropZoneComponent = (props: Props): React.ReactElement<Props> => {
 
     return (
         <div className={wrapperClassName}>
-            <Preview formName={formName} name={name} />
+            <Preview
+                formName={formName}
+                name={name}
+                preview={preview}
+                deletePreview={deletePreview}
+            />
             <div className={styles["icon-wrapper"]}>
                 <FileUploadIcon />
             </div>

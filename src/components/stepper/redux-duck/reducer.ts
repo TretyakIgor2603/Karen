@@ -4,13 +4,13 @@ import { Step } from "../../../types/stepper";
 import { StepperActions } from "./actions";
 
 export type StepperState = {
-    loading: boolean;
+    disabled: boolean;
     error: null | string;
     steps: Step[];
 }
 
 const INITIAL_STATE = Object.freeze({
-    loading: false,
+    disabled: false,
     error: null,
     steps: []
 });
@@ -24,6 +24,12 @@ export default (state: StepperState = INITIAL_STATE, action: StepperActions): St
             return {
                 ...state,
                 steps: payload.steps
+            };
+
+        case (Type.DISABLED_NEXT_BUTTON):
+            return {
+                ...state,
+                disabled: payload.disabled
             };
 
         default:

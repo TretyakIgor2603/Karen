@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 // Utils
 import _get from "lodash/fp/get";
-import _find from "lodash/fp/find";
 // Redux
 import redux, { connect } from "react-redux";
 // Components
@@ -12,37 +11,28 @@ import DropZone from "./components/drop-zone/drop-zone.component";
 import form from "redux-form";
 import { ReduxState } from "../../../redux/root-reducer";
 
-type OwnProps = { children?: never; formName: string } & form.WrappedFieldProps;
+type OwnProps = {
+    children?: never;
+    formName: string;
+    uploadFunction: (acceptedFiles: File[]) => void;
+    preview: any;
+    deletePreview: (id: string) => void;
+} & form.WrappedFieldProps;
 type ReduxStateToProps = { files: File[] };
 type Props = OwnProps & form.WrappedFieldProps & ReduxStateToProps;
 
-const getUploadFiles = (acceptedFiles: File[], files: File[]): File[] => {
-    return acceptedFiles.reduce((acc: File[], file: File) => {
-        const found = _find(file, files);
-
-        if (found) {
-            toastr.info("File already added", `You cannot add a ${found.name} file a second time`);
-        } else {
-            acc.push(file);
-        }
-
-        return acc;
-    }, []);
-};
-
 const FileUploaderComponent = (props: Props): React.ReactElement<Props> => {
+    const { uploadFunction } = props;
     const onDrop = useCallback((acceptedFiles) => {
-        const uploadFiles = getUploadFiles(acceptedFiles, props.files);
-        const newFiles = [...(props.files ? props.files : []), ...uploadFiles];
-
-        props.input.onChange(newFiles);
-    }, [props.input, props.files]);
+        uploadFunction(acceptedFiles);
+        props.input.onChange(props.files);
+    }, [props.files, props.input, uploadFunction]);
 
     const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
         onDrop,
         accept: "image/*, application/pdf"
     });
-    const { formName, input } = props;
+    const { formName, input, deletePreview, preview } = props;
 
     if (isDragReject) {
         toastr.error("Accept formats", "You can upload pdf files and all image file formats");
@@ -56,6 +46,8 @@ const FileUploaderComponent = (props: Props): React.ReactElement<Props> => {
                 isDragActive={isDragActive}
                 formName={formName}
                 name={input.name}
+                preview={preview}
+                deletePreview={deletePreview}
             />
         </div>
     );

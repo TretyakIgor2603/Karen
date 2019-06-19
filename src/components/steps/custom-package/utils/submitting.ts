@@ -6,14 +6,19 @@ import { set, get, remove } from "local-storage";
 import env from "../../../../env/env";
 import { getAxiosError } from "../../../../utils/helpers";
 import { toastr } from "react-redux-toastr";
-import _get from "lodash/fp/get";
-import { getCategories, getSelectedFurniture, getStyles, getPersonalQuestions } from "./dataCollection";
+import {
+    getCategories,
+    getSelectedFurniture,
+    getStyles,
+    getPersonalQuestions,
+    getPersonalQuestionsStyles
+} from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
 // TS types
 import { Error } from "../../../../types/axios";
 import { User } from "../../../../types/authentication";
-import { StyleReportData, PostFiles, CustomPackageStep4File } from "../../../../types/custom-package";
+import { StyleReportData } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
@@ -44,32 +49,6 @@ export const onFormSubmitStep3 = (values: any): void => {
 
 export const onFormSubmitStep4 = (values: any): void => {
     set(CustomPackage.CustomPackageStep4, values);
-
-    const files = _get("styles", values);
-
-    if (files && files.length) {
-        const images = files.map((file: File) => ({
-            aws_path: file,
-            name: file.name
-        }));
-
-        const data = { survey: { images } };
-        httpCustomPackage.postFiles(convertToFormData(data))
-            .then((response: PostFiles) => {
-                const alreadySelect: CustomPackageStep4File[] = get(CustomPackage.CustomPackageStep4Styles);
-
-                if (alreadySelect && alreadySelect.length) {
-                    set(CustomPackage.CustomPackageStep4Styles, alreadySelect.concat(response.data));
-                } else {
-                    set(CustomPackage.CustomPackageStep4Styles, response.data);
-                }
-
-            })
-            .catch((error: Error) => {
-                const err = getAxiosError(error);
-                toastr.error("Save files error", err);
-            });
-    }
 };
 
 export const onFormSubmitStep5 = (values: any): void => {
@@ -137,11 +116,7 @@ function createStyleReport(userId: number, token: string, userName: string) {
     const design_styles = getStyles(get(CustomPackage.CustomPackageStep3));
     const personal_question = {
         ...getPersonalQuestions(get(CustomPackage.CustomPackageStep4)),
-        styles: [
-            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1417/download.jpeg",
-            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1418/download.jpg",
-            "https://dkarpj7eykpeb.cloudfront.net/photos/survey_image/aws_path/1419/error_F.jpg"
-        ]
+        styles: getPersonalQuestionsStyles(get(CustomPackage.CustomPackageStep4Styles) || [])
     };
 
     const surveysData: StyleReportData = {
@@ -169,5 +144,6 @@ function clearStorage(): void {
     remove(CustomPackage.CustomPackageStep2);
     remove(CustomPackage.CustomPackageStep3);
     remove(CustomPackage.CustomPackageStep4);
+    remove(CustomPackage.CustomPackageStep4Styles);
     remove(CustomPackage.CustomPackageStep5);
 }

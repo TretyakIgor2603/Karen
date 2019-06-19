@@ -1,7 +1,7 @@
 import { toastr } from "react-redux-toastr";
 import { getAxiosError } from "../../../../utils/helpers";
 // TS types
-import { PersonalQuestions } from "../../../../types/custom-package";
+import { PersonalQuestions, CustomPackageStep4File } from "../../../../types/custom-package";
 
 type Furniture = {
     product_category_id: string;
@@ -87,4 +87,8 @@ export const getPersonalQuestions = (values: { [key: string]: string }) => {
     }
 
     return answers;
+};
+
+export const getPersonalQuestionsStyles = (values: CustomPackageStep4File[]) => {
+    return values.map((file) => file.aws_path.url);
 };

@@ -23,7 +23,17 @@ type AllowNextStepDone = {
     payload: { steps: Step[] };
 }
 
-export type StepperActions = RegisterStepsAction & RegisterStepsActionDone & AllowNextStep & AllowNextStepDone;
+type DisabledButton = {
+    type: string;
+    payload: { disabled: boolean };
+}
+
+export type StepperActions =
+    RegisterStepsAction
+    & RegisterStepsActionDone
+    & AllowNextStep
+    & AllowNextStepDone
+    & DisabledButton;
 
 export const registerStepsAction = (componentChildren: ReactElement[]): RegisterStepsAction => ({
     type: Type.REGISTER_STEPS,
@@ -43,4 +53,9 @@ export const allowNextStepAction = (indexStep: number): AllowNextStep => ({
 export const allowNextStepActionDone = (steps: Step[]): AllowNextStepDone => ({
     type: Type.ALLOW_NEXT_STEP_DONE,
     payload: { steps }
+});
+
+export const disabledButton = (disabled: boolean): DisabledButton => ({
+    type: Type.DISABLED_NEXT_BUTTON,
+    payload: { disabled }
 });

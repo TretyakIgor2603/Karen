@@ -72,7 +72,7 @@ export type DesignStyleRequest = {
 }
 
 export type PostFiles = {
-    data: CustomPackageStep4File;
+    data: CustomPackageStep4File[];
 }
 
 export type CustomPackageStep4File = {

@@ -9,6 +9,7 @@ import { ReduxState } from "../../redux/root-reducer";
 import { getStepsSelector } from "./redux-duck/selectors";
 import redux, { connect } from "react-redux";
 import { registerStepsAction, allowNextStepAction } from "./redux-duck/actions";
+import { getDisabledButtonSelector } from "./redux-duck/selectors";
 import { submit } from "redux-form";
 // Styles
 import styles from "./stepper.module.css";
@@ -24,6 +25,7 @@ type ReduxDispatchToProps = {
 type ReduxStateToProps = {
     steps: Step[];
     form: any;
+    isButtonNextDisabled: boolean;
 }
 type OwnProps = {
     children: React.ReactElement[];
@@ -38,7 +40,7 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
     }, []);
     const [currentStepIndex, setCurrentStepIndex] = useState(props.defaultStepIndex);
     const [passStepIndex, setPassStepIndex] = useState(1);
-    const { children } = props;
+    const { children, isButtonNextDisabled } = props;
     const isDisabledNextButton = disableNextButton(props.form);
     const step = 1;
     const minStepIndex = 0;
@@ -60,7 +62,7 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
     const onNextButtonClick = (event: React.SyntheticEvent<HTMLAnchorElement>): void => {
         event && event.preventDefault && event.preventDefault();
 
-        if (isDisabledNextButton || lastStep) return;
+        if (isButtonNextDisabled || isDisabledNextButton || lastStep) return;
         if (props.steps[currentStepIndex].disabled) return;
         Promise.resolve(props.formSubmit(Object.keys(props.form)[0]))
             .then(() => {
@@ -95,7 +97,7 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
     });
 
     const nextLinkClassNames = cn(styles["next-link"], {
-        [styles.disabled]: isDisabledNextButton || lastStep
+        [styles.disabled]: isDisabledNextButton || lastStep || isButtonNextDisabled
     });
 
     const lineStyle = {
@@ -154,7 +156,8 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
 
 const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
     steps: getStepsSelector(state),
-    form: state.form
+    form: state.form,
+    isButtonNextDisabled: getDisabledButtonSelector(state)
 });
 const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     registerSteps: (children) => dispatch(registerStepsAction(children)),

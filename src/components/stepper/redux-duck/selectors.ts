@@ -4,3 +4,4 @@ import { Step } from "../../../types/stepper";
 import { ReduxState } from "../../../redux/root-reducer";
 
 export const getStepsSelector = (state: ReduxState): Step[] => state[MODULE_NAME].steps;
+export const getDisabledButtonSelector = (state: ReduxState): boolean => state[MODULE_NAME].disabled;
