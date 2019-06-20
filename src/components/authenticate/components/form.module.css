@@ -72,3 +72,16 @@
 .link:hover::before { background-color: var(--cp-step-link__color--hover); }
 
 .link:active { opacity: 0.7; }
+
+@media screen and (max-width: 750px) {
+    .fieldset {
+        width: 100%;
+    }
+
+    .fieldset-column {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .fieldset-column .field-wrapper { width: 100%; }
+}

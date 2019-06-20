@@ -7,3 +7,14 @@
     width: 48.5%;
     margin-bottom: 1.5rem;
 }
+
+@media screen and (max-width: 750px) {
+    .fieldset {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .field-wrapper {
+        width: 100%;
+    }
+}

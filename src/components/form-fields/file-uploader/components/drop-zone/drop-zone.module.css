@@ -9,6 +9,7 @@
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 1.4;
+    text-align: center;
     border: 2px solid var(--field__border-color);
     border-radius: 2px;
     transition-property: all;
