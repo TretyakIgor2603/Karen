@@ -20,7 +20,7 @@ export const getCategories = (values: { [key: string]: string }) => {
     const tempArray = [];
 
     for (const [key, value] of Object.entries(values)) {
-        if (value && !key.includes("count")) {
+        if (typeof value === "boolean" && value && values[`${key}-count`]) {
             tempArray.push({
                 id: key.substring(2),
                 count: Number(values[`${key}-count`])

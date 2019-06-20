@@ -7,6 +7,18 @@ import store from "../../../redux/store";
 
 type Validate = (values?: any) => boolean
 
+const validateStep1: Validate = (values) => {
+    const tempArr: boolean[] = [];
+
+    for (const [key, value] of Object.entries(values)) {
+        if (typeof value === "boolean" && value && values[`${key}-count`]) {
+            tempArr.push(value);
+        }
+    }
+
+    return !tempArr.includes(true);
+};
+
 const validateStep2: Validate = (values) => {
     const allValues = Object.values(values);
     const isExists = allValues.map((item: any) => {
@@ -41,16 +53,19 @@ export const disableNextButton = (data: any): boolean => {
     const userAnswers = Object.values(values);
 
     switch (formName) {
-        case(FormName.CustomPackageStep2):
+        case (FormName.CustomPackageStep1):
+            return validateStep1(values);
+
+        case (FormName.CustomPackageStep2):
             return validateStep2(values);
 
-        case(FormName.CustomPackageStep3):
+        case (FormName.CustomPackageStep3):
             return validateStep3(userAnswers);
 
-        case(FormName.CustomPackageStep4):
+        case (FormName.CustomPackageStep4):
             return validateStep4();
 
-        case(FormName.CustomPackageStep5):
+        case (FormName.CustomPackageStep5):
             return validateStep5();
 
         default:

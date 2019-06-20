@@ -3,10 +3,19 @@ import React, { useEffect, useRef } from "react";
 import styles from "./item.module.css";
 // Utils
 import { defaultImageSrc } from "../../../../app-constants";
+import cn from "classnames";
 // Components
 import { InputCounter } from "../../../all-components";
+// Redux
+import { connect, MapStateToProps } from "react-redux";
+import { getFormValues } from "redux-form";
 // TS types
 import form from "redux-form";
+import { ReduxState } from "../../../../redux/root-reducer";
+
+type ReduxStateToProps = {
+    formValues: any
+}
 
 type OwnProps = {
     title: string;
@@ -14,8 +23,8 @@ type OwnProps = {
     initialValue: number;
     checked?: boolean;
     children?: never;
-}
-type Props = OwnProps & form.WrappedFieldProps
+} & form.WrappedFieldProps
+type Props = OwnProps & form.WrappedFieldProps & ReduxStateToProps;
 
 const ItemComponent = (props: Props): React.ReactElement<Props> => {
     useEffect(() => {
@@ -24,14 +33,19 @@ const ItemComponent = (props: Props): React.ReactElement<Props> => {
     }, []);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const { image, title, initialValue, input } = props;
+    const { image, title, initialValue, input, formValues } = props;
+    const counterValue = formValues && formValues[`${input.name}-count`];
+
+    const checkboxClassName = cn("visually-hidden", styles.input, {
+        [styles.counterZeroValue]: counterValue === 0
+    });
 
     return (
         <>
             <input
                 {...input}
                 ref={inputRef}
-                className={`${styles.input} visually-hidden`}
+                className={checkboxClassName}
                 type="checkbox"
                 id={`${input.name}-id`}
                 checked={input.value}
@@ -57,4 +71,8 @@ const ItemComponent = (props: Props): React.ReactElement<Props> => {
     );
 };
 
-export default ItemComponent;
+const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state, ownProps) => ({
+    formValues: getFormValues(ownProps.meta.form)(state)
+});
+
+export default connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)(ItemComponent);

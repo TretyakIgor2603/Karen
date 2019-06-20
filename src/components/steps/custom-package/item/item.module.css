@@ -43,3 +43,10 @@
 
 .label-checked .item-title,
 .input:checked + .label .item-title { color: #fff; }
+
+.input:checked.counterZeroValue + .label,
+.input:checked.counterZeroValue + .label .item-title,
+.label-checked {
+    color: var(--color__app);
+    background-color: var(--cp-step__background-color);
+}
