@@ -119,3 +119,61 @@
         background-size: 15px 15px;
     }
 }
+
+@media screen and (max-width: 1314px) {
+    .navigation-item {
+        display: flex;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-right: 2px;
+        padding: 0;
+        align-items: center;
+    }
+
+    .navigation-item::before {
+        display: none;
+    }
+
+    .step {
+        width: 2.5rem;
+        height: 2.5rem;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--stepper__background-color);
+        font-size: 1.5rem;
+        line-height: 2.5rem;
+    }
+
+    .step-title {
+        display: none;
+        margin-bottom: 0;
+        padding-left: 5px;
+    }
+
+    .navigation-item.current {
+        width: 14rem;
+        font-size: 1rem;
+    }
+
+    .navigation-item.current .step-title {
+        display: block;
+    }
+
+    .navigation-item.disabled .step {
+        color: var(--stepper-mobile__color--disabled);
+        border-color: var(--stepper-mobile__border-color--disabled);
+        background-color: var(--stepper-mobile__background-color--disabled);
+    }
+
+    .navigation-item.pass .step {
+        position: relative;
+        font-size: 0;
+        background-image: url("../images/checkmark.svg");
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: 15px 15px;
+    }
+}
