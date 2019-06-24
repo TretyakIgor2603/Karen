@@ -97,3 +97,17 @@
     opacity: 1;
     cursor: not-allowed;
 }
+
+@media screen and (max-width: 1314px) {
+    .navigation-list {
+        min-height: 30px;
+        margin-bottom: 20px;
+    }
+
+    .progress {
+        height: 3px;
+        margin-right: -20px;
+        margin-left: -20px;
+        background-color: #dbdbdb;
+    }
+}

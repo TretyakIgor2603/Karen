@@ -3,6 +3,7 @@ import React, { useEffect, useState, Children, cloneElement } from "react";
 import cn from "classnames";
 import _get from "lodash/fp/get";
 import { disableNextButton } from "./utils/step-validator";
+import { useMedia } from "the-platform";
 // Redux
 import { ReduxState } from "../../redux/root-reducer";
 import { getStepsSelector } from "./redux-duck/selectors";
@@ -36,12 +37,14 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
         // eslint-disable-next-line
     }, []);
     const [currentStepIndex, setCurrentStepIndex] = useState(props.defaultStepIndex);
+    const [passStepIndex, setPassStepIndex] = useState(1);
     const { children } = props;
     const isDisabledNextButton = disableNextButton(props.form);
     const step = 1;
     const minStepIndex = 0;
     const firstStep = currentStepIndex === minStepIndex;
     const lastStep = currentStepIndex === (children.length - 1);
+    const quantity = children.length;
 
     const onStepClick = (event: React.SyntheticEvent<HTMLLIElement>): void => {
         const { currentTarget } = event;
@@ -63,6 +66,7 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
             .then(() => {
                 setCurrentStepIndex(currentStepIndex + step);
                 props.allowNextStep(currentStepIndex + step);
+                setPassStepIndex(currentStepIndex + step + 1);
             });
     };
 
@@ -94,6 +98,17 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
         [styles.disabled]: isDisabledNextButton || lastStep
     });
 
+    const lineStyle = {
+        height: "3px",
+        marginRight: `${100 / quantity * (quantity - passStepIndex)}%`,
+        marginLeft: "-20px",
+        backgroundColor: "#c49f68",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% 100%"
+    };
+
+    const viewport = useMedia("(max-width: 1314px)");
+
     return (
         <div>
             <nav className={styles.navigation}>
@@ -101,6 +116,13 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
                     {renderNavigationWithStepApiAsProps}
                 </ul>
             </nav>
+
+            {viewport && (
+                <div className={styles.progress}>
+                    <div style={lineStyle} />
+                    <span className="visually-hidden">Progress bar</span>
+                </div>
+            )}
 
             <div>
                 {renderCurrentStepContent()}

@@ -57,6 +57,9 @@
     --stepper__link-color: #3d4149;
     --stepper__link-color--hover: #26282d;
     --stepper__link-color--disabled: #ccc;
+    --stepper-mobile__color--disabled: #333;
+    --stepper-mobile__border-color--disabled: #dbdbdb;
+    --stepper-mobile__background-color--disabled: #dbdbdb;
 
     /* Custom package */
     --cp-step__background-color: #fff;
