@@ -177,3 +177,27 @@
         background-size: 15px 15px;
     }
 }
+
+@media screen and (min-width: 768px) and (max-width: 1314px) {
+    .navigation-item {
+        width: 4rem;
+        height: 4rem;
+        margin-right: 2rem;
+    }
+
+    .step {
+        width: 4rem;
+        height: 4rem;
+        font-size: 2rem;
+        line-height: 4rem;
+    }
+
+    .navigation-item.current {
+        width: 20rem;
+        font-size: 1.5rem;
+    }
+
+    .step-title {
+        padding-left: 1rem;
+    }
+}
