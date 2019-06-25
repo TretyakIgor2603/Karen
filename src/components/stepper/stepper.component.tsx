@@ -113,6 +113,11 @@ const StepperComponent = (props: Props): React.ReactElement<Props> => {
 
     return (
         <div>
+            <img
+                src="https://gofourwalls.s3.amazonaws.com/globalimages/icons/checkmark.57e5201e.svg"
+                alt="check mark"
+                className="visually-hidden"
+            />
             <nav className={styles.navigation}>
                 <ul className={styles["navigation-list"]}>
                     {renderNavigationWithStepApiAsProps}

@@ -160,6 +160,7 @@
 
     .navigation-item.current .step-title {
         display: block;
+        font-size: 1rem;
     }
 
     .navigation-item.disabled .step {
@@ -171,7 +172,7 @@
     .navigation-item.pass .step {
         position: relative;
         font-size: 0;
-        background-image: url("../images/checkmark.svg");
+        background-image: url("https://gofourwalls.s3.amazonaws.com/globalimages/icons/checkmark.57e5201e.svg");
         background-position: 50% 50%;
         background-repeat: no-repeat;
         background-size: 15px 15px;
