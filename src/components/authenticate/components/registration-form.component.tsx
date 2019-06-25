@@ -124,14 +124,6 @@ export default compose<React.ComponentType<OwnProps>>(
     reduxForm<FormData, OwnProps>({
         form: FormName.Registration,
         onSubmit: onFormSubmitRegistration,
-        initialValues: {
-            first_name: "FirstName",
-            last_name: "LastName",
-            phone_number: "(555)1234567",
-            email: "test@email.com",
-            password: "123456789",
-            password_confirmation: "123456789"
-        },
         validate
     }),
     connect<ReduxStateToProps, {}, OwnProps, ReduxState>(mapStateToProps)

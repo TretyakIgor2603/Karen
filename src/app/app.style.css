@@ -1,5 +1,7 @@
 @import "~react-redux-toastr/lib/css/react-redux-toastr.min.css";
+@import "~rc-tooltip/assets/bootstrap.css";
 @import "../style/variables.css";
+@import "../style/rc-slider.css";
 @import "~normalize.css";
 @import "../components/buttons/buttons.css";
 @import "../style/link.css";
@@ -47,4 +49,10 @@ img {
     height: 1px !important;
     width: 1px !important;
     overflow: hidden;
+}
+
+@media screen and (max-width: 500px) {
+    #app-root {
+        padding-top: 5rem;
+    }
 }

@@ -11,7 +11,7 @@ import {
     getSelectedFurniture,
     getStyles,
     getPersonalQuestions,
-    getPersonalQuestionsStyles
+    getPersonalQuestionsStyles, getBudgetString
 } from "./dataCollection";
 // Actions
 import { getFurnitureListAction } from "../redux-duck/actions";
@@ -51,9 +51,7 @@ export const onFormSubmitStep4 = (values: any): void => {
     set(CustomPackage.CustomPackageStep4, values);
 };
 
-export const onFormSubmitStep5 = (values: any): void => {
-    set(CustomPackage.CustomPackageStep5, values);
-};
+export const onFormSubmitStep5 = (): void => undefined;
 
 export const onFormSubmitRegistration = (values: any): void => {
     const userData = {
@@ -118,13 +116,14 @@ function createStyleReport(userId: number, token: string, userName: string) {
         ...getPersonalQuestions(get(CustomPackage.CustomPackageStep4)),
         styles: getPersonalQuestionsStyles(get(CustomPackage.CustomPackageStep4Styles) || [])
     };
+    const budget_string = getBudgetString();
 
     const surveysData: StyleReportData = {
         categories,
         selected_furniture,
         design_styles,
         personal_question,
-        budget_string: "$1500 to $3500",
+        budget_string,
         user_id: userId
     };
 

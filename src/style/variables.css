@@ -67,4 +67,9 @@
     --cp-step-subtitle-color: #909090;
     --cp-step-link__color: var(--color__app, #333);
     --cp-step-link__color--hover: #000;
+
+    /* rc-slider */
+    --slider-color__main: var(--mustard, #c49f68);
+    --slider-color__main--light: #cfb286;
+    --slider-color__box-shadow: #e7d8c2;
 }

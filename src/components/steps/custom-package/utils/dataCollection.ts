@@ -1,7 +1,9 @@
 import { toastr } from "react-redux-toastr";
 import { getAxiosError } from "../../../../utils/helpers";
+import { get } from "local-storage";
 // TS types
 import { PersonalQuestions, CustomPackageStep4File } from "../../../../types/custom-package";
+import { CustomPackage } from "./submitting";
 
 type Furniture = {
     product_category_id: string;
@@ -91,4 +93,12 @@ export const getPersonalQuestions = (values: { [key: string]: string }) => {
 
 export const getPersonalQuestionsStyles = (values: CustomPackageStep4File[]) => {
     return values.map((file) => file.aws_path.url);
+};
+
+export const getBudgetString = (): any => {
+    const range: number[] = get(CustomPackage.CustomPackageStep5);
+
+    if (range && range.length) {
+        return `$${range[0]} to $${range[1]}`;
+    }
 };

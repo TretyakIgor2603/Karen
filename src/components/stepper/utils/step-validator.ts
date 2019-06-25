@@ -39,9 +39,7 @@ const validateStep4: Validate = () => {
     return !_isEmpty(errors);
 };
 
-const validateStep5: Validate = () => {
-    return false;
-};
+const validateStep5: Validate = () => false;
 
 export const disableNextButton = (data: any): boolean => {
     const formName = Object.keys(data)[0];
