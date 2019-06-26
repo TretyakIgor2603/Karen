@@ -41,7 +41,7 @@ const ItemComponent = (props: Props): React.ReactElement<Props> => {
     });
 
     return (
-        <>
+        <div className={styles.wrapper}>
             <input
                 {...input}
                 ref={inputRef}
@@ -67,7 +67,7 @@ const ItemComponent = (props: Props): React.ReactElement<Props> => {
                     />
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

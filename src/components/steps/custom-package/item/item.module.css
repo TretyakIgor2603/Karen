@@ -18,6 +18,7 @@
     cursor: pointer;
     transition-property: all;
     transition-duration: 0.3s;
+    overflow: hidden;
 }
 
 .item-image {
@@ -49,4 +50,27 @@
 .label-checked {
     color: var(--color__app);
     background-color: var(--cp-step__background-color);
+}
+
+@media screen and (max-width: 675px) {
+    .counter {
+        max-width: 10rem;
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: stretch;
+        padding: 3px;
+    }
+
+    .label {
+        flex-grow: 1;
+        min-height: 20rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .label {
+        min-height: 15rem;
+    }
 }
