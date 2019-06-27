@@ -1,7 +1,6 @@
 import { FormName } from "../../../app-constants";
 import _get from "lodash/fp/get";
 import _isEmpty from "lodash/fp/isEmpty";
-import _includes from "lodash/fp/includes";
 import { getFormSyncErrors } from "redux-form";
 import store from "../../../redux/store";
 
@@ -20,12 +19,7 @@ const validateStep1: Validate = (values) => {
 };
 
 const validateStep2: Validate = (values) => {
-    const allValues = Object.values(values);
-    const isExists = allValues.map((item: any) => {
-        return _includes(true, item);
-    });
-
-    return !isExists.includes(true);
+    return validateStep1(values);
 };
 
 const validateStep3: Validate = (values) => {

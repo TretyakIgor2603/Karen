@@ -5,6 +5,7 @@ import styles from "./form.module.css";
 import { get } from "local-storage";
 import { CustomPackage } from "../../utils/submitting";
 import _find from "lodash/fp/find";
+import _kebabCase from "lodash/fp/kebabCase";
 // Components
 import { Field } from "redux-form";
 import { HiddenInput } from "../../../../all-components";
@@ -17,7 +18,7 @@ type OwnProps = {
     checked?: boolean;
     initialValue?: number;
     children?: never;
-    category?: string;
+    category: string;
 }
 type Props = OwnProps
 
@@ -33,11 +34,13 @@ const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
 
                     const isChecked = (checkedCategories && category && checkedCategories[category]) ? !!find : true;
 
+                    const name = _kebabCase(category + item.label);
+
                     return (
                         <li className={styles["list-item"]} key={item.value}>
-                            <HiddenInput name={`${item.label}-id`} initialValue={item.value} />
+                            <HiddenInput name={`${name}-id`} initialValue={item.value} />
                             <Field
-                                name={item.label}
+                                name={name}
                                 component={FurnitureItem}
                                 title={item.label}
                                 image={item.icon_url.url ? item.icon_url.url : item.remote_icon_url}

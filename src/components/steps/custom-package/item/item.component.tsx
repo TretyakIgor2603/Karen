@@ -7,7 +7,7 @@ import cn from "classnames";
 // Components
 import { InputCounter } from "../../../all-components";
 // Redux
-import { connect, MapStateToProps } from "react-redux";
+import redux, { connect } from "react-redux";
 import { getFormValues } from "redux-form";
 // TS types
 import form from "redux-form";
@@ -71,7 +71,7 @@ const ItemComponent = (props: Props): React.ReactElement<Props> => {
     );
 };
 
-const mapStateToProps: MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state, ownProps) => ({
+const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state, ownProps) => ({
     formValues: getFormValues(ownProps.meta.form)(state)
 });
 

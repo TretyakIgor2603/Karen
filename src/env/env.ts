@@ -1,6 +1,6 @@
 const env = {
-    apiUrl: "http://172.16.102.81:3000/api/v1/",
-    domain: "http://172.16.102.81:3000"
+    apiUrl: "https://furnishr.ml/api/v1/",
+    domain: "https://furnishr.ml"
 };
 
 export default env;
