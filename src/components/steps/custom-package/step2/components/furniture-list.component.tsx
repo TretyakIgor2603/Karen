@@ -4,7 +4,6 @@ import styles from "./form.module.css";
 // Utils
 import { get } from "local-storage";
 import { CustomPackage } from "../../utils/submitting";
-import _find from "lodash/fp/find";
 import _kebabCase from "lodash/fp/kebabCase";
 // Components
 import { Field } from "redux-form";
@@ -23,18 +22,23 @@ type OwnProps = {
 type Props = OwnProps
 
 const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
-    const { furniture, initialValue, checked, category } = props;
+    const { furniture, initialValue, category } = props;
     const checkedCategories: any = get(CustomPackage.CustomPackageStep2);
 
     return (
         <ul className={styles.list}>
             {
                 furniture.map((item: FurnitureItemType) => {
-                    const find = _find(checkedCategories, item);
+                    const name = `${_kebabCase(category)}---${_kebabCase(item.label)}`;
+                    let checked: boolean = false;
 
-                    const isChecked = (checkedCategories && category && checkedCategories[category]) ? !!find : true;
-
-                    const name = _kebabCase(category + item.label);
+                    if (checkedCategories && typeof checkedCategories[name] === "undefined") {
+                        checked = item.variation === "essential";
+                    } else if (checkedCategories) {
+                        checked = checkedCategories[name];
+                    } else {
+                        checked = item.variation === "essential";
+                    }
 
                     return (
                         <li className={styles["list-item"]} key={item.value}>
@@ -45,7 +49,7 @@ const FurnitureListComponent = (props: Props): React.ReactElement<Props> => {
                                 title={item.label}
                                 image={item.icon_url.url ? item.icon_url.url : item.remote_icon_url}
                                 initialValue={initialValue ? initialValue : item.quantity > 0 ? item.quantity : 1}
-                                checked={checked ? checked : isChecked}
+                                checked={checked}
                             />
                         </li>
                     );
