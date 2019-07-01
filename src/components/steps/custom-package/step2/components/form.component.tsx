@@ -44,7 +44,7 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
 
     const furnitureBody = furnitureList.map((furniture) => (
         <div className={styles.wrapper} key={furniture.label}>
-            <HiddenInput name="category_room_id" initialValue={furniture.category_room_id} />
+            <HiddenInput name={furniture.label} initialValue={furniture.category_room_id} />
             <h2 className={styles.title}>
                 {furniture.label}
             </h2>

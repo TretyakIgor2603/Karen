@@ -1,6 +1,7 @@
 import { toastr } from "react-redux-toastr";
 import { getAxiosError } from "../../../../utils/helpers";
 import { get } from "local-storage";
+import _kebabCase from "lodash/fp/kebabCase";
 // TS types
 import { PersonalQuestions, CustomPackageStep4File } from "../../../../types/custom-package";
 import { CustomPackage } from "./submitting";
@@ -38,22 +39,26 @@ export const getSelectedFurniture = (values: { [key: string]: any }) => {
 
     try {
         for (const [key, value] of Object.entries(values)) {
+            const isCategory: boolean = /(?=.*[A-Z])/.test(key);
 
-            selected_furniture[key] = {
-                category_name: key,
-                category_room_id: value.category_room_id,
-                furniture: []
-            };
+            if (isCategory) {
+                selected_furniture[key] = {
+                    category_name: key,
+                    category_room_id: value,
+                    furniture: []
+                };
 
-            for (const [k, v] of Object.entries(value)) {
-                if (v && !k.endsWith("-id") && k !== "category_room_id") {
-                    if (values[key][`${k}-id`] && values[key][key][`${k}-count`]) {
+                Object.entries(values).forEach((item: any) => {
+                    const category = item[0];
+
+                    if (category.startsWith(_kebabCase(key)) && typeof values[category] === "boolean" && values[category]) {
                         selected_furniture[key].furniture.push({
-                            product_category_id: values[key][`${k}-id`],
-                            count: parseInt(values[key][key][`${k}-count`], 10)
+                            product_category_id: values[`${category}-id`],
+                            count: values[`${category}-count`]
                         });
                     }
-                }
+                });
+
             }
         }
     } catch (error) {
