@@ -57,7 +57,10 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
         }
     }, []);
     const { handleSubmit, isLoading } = props;
-    const marks = generateMarks(500, 7500);
+    const MID_PRICE = 5000;
+    const MIN_VALUE = Math.ceil(MID_PRICE - MID_PRICE * 50 / 100);
+    const MAX_VALUE = Math.ceil(MID_PRICE + MID_PRICE * 50 / 100);
+    const marks = generateMarks(MIN_VALUE, MAX_VALUE);
     const range: number[] | undefined = get(CustomPackage.CustomPackageStep5);
 
     const setValue = (range: number[]): void => {
@@ -78,8 +81,8 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
                         tipFormatter={tipFormatter}
                         marks={marks}
                         defaultValue={(range && range.length) ? range : [3000, 7000]}
-                        min={500}
-                        max={7500}
+                        min={MIN_VALUE}
+                        max={MAX_VALUE}
                         step={500}
                         pushable={1000}
                         onChange={setValue}

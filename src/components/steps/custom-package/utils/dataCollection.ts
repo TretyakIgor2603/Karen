@@ -69,6 +69,30 @@ export const getSelectedFurniture = (values: { [key: string]: any }) => {
     return selected_furniture;
 };
 
+export const getCategorySelectedFurniture = (values: { [key: string]: any }) => {
+    const product_categories: { count: number, product_category_id: string | number }[] = [];
+
+    for (const [key] of Object.entries(values)) {
+        const isCategory: boolean = /(?=.*[A-Z])/.test(key);
+
+        if (isCategory) {
+            Object.entries(values).forEach((item: any) => {
+                const category = item[0];
+
+                if (category.startsWith(_kebabCase(key)) && typeof values[category] === "boolean" && values[category]) {
+                    product_categories.push({
+                        product_category_id: values[`${category}-id`],
+                        count: values[`${category}-count`]
+                    });
+                }
+            });
+
+        }
+    }
+
+    return product_categories;
+};
+
 export const getStyles = (values: { [key: string]: string }) => {
     const stylesIds: number[] = [];
 

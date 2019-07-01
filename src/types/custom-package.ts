@@ -88,3 +88,12 @@ export type CustomPackageStep4File = {
     size: number;
     updated_at: string;
 }
+
+type FurnitureCategory = {
+    product_category_id: number | string;
+    count: number
+}
+
+export type MiddlePriceData = {
+    product_categories: FurnitureCategory[]
+}

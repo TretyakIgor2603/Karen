@@ -1,6 +1,6 @@
 import { http } from "./config";
 // TS types
-import { StyleReportData } from "../types/custom-package";
+import { StyleReportData, MiddlePriceData } from "../types/custom-package";
 
 export default {
     getRoomList: () => http("GET", "consumer_facing/categories"),
@@ -13,5 +13,7 @@ export default {
 
     postFiles: (files: File[]) => http("POST", "consumer_facing/surveys/upload_survey_image", files),
 
-    deleteFile: (id: string) => http("DELETE", `consumer_facing/surveys/${id}/destroy_survey_image`)
+    deleteFile: (id: string) => http("DELETE", `consumer_facing/surveys/${id}/destroy_survey_image`),
+
+    calculateMiddlePrice: (data: MiddlePriceData) => http("POST", "consumer_facing/surveys/budget", data)
 };

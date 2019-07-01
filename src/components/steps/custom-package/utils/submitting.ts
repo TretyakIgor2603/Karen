@@ -1,4 +1,5 @@
 import http from "../../../../api/authentication";
+import objectToFormData from "object-to-formdata";
 import httpCustomPackage from "../../../../api/custom-package";
 import convertToFormData from "object-to-formdata";
 import store from "../../../../redux/store";
@@ -11,10 +12,12 @@ import {
     getSelectedFurniture,
     getStyles,
     getPersonalQuestions,
-    getPersonalQuestionsStyles, getBudgetString
+    getPersonalQuestionsStyles,
+    getBudgetString,
+    getCategorySelectedFurniture
 } from "./dataCollection";
 // Actions
-import { getFurnitureListAction } from "../redux-duck/actions";
+import { getFurnitureListAction, calculateMiddlePriceAction } from "../redux-duck/actions";
 // TS types
 import { Error } from "../../../../types/axios";
 import { User } from "../../../../types/authentication";
@@ -49,6 +52,32 @@ export const onFormSubmitStep3 = (values: any): void => {
 
 export const onFormSubmitStep4 = (values: any): void => {
     set(CustomPackage.CustomPackageStep4, values);
+
+    const step2Data: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
+    const selectedFurniture = getCategorySelectedFurniture(step2Data);
+
+    const flattenedFurniture = selectedFurniture.reduce((category: any, furniture: any) => {
+
+        if (category[furniture.product_category_id]) {
+            category[furniture.product_category_id] = {
+                product_category_id: furniture.product_category_id,
+                count: +furniture.count + +category[furniture.product_category_id].count
+            };
+        } else {
+            category[furniture.product_category_id] = {
+                product_category_id: furniture.product_category_id,
+                count: furniture.count
+            };
+        }
+
+        return category;
+    }, {});
+
+    const data = {
+        product_categories: Object.values(flattenedFurniture)
+    };
+
+    store.dispatch(calculateMiddlePriceAction(objectToFormData(data)));
 };
 
 export const onFormSubmitStep5 = (): void => undefined;

@@ -10,6 +10,7 @@ export type CustomPackageState = {
     roomList: Room[];
     furnitureList: Furniture[];
     designStyleList: DesignStyleRequest;
+    middlePrice: number | null;
 }
 
 const INITIAL_STATE = Object.freeze({
@@ -17,7 +18,8 @@ const INITIAL_STATE = Object.freeze({
     error: null,
     roomList: [],
     furnitureList: [],
-    designStyleList: {}
+    designStyleList: {},
+    middlePrice: null
 });
 
 export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackageActions): CustomPackageState => {
@@ -27,6 +29,7 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
         case (Type.GET_ROOM_LIST):
         case (Type.GET_FURNITURE_LIST):
         case (Type.GET_DESIGN_STYLES_LIST):
+        case (Type.CALCULATE_MIDDLE_PRICE):
             return {
                 ...state,
                 loading: true,
@@ -77,6 +80,22 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
                 error: payload.error,
                 designStyleList: {}
             };
+
+        case (Type.CALCULATE_MIDDLE_PRICE_DONE):
+            return {
+                ...state,
+                loading: false,
+                middlePrice: payload.middlePrice
+            };
+
+        case (Type.CALCULATE_MIDDLE_PRICE_ERROR):
+            return {
+                ...state,
+                loading: false,
+                error: payload.error,
+                middlePrice: null
+            };
+
         default:
             return state;
     }
