@@ -19,6 +19,20 @@ type SelectedFurniture = {
     }
 }
 
+export const getSelectedCategories = (values: any) => {
+    if (!values) return;
+
+    const tempObj: { [key: string]: number } = {};
+
+    for (const [key, value] of Object.entries(values)) {
+        if (typeof value === "boolean" && value && values[`${key}-count`]) {
+            tempObj[`${key}-count`] = Number(values[`${key}-count`]);
+        }
+    }
+
+    return tempObj;
+};
+
 export const getCategories = (values: { [key: string]: string }) => {
     const tempArray = [];
 
