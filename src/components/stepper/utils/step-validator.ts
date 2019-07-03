@@ -3,6 +3,7 @@ import _get from "lodash/fp/get";
 import _isEmpty from "lodash/fp/isEmpty";
 import { getFormSyncErrors } from "redux-form";
 import store from "../../../redux/store";
+import { getPopupStatus } from "../../modal/redux-duck/selectors";
 
 type Validate = (values?: any) => boolean
 
@@ -19,7 +20,8 @@ const validateStep1: Validate = (values) => {
 };
 
 const validateStep2: Validate = (values) => {
-    return validateStep1(values);
+    const isPopupOpen = getPopupStatus(store.getState());
+    return validateStep1(values) || isPopupOpen;
 };
 
 const validateStep3: Validate = (values) => {

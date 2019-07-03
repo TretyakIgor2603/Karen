@@ -74,7 +74,7 @@
     --slider-color__box-shadow: #e7d8c2;
 
     /* modal */
-    --modal__background-color: rgba(255, 255, 255, 0.8);
+    --modal__background-color: var(--white, #fff);
     --modal-header__background-color: #060608;
     --modal-header__color: var(--white, #fff);
     --modal-wrapper__background-color: rgba(0, 0, 0, 0.8);

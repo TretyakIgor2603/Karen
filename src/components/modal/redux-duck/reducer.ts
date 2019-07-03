@@ -2,7 +2,7 @@ import * as Type from "./constants";
 // TS types
 import { ModalActions } from "./actions";
 
-export type CustomPackageState = {
+export type ModalState = {
     isPopupOpen: boolean
 }
 
@@ -10,7 +10,7 @@ const INITIAL_STATE = Object.freeze({
     isPopupOpen: false
 });
 
-export default (state: CustomPackageState = INITIAL_STATE, action: ModalActions): CustomPackageState => {
+export default (state: ModalState = INITIAL_STATE, action: ModalActions): ModalState => {
     const { type } = action;
 
     switch (type) {

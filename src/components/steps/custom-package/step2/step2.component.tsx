@@ -31,7 +31,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         <Layout title="Select furniture for each room">
             <Form />
             {isPopupOpen && (
-                <Modal title="Modal title" onClick={() => console.log("button close click")}>
+                <Modal title="What rooms do you want to remove?" onClick={() => console.log("button close click")}>
                     <h1>test</h1>
                 </Modal>
             )}

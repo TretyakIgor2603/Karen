@@ -11,8 +11,7 @@ export type CustomPackageState = {
     furnitureList: Furniture[];
     designStyleList: DesignStyleRequest;
     middlePrice: number | null;
-    categoriesIds: number[],
-    isPopupOpen: boolean
+    categoriesIds: number[]
 }
 
 const INITIAL_STATE = Object.freeze({
@@ -22,8 +21,7 @@ const INITIAL_STATE = Object.freeze({
     furnitureList: [],
     designStyleList: {},
     middlePrice: null,
-    categoriesIds: [],
-    isPopupOpen: false
+    categoriesIds: []
 });
 
 export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackageActions): CustomPackageState => {

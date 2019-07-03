@@ -41,14 +41,14 @@ export const onFormSubmitStep1 = (values: any): void => {
     const state = store.getState();
     const categoriesIds = getCategoriesIds(state);
 
-    if (categoriesIds.length) {
-        store.dispatch(openPopupAction());
-    }
-
     set(CustomPackage.CustomPackageStep1, values);
     const dataToSend = { selected_design_room_categories: categories };
 
-    store.dispatch(getFurnitureListAction(convertToFormData(dataToSend)));
+    if (categoriesIds.length) {
+        store.dispatch(openPopupAction());
+    } else {
+        store.dispatch(getFurnitureListAction(convertToFormData(dataToSend)));
+    }
 };
 
 export const onFormSubmitStep2 = (values: any): void => {

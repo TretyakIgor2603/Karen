@@ -16,11 +16,13 @@ import FurnitureList from "./furniture-list.component";
 // TS types
 import { FilterFurniture } from "../../../../../types/custom-package";
 import { ReduxState } from "../../../../../redux/root-reducer";
+import { getPopupStatus } from "../../../../modal/redux-duck/selectors";
 
 type OwnProps = { children?: never };
 type ReduxStateToProps = {
     isLoading: boolean,
     furnitureList: FilterFurniture[];
+    isModalOpen: boolean;
 };
 type FormData = {
     [key: string]: boolean | string | number
@@ -30,7 +32,7 @@ type Props = OwnProps & form.InjectedFormProps<FormData, OwnProps> & ReduxStateT
 const FormComponent = (props: Props): React.ReactElement<Props> => {
     const [isOpen, setIsOpen] = useState<{ [x: string]: boolean }>(get(CustomPackage.CustomPackageStep2OpenOther) || {});
 
-    const { handleSubmit, isLoading, furnitureList } = props;
+    const { handleSubmit, isLoading, furnitureList, isModalOpen } = props;
 
     const onButtonSubtitleClick: React.ReactEventHandler<HTMLButtonElement> = (event) => {
         const { dataset } = event.target as HTMLButtonElement;
@@ -72,9 +74,11 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
         </div>
     ));
 
+    const renderFurniture: React.ReactElement[] | null = !isModalOpen ? furnitureBody : null;
+
     return (
         <form noValidate onSubmit={handleSubmit}>
-            {isLoading ? <div className={styles.loader}><MainLoader /></div> : furnitureBody}
+            {isLoading ? <div className={styles.loader}><MainLoader /></div> : renderFurniture}
         </form>
     );
 };
@@ -85,7 +89,8 @@ const makeMapStateToProps = () => {
 
         return {
             isLoading: getLoadingSelector(state),
-            furnitureList: getFurnitureListSelector(state)
+            furnitureList: getFurnitureListSelector(state),
+            isModalOpen: getPopupStatus(state)
         };
     };
 

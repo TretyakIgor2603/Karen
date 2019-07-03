@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { createPortal } from "react-dom";
 // Styles
 import styles from "./modal.module.css";
 // Redux
@@ -19,17 +20,11 @@ type ReduxDispatchToProps = {
 
 type Props = OwnProps & ReduxDispatchToProps
 
-type State = {}
-
-const initialState: State = Object.freeze({});
-
-class ModalComponent extends Component<Props, State> {
-    state = initialState;
-
+class ModalComponent extends Component<Props> {
     render(): React.ReactElement {
         const { children, title } = this.props;
 
-        return (
+        return createPortal(
             <section className={styles["modal-wrapper"]} onClick={this.handlerOverlayClick}>
                 <div className={styles["modal-content"]}>
                     <header className={styles.header}>
@@ -44,17 +39,31 @@ class ModalComponent extends Component<Props, State> {
                         {children}
                     </div>
                 </div>
-            </section>
+            </section>,
+            this.portalContainer
         );
     }
 
     componentDidMount(): void {
+        this.createPortalContainer();
         document.addEventListener("keyup", this.handlerKeyUp);
     }
 
     componentWillUnmount(): void {
+        this.removePortalContainer();
         document.removeEventListener("keyup", this.handlerKeyUp);
     }
+
+    appContainer = document.getElementById("app-root") as HTMLDivElement;
+    portalContainer = document.createElement("div") as HTMLDivElement;
+
+    createPortalContainer = () => {
+        this.appContainer.appendChild(this.portalContainer);
+    };
+
+    removePortalContainer = () => {
+        this.appContainer.removeChild(this.portalContainer);
+    };
 
     onButtonClose = (): void => {
         const { onClick, closeModal } = this.props;
