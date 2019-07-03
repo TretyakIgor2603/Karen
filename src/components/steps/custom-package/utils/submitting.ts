@@ -16,7 +16,10 @@ import {
     getBudgetString,
     getCategorySelectedFurniture
 } from "./dataCollection";
+// Selectors
+import { getCategoriesIds } from "../redux-duck/selectors";
 // Actions
+import { openPopupAction } from "../../../modal/redux-duck/actions";
 import { getFurnitureListAction, calculateMiddlePriceAction } from "../redux-duck/actions";
 // TS types
 import { Error } from "../../../../types/axios";
@@ -35,6 +38,12 @@ export enum CustomPackage {
 
 export const onFormSubmitStep1 = (values: any): void => {
     const categories = getCategories(values);
+    const state = store.getState();
+    const categoriesIds = getCategoriesIds(state);
+
+    if (categoriesIds.length) {
+        store.dispatch(openPopupAction());
+    }
 
     set(CustomPackage.CustomPackageStep1, values);
     const dataToSend = { selected_design_room_categories: categories };

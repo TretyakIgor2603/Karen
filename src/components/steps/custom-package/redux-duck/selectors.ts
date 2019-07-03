@@ -31,3 +31,7 @@ export const makeGetFurnitureListSelector = () => createSelector<ReduxState, Fil
     [getFurnitureList],
     (furnitureList) => furnitureList
 );
+
+export const getMiddlePrice = (state: ReduxState): number | null => state[MODULE_NAME].middlePrice;
+
+export const getCategoriesIds = (state: ReduxState): number[] => state[MODULE_NAME].categoriesIds;

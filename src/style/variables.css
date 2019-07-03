@@ -72,4 +72,12 @@
     --slider-color__main: var(--mustard, #c49f68);
     --slider-color__main--light: #cfb286;
     --slider-color__box-shadow: #e7d8c2;
+
+    /* modal */
+    --modal__background-color: rgba(255, 255, 255, 0.8);
+    --modal-header__background-color: #060608;
+    --modal-header__color: var(--white, #fff);
+    --modal-wrapper__background-color: rgba(0, 0, 0, 0.8);
+    --modal-button-close__color: #6b6b6b;
+    --modal-button-close__color--hover: #e1e1e1;
 }

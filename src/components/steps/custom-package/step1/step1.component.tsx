@@ -7,7 +7,7 @@ import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 // Redux
 import redux, { connect } from "react-redux";
-import { getRoomListAction } from "../redux-duck/actions";
+import { getRoomListAction, saveCategoriesIdsAction } from "../redux-duck/actions";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form.component";
@@ -17,11 +17,12 @@ import { getSelectedCategories } from "../utils/dataCollection";
 
 type OwnProps = { children?: never }
 type ReduxStateToProps = {
-    formValues: form.FormState
+    formValues: form.FormState;
 }
 type ReduxDispatchToProps = {
     initializeForm: typeof initialize;
     getRoomList: typeof getRoomListAction;
+    saveCategoriesIds: typeof saveCategoriesIdsAction;
 }
 type Props = OwnProps & ReduxDispatchToProps & ReduxStateToProps
 
@@ -50,10 +51,10 @@ const Step1Component = (props: Props): React.ReactElement<Props> => {
         // eslint-disable-next-line
     }, []);
 
-    //####################################################
-    const fieldValues = getCounterDifference(props.formValues);
-    console.log("--field values", fieldValues);
-    //####################################################
+    const { formValues, saveCategoriesIds } = props;
+
+    const fieldValues = getCounterDifference(formValues);
+    saveCategoriesIds(fieldValues);
 
     return (
         <Layout title="How many rooms do you need to furnish?">
@@ -68,7 +69,8 @@ const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxS
 
 const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     initializeForm: (formName: string, initialValues: any): form.FormAction => dispatch(initialize(formName, initialValues)),
-    getRoomList: () => dispatch(getRoomListAction())
+    getRoomList: () => dispatch(getRoomListAction()),
+    saveCategoriesIds: (ids: number[]) => dispatch(saveCategoriesIdsAction(ids))
 });
 
 export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(Step1Component);

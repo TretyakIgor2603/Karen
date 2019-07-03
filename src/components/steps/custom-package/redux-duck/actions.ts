@@ -18,6 +18,7 @@ export type GetFurnitureList = {
     type: string;
     payload: any;
 }
+
 type GetFurnitureListDone = {
     type: string;
     payload: { furnitureList: Furniture[] };
@@ -32,9 +33,20 @@ export type CalculateMiddlePrice = {
     type: string;
     payload: MiddlePriceData;
 }
+
 type CalculateMiddlePriceDone = {
     type: string;
     payload: { middlePrice: number };
+}
+
+type SaveCategoriesIds = {
+    type: string;
+    payload: { ids: number[] };
+}
+
+type TogglePopup = {
+    type: string;
+    payload: { isPopupOpen: boolean }
 }
 
 export type CustomPackageActions =
@@ -45,7 +57,9 @@ export type CustomPackageActions =
     & GetFurnitureListDone
     & GetDesignStylesListDone
     & CalculateMiddlePrice
-    & CalculateMiddlePriceDone;
+    & CalculateMiddlePriceDone
+    & SaveCategoriesIds
+    & TogglePopup;
 
 export const getRoomListAction = (): WatchAction => ({ type: Type.GET_ROOM_LIST });
 export const getRoomListDoneAction = (roomList: Room[]): GetRoomListDone => ({
@@ -91,4 +105,9 @@ export const calculateMiddlePriceDoneAction = (middlePrice: number): CalculateMi
 export const calculateMiddlePriceErrorAction = (error: Error): ActionError => ({
     type: Type.CALCULATE_MIDDLE_PRICE_ERROR,
     payload: { error }
+});
+
+export const saveCategoriesIdsAction = (ids: number[]): SaveCategoriesIds => ({
+   type: Type.SAVE_CATEGORIES_IDS,
+   payload: { ids }
 });
