@@ -9,26 +9,33 @@ import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
 import _kebabCase from "lodash/fp/kebabCase";
 import _lowerCase from "lodash/fp/lowerCase";
+import _differenceBy from "lodash/fp/differenceBy";
 // Redux
 import redux, { connect } from "react-redux";
+import { getFurnitureListDoneAction } from "../redux-duck/actions";
 import { getPopupStatus } from "../../../modal/redux-duck/selectors";
+import { getOriginFurnitureList } from "../redux-duck/selectors";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form.component";
 import { Modal, MainButton } from "../../../all-components";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
-import { SelectedRoom, SelectedRoomFurniture } from "../../../../types/custom-package";
+import { Furniture, SelectedRoom, SelectedRoomFurniture } from "../../../../types/custom-package";
 
 type OwnProps = { children?: never };
 type ReduxStateToProps = {
     isPopupOpen: boolean;
+    furniture: Furniture[]
 };
-type ReduxDispatchToProps = { initializeForm: typeof initialize };
+type ReduxDispatchToProps = {
+    initializeForm: typeof initialize;
+    getFurnitureListDone: typeof getFurnitureListDoneAction;
+};
 type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
 const getPreviousFurnitureList = (): SelectedRoom[] | void => {
-    const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids);
+    const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids) || [];
     const furnitureList: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
     const rooms: any = {};
 
@@ -120,6 +127,14 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         })
     ) : null;
 
+    const onButtonSaveChangesClick = () => {
+        const { furniture, getFurnitureListDone } = props;
+
+        const selectedRoomsObj = selectedRooms.map((item: string) => ({ label: item }));
+        const diff = _differenceBy("label", furniture, selectedRoomsObj);
+        diff.length && getFurnitureListDone(diff);
+    };
+
     return (
         <Layout title="Select furniture for each room">
             <Form />
@@ -130,7 +145,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
                             {furnitureListBody}
                         </ul>
                         <div className={styles["button-wrapper"]}>
-                            <MainButton className={styles.button}>
+                            <MainButton className={styles.button} onClick={onButtonSaveChangesClick}>
                                 Save changes
                             </MainButton>
                         </div>
@@ -142,11 +157,13 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
 };
 
 const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxState> = (state) => ({
-    isPopupOpen: getPopupStatus(state)
+    isPopupOpen: getPopupStatus(state),
+    furniture: getOriginFurnitureList(state)
 });
 
 const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
-    initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues))
+    initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues)),
+    getFurnitureListDone: (furniture: Furniture[]) => dispatch(getFurnitureListDoneAction(furniture))
 });
 
 export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(Step2Component);

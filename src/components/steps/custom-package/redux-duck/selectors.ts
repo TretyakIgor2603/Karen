@@ -5,6 +5,7 @@ import { ReduxState } from "../../../../redux/root-reducer";
 import { Room, Furniture, FilterFurniture, FurnitureItem, DesignStyleRequest } from "../../../../types/custom-package";
 
 export const getRoomListSelector = (state: ReduxState): Room[] => state[MODULE_NAME].roomList;
+export const getOriginFurnitureList = (state: ReduxState): Furniture[] => state[MODULE_NAME].furnitureList;
 export const getLoadingSelector = (state: ReduxState): boolean => state[MODULE_NAME].loading;
 export const getDesignStyleListSelector = (state: ReduxState): DesignStyleRequest => state[MODULE_NAME].designStyleList;
 
