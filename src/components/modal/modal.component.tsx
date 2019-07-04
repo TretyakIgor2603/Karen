@@ -9,7 +9,7 @@ import redux, { connect } from "react-redux";
 import { ReduxState } from "../../redux/root-reducer";
 // TS types
 type OwnProps = {
-    children: React.ReactElement;
+    children: React.ReactElement | React.ReactElement[];
     title: string;
     onClick?: () => void
 }

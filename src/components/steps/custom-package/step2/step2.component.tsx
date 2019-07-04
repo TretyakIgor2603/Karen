@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+// Styles
+import styles from "./step2.module.css";
 // Utils
+import cn from "classnames";
 import { get } from "local-storage";
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
@@ -12,7 +15,7 @@ import { getPopupStatus } from "../../../modal/redux-duck/selectors";
 // Components
 import Layout from "../../layout/layout.component";
 import Form from "./components/form.component";
-import { Modal } from "../../../all-components";
+import { Modal, MainButton } from "../../../all-components";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
 import { SelectedRoom, SelectedRoomFurniture } from "../../../../types/custom-package";
@@ -24,7 +27,7 @@ type ReduxStateToProps = {
 type ReduxDispatchToProps = { initializeForm: typeof initialize };
 type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
-const getPreviousFurnitureList = (): any => {
+const getPreviousFurnitureList = (): SelectedRoom[] | void => {
     const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids);
     const furnitureList: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
     const rooms: any = {};
@@ -59,7 +62,8 @@ const getPreviousFurnitureList = (): any => {
 };
 
 const Step2Component = (props: Props): React.ReactElement<Props> => {
-    const [furnitureList, setFurnitureList] = useState<any>([]);
+    const [furnitureList, setFurnitureList] = useState<{ [key: string]: any }>([]);
+    const [selectedRooms, setSelectedRooms] = useState<any>([]);
     useEffect(() => {
         props.initializeForm(FormName.CustomPackageStep2, get(CustomPackage.CustomPackageStep2));
         setFurnitureList(getChangedFurnitureList());
@@ -70,13 +74,50 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
 
     const getChangedFurnitureList = () => {
         const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids);
-        const previousFurnitureList: SelectedRoom[] = getPreviousFurnitureList() || [];
+        const previousFurnitureList: SelectedRoom[] | [] = getPreviousFurnitureList() || [];
 
         return previousFurnitureList.filter((furniture: SelectedRoom) => categoriesIds && categoriesIds.indexOf(furniture.id) !== -1);
     };
 
+    const selectRoom: React.MouseEventHandler<HTMLLIElement> = (event) => {
+        const { currentTarget } = event;
+        let newSelectedRooms: any = [];
+
+        if (selectedRooms.indexOf(currentTarget.dataset.label) === -1) {
+            newSelectedRooms = [...selectedRooms, currentTarget.dataset.label];
+        } else {
+            newSelectedRooms = selectedRooms.filter((item: string) => item !== currentTarget.dataset.label);
+        }
+
+        setSelectedRooms(newSelectedRooms);
+    };
+
     const furnitureListBody = (furnitureList && furnitureList.length) ? (
-        furnitureList.map((furniture: SelectedRoomFurniture) => <li key={furniture.label}>{furniture.label}</li>)
+        furnitureList.map((furniture: SelectedRoom) => {
+            const listItemStyle = cn(styles["list-item"], {
+                [styles.selected]: selectedRooms.includes(furniture.label)
+            });
+
+            return (
+                <li
+                    key={furniture.label}
+                    className={listItemStyle}
+                    data-label={furniture.label}
+                    onClick={selectRoom}
+                >
+                    <h3 className={styles.title}>{furniture.label}</h3>
+                    <ul className={styles["description-list"]}>
+                        {
+                            furniture.furniture.map((item: SelectedRoomFurniture) => (
+                                <li key={item.label} className={styles["description-item"]}>
+                                    {item.label} : {item.count}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </li>
+            );
+        })
     ) : null;
 
     return (
@@ -84,7 +125,16 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
             <Form />
             {isPopupOpen && (
                 <Modal title="What rooms do you want to remove?" onClick={() => console.log("button close click")}>
-                    {furnitureListBody}
+                    <div className={styles.content}>
+                        <ul className={styles.list}>
+                            {furnitureListBody}
+                        </ul>
+                        <div className={styles["button-wrapper"]}>
+                            <MainButton className={styles.button}>
+                                Save changes
+                            </MainButton>
+                        </div>
+                    </div>
                 </Modal>
             )}
         </Layout>
