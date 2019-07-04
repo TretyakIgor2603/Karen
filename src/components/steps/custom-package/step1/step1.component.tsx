@@ -36,7 +36,8 @@ const getCounterDifference = (formValues: Partial<form.FormState>) => {
     if (selectedCategoriesFromForm && selectedCategoriesFromLS) {
         for (const [key, value] of Object.entries(selectedCategoriesFromForm)) {
             if (selectedCategoriesFromLS[key] > value) {
-                ids.push(parseInt(key.substr(2, 1), 10));
+                const id = key.split("-")[1];
+                ids.push(parseInt(id, 10));
             }
         }
     }

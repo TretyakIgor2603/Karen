@@ -97,3 +97,14 @@ type FurnitureCategory = {
 export type MiddlePriceData = {
     product_categories: FurnitureCategory[]
 }
+
+export type SelectedRoomFurniture = {
+    label: string;
+    count: number;
+}
+
+export type SelectedRoom = {
+    id: number;
+    label: string;
+    furniture: SelectedRoomFurniture[];
+}

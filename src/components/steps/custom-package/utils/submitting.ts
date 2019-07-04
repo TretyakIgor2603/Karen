@@ -28,18 +28,20 @@ import { StyleReportData } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
+    CustomPackageStep1Ids = "CUSTOM_PACKAGE/STEP1_IDS",
     CustomPackageStep2 = "CUSTOM_PACKAGE/STEP2",
     CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER",
     CustomPackageStep3 = "CUSTOM_PACKAGE/STEP3",
     CustomPackageStep4 = "CUSTOM_PACKAGE/STEP4",
     CustomPackageStep4Styles = "CUSTOM_PACKAGE/STEP4_STYLES",
-    CustomPackageStep5 = "CUSTOM_PACKAGE/STEP5",
+    CustomPackageStep5 = "CUSTOM_PACKAGE/STEP5"
 }
 
 export const onFormSubmitStep1 = (values: any): void => {
     const categories = getCategories(values);
     const state = store.getState();
     const categoriesIds = getCategoriesIds(state);
+    set(CustomPackage.CustomPackageStep1Ids, categoriesIds);
 
     set(CustomPackage.CustomPackageStep1, values);
     const dataToSend = { selected_design_room_categories: categories };
@@ -53,6 +55,7 @@ export const onFormSubmitStep1 = (values: any): void => {
 
 export const onFormSubmitStep2 = (values: any): void => {
     set(CustomPackage.CustomPackageStep2, values);
+    remove(CustomPackage.CustomPackageStep1Ids);
 };
 
 export const onFormSubmitStep3 = (values: any): void => {
