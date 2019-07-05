@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 // Utils
 import _get from "lodash/fp/get";
-import { get } from "local-storage";
+import { get, set } from "local-storage";
 import form, { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
@@ -28,6 +28,7 @@ type Props = OwnProps & ReduxDispatchToProps & ReduxStateToProps
 
 const getCounterDifference = (formValues: Partial<form.FormState>) => {
     const ids: number[] = [];
+    const counts: any = {};
     const fieldValues = _get("values", formValues);
 
     const selectedCategoriesFromLS = getSelectedCategories(get(CustomPackage.CustomPackageStep1));
@@ -38,11 +39,13 @@ const getCounterDifference = (formValues: Partial<form.FormState>) => {
             if (selectedCategoriesFromLS[key] > value) {
                 const id = key.split("-")[1];
                 ids.push(parseInt(id, 10));
+
+                counts[id] = { count: selectedCategoriesFromLS[key] - value };
             }
         }
     }
 
-    return ids;
+    return { ids, counts };
 };
 
 const Step1Component = (props: Props): React.ReactElement<Props> => {
@@ -55,7 +58,8 @@ const Step1Component = (props: Props): React.ReactElement<Props> => {
     const { formValues, saveCategoriesIds } = props;
 
     const fieldValues = getCounterDifference(formValues);
-    saveCategoriesIds(fieldValues);
+    saveCategoriesIds(fieldValues.ids);
+    set(CustomPackage.CustomPackageStep1Count, fieldValues.counts);
 
     return (
         <Layout title="How many rooms do you need to furnish?">

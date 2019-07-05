@@ -92,6 +92,7 @@ const updateLocalStorageStep2 = (selectedRooms: string[], formValues: { [key: st
 const Step2Component = (props: Props): React.ReactElement<Props> => {
     const [furnitureList, setFurnitureList] = useState<{ [key: string]: any }>([]);
     const [selectedRooms, setSelectedRooms] = useState<any>([]);
+    const [selectedRoomsIds, setSelectedRoomsIds] = useState<any>({});
     useEffect(() => {
         props.initializeForm(FormName.CustomPackageStep2, get(CustomPackage.CustomPackageStep2));
         setFurnitureList(getChangedFurnitureList());
@@ -110,14 +111,38 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
     const selectRoom: React.MouseEventHandler<HTMLLIElement> = (event) => {
         const { currentTarget } = event;
         let newSelectedRooms: any = [];
+        let newSelectedRoomsIds: any = {};
 
         if (selectedRooms.indexOf(currentTarget.dataset.label) === -1) {
             newSelectedRooms = [...selectedRooms, currentTarget.dataset.label];
+            const id = currentTarget.dataset.id;
+
+            if (id) {
+                newSelectedRoomsIds = {
+                    ...selectedRoomsIds,
+                    [id]: selectedRoomsIds[id] ?
+                        selectedRoomsIds[id] = { count: selectedRoomsIds[id].count += 1 } :
+                        selectedRoomsIds[id] = { count: 1 }
+                };
+            }
+
         } else {
             newSelectedRooms = selectedRooms.filter((item: string) => item !== currentTarget.dataset.label);
+            const id = currentTarget.dataset.id;
+
+            if (id) {
+                newSelectedRoomsIds = {
+                    ...selectedRoomsIds,
+                    [id]: { count: selectedRoomsIds[id].count -= 1 }
+                };
+            }
         }
 
         setSelectedRooms(newSelectedRooms);
+        setSelectedRoomsIds(newSelectedRoomsIds);
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        console.log("select furniture count", newSelectedRoomsIds);
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     };
 
     const furnitureListBody = (furnitureList && furnitureList.length) ? (
@@ -131,6 +156,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
                     key={furniture.label}
                     className={listItemStyle}
                     data-label={furniture.label}
+                    data-id={furniture.id}
                     onClick={selectRoom}
                 >
                     <h3 className={styles.title}>{furniture.label}</h3>
@@ -163,7 +189,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         <Layout title="Select furniture for each room">
             <Form />
             {isPopupOpen && (
-                <Modal title="What rooms do you want to remove?" onClick={() => console.log("button close click")}>
+                <Modal title="What rooms do you want to remove?" onClick={onButtonSaveChangesClick}>
                     <div className={styles.content}>
                         <ul className={styles.list}>
                             {furnitureListBody}

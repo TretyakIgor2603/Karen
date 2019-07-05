@@ -28,6 +28,7 @@ import { StyleReportData } from "../../../../types/custom-package";
 
 export enum CustomPackage {
     CustomPackageStep1 = "CUSTOM_PACKAGE/STEP1",
+    CustomPackageStep1Count = "CUSTOM_PACKAGE/STEP1_COUNT",
     CustomPackageStep1Ids = "CUSTOM_PACKAGE/STEP1_IDS",
     CustomPackageStep2 = "CUSTOM_PACKAGE/STEP2",
     CustomPackageStep2OpenOther = "CUSTOM_PACKAGE/STEP2_OPEN_OTHER",
@@ -56,6 +57,7 @@ export const onFormSubmitStep1 = (values: any): void => {
 export const onFormSubmitStep2 = (values: any): void => {
     set(CustomPackage.CustomPackageStep2, values);
     remove(CustomPackage.CustomPackageStep1Ids);
+    remove(CustomPackage.CustomPackageStep1Count);
 };
 
 export const onFormSubmitStep3 = (values: any): void => {
