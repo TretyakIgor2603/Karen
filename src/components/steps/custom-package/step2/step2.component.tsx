@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./step2.module.css";
 // Utils
 import cn from "classnames";
-import { get } from "local-storage";
+import { get, set } from "local-storage";
 import { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
 import { CustomPackage } from "../utils/submitting";
@@ -34,6 +34,7 @@ type ReduxDispatchToProps = {
 };
 type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
+// Helpers
 const getPreviousFurnitureList = (): SelectedRoom[] | void => {
     const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids) || [];
     const furnitureList: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
@@ -66,6 +67,26 @@ const getPreviousFurnitureList = (): SelectedRoom[] | void => {
     }
 
     return Object.values(rooms);
+};
+
+const updateLocalStorageStep2 = (selectedRooms: string[], formValues: { [key: string]: any }) => {
+    const values = formValues;
+
+    for (const [key] of Object.entries(values)) {
+        if (selectedRooms.includes(key)) {
+            const kebabKey = _kebabCase(key);
+            delete values[key];
+
+            for (const [k] of Object.entries(values)) {
+                if (k.startsWith(kebabKey)) {
+                    delete values[k];
+                }
+            }
+
+        }
+    }
+
+    set(CustomPackage.CustomPackageStep2, values);
 };
 
 const Step2Component = (props: Props): React.ReactElement<Props> => {
@@ -133,6 +154,9 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         const selectedRoomsObj = selectedRooms.map((item: string) => ({ label: item }));
         const diff = _differenceBy("label", furniture, selectedRoomsObj);
         diff.length && getFurnitureListDone(diff);
+
+        const formValues: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
+        updateLocalStorageStep2(selectedRooms, formValues);
     };
 
     return (
