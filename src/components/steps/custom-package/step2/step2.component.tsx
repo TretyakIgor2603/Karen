@@ -112,37 +112,61 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         const { currentTarget } = event;
         let newSelectedRooms: any = [];
         let newSelectedRoomsIds: any = {};
+        const id = currentTarget.dataset.id;
+        const label = currentTarget.dataset.label;
 
-        if (selectedRooms.indexOf(currentTarget.dataset.label) === -1) {
-            newSelectedRooms = [...selectedRooms, currentTarget.dataset.label];
-            const id = currentTarget.dataset.id;
+        const step1Count: any = get(CustomPackage.CustomPackageStep1Count);
+
+        if (selectedRooms.indexOf(label) === -1) {
 
             if (id) {
-                newSelectedRoomsIds = {
-                    ...selectedRoomsIds,
-                    [id]: selectedRoomsIds[id] ?
-                        selectedRoomsIds[id] = { count: selectedRoomsIds[id].count += 1 } :
-                        selectedRoomsIds[id] = { count: 1 }
-                };
+
+                if (selectedRoomsIds[id] && selectedRoomsIds[id].count && (step1Count[id].count === selectedRoomsIds[id].count)) {
+                    newSelectedRooms = [...selectedRooms.slice(1), label];
+
+                    newSelectedRoomsIds = {
+                        ...selectedRoomsIds,
+                        [id]: {
+                            count: selectedRoomsIds[id].count,
+                            labels: [...selectedRoomsIds[id].labels.filter((item: string) => item !== selectedRooms[0]), label]
+                        }
+                    };
+
+                } else {
+                    newSelectedRooms = [...selectedRooms, currentTarget.dataset.label];
+
+                    newSelectedRoomsIds = {
+                        ...selectedRoomsIds,
+                        [id]: selectedRoomsIds[id] ?
+                            selectedRoomsIds[id] = {
+                                count: selectedRoomsIds[id].count += 1,
+                                labels: [...selectedRoomsIds[id].labels, label]
+                            } :
+                            selectedRoomsIds[id] = {
+                                count: 1,
+                                labels: [label]
+                            }
+                    };
+                }
+
             }
 
         } else {
             newSelectedRooms = selectedRooms.filter((item: string) => item !== currentTarget.dataset.label);
-            const id = currentTarget.dataset.id;
 
             if (id) {
                 newSelectedRoomsIds = {
                     ...selectedRoomsIds,
-                    [id]: { count: selectedRoomsIds[id].count -= 1 }
+                    [id]: {
+                        count: selectedRoomsIds[id].count -= 1,
+                        labels: selectedRoomsIds[id].labels.filter((item: string) => item !== label)
+                    }
                 };
             }
         }
 
         setSelectedRooms(newSelectedRooms);
         setSelectedRoomsIds(newSelectedRoomsIds);
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        console.log("select furniture count", newSelectedRoomsIds);
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     };
 
     const furnitureListBody = (furnitureList && furnitureList.length) ? (

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 // Utils
 import _get from "lodash/fp/get";
+import _isEmpty from "lodash/fp/isEmpty";
 import { get, set } from "local-storage";
 import form, { initialize } from "redux-form";
 import { FormName } from "../../../../app-constants";
@@ -59,7 +60,10 @@ const Step1Component = (props: Props): React.ReactElement<Props> => {
 
     const fieldValues = getCounterDifference(formValues);
     saveCategoriesIds(fieldValues.ids);
-    set(CustomPackage.CustomPackageStep1Count, fieldValues.counts);
+
+    if (!_isEmpty(fieldValues.counts)) {
+        set(CustomPackage.CustomPackageStep1Count, fieldValues.counts);
+    }
 
     return (
         <Layout title="How many rooms do you need to furnish?">
