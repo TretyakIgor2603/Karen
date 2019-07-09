@@ -13,6 +13,7 @@ import _differenceBy from "lodash/fp/differenceBy";
 // Redux
 import redux, { connect } from "react-redux";
 import { getFurnitureListDoneAction } from "../redux-duck/actions";
+import { closePopupAction } from "../../../modal/redux-duck/actions";
 import { getPopupStatus } from "../../../modal/redux-duck/selectors";
 import { getOriginFurnitureList } from "../redux-duck/selectors";
 // Components
@@ -31,6 +32,7 @@ type ReduxStateToProps = {
 type ReduxDispatchToProps = {
     initializeForm: typeof initialize;
     getFurnitureListDone: typeof getFurnitureListDoneAction;
+    closeModal: typeof closePopupAction;
 };
 type Props = OwnProps & ReduxStateToProps & ReduxDispatchToProps;
 
@@ -199,7 +201,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
     ) : null;
 
     const onButtonSaveChangesClick = () => {
-        const { furniture, getFurnitureListDone } = props;
+        const { furniture, getFurnitureListDone, closeModal } = props;
 
         const selectedRoomsObj = selectedRooms.map((item: string) => ({ label: item }));
         const diff = _differenceBy("label", furniture, selectedRoomsObj);
@@ -207,6 +209,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
 
         const formValues: { [key: string]: any } = get(CustomPackage.CustomPackageStep2);
         updateLocalStorageStep2(selectedRooms, formValues);
+        closeModal();
     };
 
     return (
@@ -237,7 +240,8 @@ const mapStateToProps: redux.MapStateToProps<ReduxStateToProps, OwnProps, ReduxS
 
 const mapDispatchToProps: redux.MapDispatchToProps<ReduxDispatchToProps, OwnProps> = (dispatch) => ({
     initializeForm: (formName: string, initialValues: any) => dispatch(initialize(formName, initialValues)),
-    getFurnitureListDone: (furniture: Furniture[]) => dispatch(getFurnitureListDoneAction(furniture))
+    getFurnitureListDone: (furniture: Furniture[]) => dispatch(getFurnitureListDoneAction(furniture)),
+    closeModal: () => dispatch(closePopupAction())
 });
 
 export default connect<ReduxStateToProps, ReduxDispatchToProps, OwnProps, ReduxState>(mapStateToProps, mapDispatchToProps)(Step2Component);

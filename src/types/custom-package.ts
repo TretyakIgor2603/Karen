@@ -108,3 +108,12 @@ export type SelectedRoom = {
     label: string;
     furniture: SelectedRoomFurniture[];
 }
+
+export type MiddlePrice = {
+    handleMin: number;
+    handleMax: number;
+    rangeMin: number;
+    rangeMax: number;
+    step: number;
+    pushable: number;
+}

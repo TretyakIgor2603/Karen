@@ -10,7 +10,7 @@ export type CustomPackageState = {
     roomList: Room[];
     furnitureList: Furniture[];
     designStyleList: DesignStyleRequest;
-    middlePrice: number | null;
+    middlePrice: number;
     categoriesIds: number[]
 }
 
@@ -20,7 +20,7 @@ const INITIAL_STATE = Object.freeze({
     roomList: [],
     furnitureList: [],
     designStyleList: {},
-    middlePrice: null,
+    middlePrice: 0,
     categoriesIds: []
 });
 
@@ -95,7 +95,7 @@ export default (state: CustomPackageState = INITIAL_STATE, action: CustomPackage
                 ...state,
                 loading: false,
                 error: payload.error,
-                middlePrice: null
+                middlePrice: 0
             };
 
         case (Type.SAVE_CATEGORIES_IDS):

@@ -1,8 +1,17 @@
 import { MODULE_NAME } from "./constants";
 import { createSelector } from "reselect";
+// Utils
+import { roundUp } from "../../../../utils/helpers";
 // TS types
 import { ReduxState } from "../../../../redux/root-reducer";
-import { Room, Furniture, FilterFurniture, FurnitureItem, DesignStyleRequest } from "../../../../types/custom-package";
+import {
+    Room,
+    Furniture,
+    FilterFurniture,
+    FurnitureItem,
+    DesignStyleRequest,
+    MiddlePrice
+} from "../../../../types/custom-package";
 
 export const getRoomListSelector = (state: ReduxState): Room[] => state[MODULE_NAME].roomList;
 export const getOriginFurnitureList = (state: ReduxState): Furniture[] => state[MODULE_NAME].furnitureList;
@@ -33,6 +42,28 @@ export const makeGetFurnitureListSelector = () => createSelector<ReduxState, Fil
     (furnitureList) => furnitureList
 );
 
-export const getMiddlePrice = (state: ReduxState): number | null => state[MODULE_NAME].middlePrice;
+const getMiddlePrice = (state: ReduxState): number => state[MODULE_NAME].middlePrice;
 
 export const getCategoriesIds = (state: ReduxState): number[] => state[MODULE_NAME].categoriesIds;
+
+const getPriceData = (state: ReduxState): MiddlePrice => {
+    const middlePrice: number = getMiddlePrice(state);
+
+    const thirtyPercent = middlePrice * 30 / 100;
+    const fiftyPercent = middlePrice * 50 / 100;
+    const step = roundUp(middlePrice + fiftyPercent) / 10;
+
+    return {
+        handleMax: roundUp(middlePrice + thirtyPercent),
+        handleMin: roundUp(middlePrice - thirtyPercent),
+        rangeMax: roundUp(middlePrice + fiftyPercent),
+        rangeMin: roundUp(middlePrice - fiftyPercent),
+        step,
+        pushable: step
+    };
+};
+
+export const makeGetPriceSelector = () => createSelector<ReduxState, MiddlePrice, MiddlePrice>(
+    [getPriceData],
+    (priceData) => priceData
+);
