@@ -9,23 +9,44 @@ import form from "redux-form";
 type OwnProps = {
     label: string;
     image: string;
+    onInputChange?: (name: string) => void;
     children?: never;
 }
 type Props = OwnProps & form.WrappedFieldProps
 
 const ListItemComponent = (props: Props): React.ReactElement<Props> => {
-    const { image, input, label } = props;
+    const {
+        image,
+        input: {
+            name,
+            value,
+            onChange,
+            ...restInputProps
+        },
+        onInputChange,
+        label
+    } = props;
+
+    const handleInputChange: React.FormEventHandler<HTMLInputElement> = (event) => {
+        if (onInputChange) {
+            onInputChange(name);
+        } else {
+            onChange(event, value);
+        }
+    };
 
     return (
         <>
             <input
-                {...input}
+                {...restInputProps}
+                onChange={handleInputChange}
                 type="checkbox"
                 className={`${styles.input} visually-hidden`}
-                id={`${input.name}-id`}
-                checked={input.value}
+                id={`${name}-id`}
+                checked={value}
+                value={value}
             />
-            <label className={styles.label} htmlFor={`${input.name}-id`}>
+            <label className={styles.label} htmlFor={`${name}-id`}>
                 <div className={styles.promo}>
                     <img
                         className={styles.image}

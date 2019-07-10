@@ -17,7 +17,10 @@ import ListItem from "../list-item/list-item.component";
 import { ReduxState } from "../../../../../../redux/root-reducer";
 import { DesignStyleRequest } from "../../../../../../types/custom-package";
 
-type OwnProps = { children?: never };
+type OwnProps = {
+    onInputChange: (name: string) => void;
+    children?: never;
+};
 type ReduxStateToProps = {
     isLoading: boolean;
     designStylesList: DesignStyleRequest;
@@ -28,7 +31,7 @@ type FormData = {
 type Props = OwnProps & form.InjectedFormProps<FormData, OwnProps> & ReduxStateToProps;
 
 const FormComponent = (props: Props): React.ReactElement<Props> => {
-    const { handleSubmit, isLoading, designStylesList } = props;
+    const { handleSubmit, isLoading, designStylesList, onInputChange } = props;
     const { is_logged, style_quiz, design_styles } = designStylesList;
 
     const designStylesBody = (design_styles && design_styles.length) ? (
@@ -41,6 +44,7 @@ const FormComponent = (props: Props): React.ReactElement<Props> => {
                         name={name}
                         image={designStyle.image_url.url}
                         label={designStyle.label}
+                        onInputChange={onInputChange}
                         component={ListItem}
                     />
                 </li>
