@@ -27,7 +27,7 @@ import { Furniture, SelectedRoom, SelectedRoomFurniture } from "../../../../type
 type OwnProps = { children?: never };
 type ReduxStateToProps = {
     isPopupOpen: boolean;
-    furniture: Furniture[]
+    furniture: Furniture[];
 };
 type ReduxDispatchToProps = {
     initializeForm: typeof initialize;
@@ -45,7 +45,7 @@ const getPreviousFurnitureList = (): SelectedRoom[] | void => {
     if (!categoriesIds.length) return;
 
     for (const [key, value] of Object.entries(furnitureList)) {
-        const isCategory: boolean = /(?=.*[A-Z])/.test(key);
+        const isCategory: boolean = (/(?=.*[A-Z])/).test(key);
         const name = _kebabCase(key);
 
         if (isCategory) {
@@ -57,7 +57,7 @@ const getPreviousFurnitureList = (): SelectedRoom[] | void => {
         } else {
             if (key.endsWith("-id") || key.endsWith("-count") || !value) continue;
             const splitKey = key.split("---");
-            const categoryName = splitKey[0];
+            const [categoryName] = splitKey;
             const furnitureName = _lowerCase(splitKey[1]);
 
             rooms[categoryName].furniture.push({
@@ -71,7 +71,7 @@ const getPreviousFurnitureList = (): SelectedRoom[] | void => {
     return Object.values(rooms);
 };
 
-const updateLocalStorageStep2 = (selectedRooms: string[], formValues: { [key: string]: any }) => {
+const updateLocalStorageStep2 = (selectedRooms: string[], formValues: { [key: string]: any }): void => {
     const values = formValues;
 
     for (const [key] of Object.entries(values)) {
@@ -103,7 +103,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
 
     const { isPopupOpen } = props;
 
-    const getChangedFurnitureList = () => {
+    const getChangedFurnitureList = (): SelectedRoom[] => {
         const categoriesIds: number[] = get(CustomPackage.CustomPackageStep1Ids);
         const previousFurnitureList: SelectedRoom[] | [] = getPreviousFurnitureList() || [];
 
@@ -114,8 +114,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         const { currentTarget } = event;
         let newSelectedRooms: any = [];
         let newSelectedRoomsIds: any = {};
-        const id = currentTarget.dataset.id;
-        const label = currentTarget.dataset.label;
+        const { id, label } = currentTarget.dataset;
 
         const step1Count: any = get(CustomPackage.CustomPackageStep1Count);
 
@@ -141,7 +140,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
                         ...selectedRoomsIds,
                         [id]: selectedRoomsIds[id] ?
                             selectedRoomsIds[id] = {
-                                count: selectedRoomsIds[id].count += 1,
+                                count: selectedRoomsIds[id].count = selectedRoomsIds[id].count + 1,
                                 labels: [...selectedRoomsIds[id].labels, label]
                             } :
                             selectedRoomsIds[id] = {
@@ -160,7 +159,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
                 newSelectedRoomsIds = {
                     ...selectedRoomsIds,
                     [id]: {
-                        count: selectedRoomsIds[id].count -= 1,
+                        count: selectedRoomsIds[id].count = selectedRoomsIds[id].count - 1,
                         labels: selectedRoomsIds[id].labels.filter((item: string) => item !== label)
                     }
                 };
@@ -200,7 +199,7 @@ const Step2Component = (props: Props): React.ReactElement<Props> => {
         })
     ) : null;
 
-    const onButtonSaveChangesClick = () => {
+    const onButtonSaveChangesClick = (): void => {
         const { furniture, getFurnitureListDone, closeModal } = props;
 
         const selectedRoomsObj = selectedRooms.map((item: string) => ({ label: item }));

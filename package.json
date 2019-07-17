@@ -6,6 +6,7 @@
         "dev": "cp src/env/local.ts src/env/env.ts & react-scripts start",
         "build:dev": "cp src/env/dev.ts src/env/env.ts & react-scripts build",
         "deploy:dev": "rm -rf ./build && yarn build:dev && yarn gulp",
+        "deploy:prod": "rm -rf ./build && yarn build:prod && yarn gulp",
         "build:staging": "cp src/env/staging.ts src/env/env.ts & react-scripts build",
         "build:prod": "cp src/env/prod.ts src/env/env.ts & react-scripts build",
         "build:vista": "cp src/env/vista.ts src/env/env.ts & react-scripts build",
